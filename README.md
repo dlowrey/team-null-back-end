@@ -11,7 +11,7 @@ MySQL's Python Connector currently only supports Python 3.4. If you do not have 
 
 1. Go to the [MySQL Community Server](https://dev.mysql.com/downloads/mysql/) download page and select your platform.
 2. Click "Download"
-3. Select the MSI installer for your OS, Preferably the one that is not web based
+3. Select the installer for your OS, Preferably the one that is not web based
 4. When the download is complete, open the installer. You will be walked through a series of steps to set up a MySQL server.
 5. Accept the license agreement
 6. Select **Developer Default**
