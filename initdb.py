@@ -21,19 +21,23 @@ TABLES['test1'] = (
     "   PRIMARY KEY (`id`)"
     ") ENGINE=InnoDB")
 
+
 def create_database(cursor, connection):
     """
     Attempt to create the DB_NAME database
     """
+    # start transaction
+    connection.start_transaction()
     try:
-       create_sda_db = "CREATE DATABASE {}".format(DB_NAME)
-       print("Creating database {}".format(DB_NAME))
-       cursor.execute(create_sda_db)
+        create_sda_db = "CREATE DATABASE {}".format(DB_NAME)
+        print("Creating database {}".format(DB_NAME))
+        cursor.execute(create_sda_db)
     except mysql.connector.Error as mysqlError:
         print("Failed creating database: {}".format(mysqlError))
         sys.exit()
     # commit transactions
     connection.commit()
+
 
 def connect_to_database(connection):
     """
@@ -48,11 +52,14 @@ def connect_to_database(connection):
             print(mysqlError)
         sys.exit()
 
+
 def create_tables(cursor, connection):
     """
     Attempt to execute each CREATE statement in TABLES
     to create tables.
     """
+    # start transaction
+    connection.start_transaction()
     # Connect to database
     connect_to_database(connection)
     for name, query in TABLES.items():
@@ -69,10 +76,9 @@ def create_tables(cursor, connection):
                 print(mysqlError.msg)
         else:
             print("OK")
-            
+
         # commit transactions
         connection.commit()
-
 
 
 # Get username and password for desired account
@@ -82,22 +88,23 @@ password = input("Password: ")
 # Connect to the MySQL server with user credentials\
 try:
     mysql_connection = mysql.connector.connect(user=username,
-                                           password=password)
+                                               password=password)
 except mysql.connector.Error as err:
     if err.errno == errorcode.ER_ACCESS_DENIED_ERROR:
         print("Username or Password was incorrect.")
-    else: print(err)
+    else:
+        print(err)
     sys.exit()
 
 # Get cursor from server connection
-cursor = mysql_connection.cursor()
+mysql_cursor = mysql_connection.cursor()
 # Set autocommit to false for batch
 mysql_connection.autocommit = False
 # Create database
-create_database(cursor, mysql_connection)
+create_database(mysql_cursor, mysql_connection)
 # Create tables
-create_tables(cursor, mysql_connection)
+create_tables(mysql_cursor, mysql_connection)
 # Close cursor
-cursor.close()
+mysql_cursor.close()
 # Close connection
 mysql_connection.close()
