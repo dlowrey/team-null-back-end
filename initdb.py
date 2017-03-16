@@ -1,10 +1,6 @@
 # Initializes a MySQL Database
-# 1) connect to server
-# 2) create database with cursor
-# 3) connect to database
-# 4) create tables with cursor
-# 5) commit transactoins
-# 6) exit
+# 1) Check if server is started, if not start it
+# 2)
 
 import sys
 import mysql.connector
@@ -14,15 +10,15 @@ from mysql.connector import errorcode
 DB_NAME = "testdb"
 
 TABLES = {}
-# Create table statments
+# Create table statements
 # replace with own schema
 
 TABLES['test1'] = (
-    "CREATE TABLE `diversity` ("
+    "CREATE TABLE `test1` ("
     "   `first_name` varchar(15) NOT NULL,"
     "   `last_name` varchar(15) NOT NULL,"
     "   `id` int(11) NOT NULL AUTO_INCREMENT,"
-    "   PRIMARY KEY (`id`)
+    "   PRIMARY KEY (`id`)"
     ") ENGINE=InnoDB")
 
 def create_database(cursor, connection):
@@ -78,12 +74,12 @@ def create_tables(cursor, connection):
         connection.commit()
 
 
+
 # Get username and password for desired account
 username = input("Username (root or other account): ")
 password = input("Password: ")
 
-
-# Connect to the MySQL server with user credentials
+# Connect to the MySQL server with user credentials\
 try:
     mysql_connection = mysql.connector.connect(user=username,
                                            password=password)
@@ -91,6 +87,7 @@ except mysql.connector.Error as err:
     if err.errno == errorcode.ER_ACCESS_DENIED_ERROR:
         print("Username or Password was incorrect.")
     else: print(err)
+    sys.exit()
 
 # Get cursor from server connection
 cursor = mysql_connection.cursor()
@@ -104,4 +101,3 @@ create_tables(cursor, mysql_connection)
 cursor.close()
 # Close connection
 mysql_connection.close()
-print("Done")
