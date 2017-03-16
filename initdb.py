@@ -1,6 +1,4 @@
 # Initializes a MySQL Database
-# 1) Check if server is started, if not start it
-# 2)
 
 import sys
 import mysql.connector
