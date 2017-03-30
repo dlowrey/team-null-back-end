@@ -1,6 +1,6 @@
 # DATABASE SCHEME
 
-## Appointments
+**Appointments**
 * All appointment information
 *
 | Attribute | Type | Description |
