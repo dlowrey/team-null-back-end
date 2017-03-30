@@ -2,7 +2,7 @@
 
 **Appointments**
 * All appointment information
-*
+* Primary key: appointment_id
 | Attribute | Type | Description |
 | --------- | ---- | ----------- |
 | appointment_id | AUTOINCREMENT Integer | Unique ID for appointment |
