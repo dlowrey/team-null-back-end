@@ -11,3 +11,10 @@
 | patient_id | Integer | ID for associated patient |
 | date_time | DateTime | Date and time of the appointment |
 | completed | TinyInt | Boolean: 1 for completed, 2 otherwise |
+
+
+
+**Patients**
+* All patient information
+* Primary key: patient_id
+
