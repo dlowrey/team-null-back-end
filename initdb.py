@@ -5,18 +5,20 @@ import mysql.connector
 from mysql.connector import errorcode
 
 # Define constants
-DB_NAME = "testdb"
+DB_NAME = "HealthCareDB"
 
 TABLES = {}
 # Create table statements
 # replace with own schema
 
-TABLES['test1'] = (
-    "CREATE TABLE `test1` ("
-    "   `first_name` varchar(15) NOT NULL,"
-    "   `last_name` varchar(15) NOT NULL,"
-    "   `id` int(11) NOT NULL AUTO_INCREMENT,"
-    "   PRIMARY KEY (`id`)"
+TABLES['Appointments'] = (
+    "CREATE TABLE `Appointments` ("
+    "   `appointment_id` int(15) NOT NULL,"
+    "   `employee_id` int(10) NOT NULL,"
+    "   `patient_id` int(15) NOT NULL,"
+    "   `date_time` DATETIME NOT NULL,"
+    "   `completed` BIT,"
+    "   PRIMARY KEY (`appointment_id`)"
     ") ENGINE=InnoDB")
 
 
