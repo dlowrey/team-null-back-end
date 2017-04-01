@@ -13,9 +13,9 @@ TABLES = {}
 
 TABLES['Appointments'] = (
     "CREATE TABLE `Appointments` ("
-    "   `appointment_id` int(10) NOT NULL AUTO_INCREMENT,"
-    "   `employee_id` int(10) NOT NULL,"
-    "   `patient_id` int(10) NOT NULL,"
+    "   `appointment_id` INT NOT NULL AUTO_INCREMENT,"
+    "   `employee_id` INT NOT NULL,"
+    "   `patient_id` INT NOT NULL,"
     "   `date_time` DATETIME NOT NULL,"
     "   `completed` BIT,"
     "   PRIMARY KEY (`appointment_id`)"
@@ -23,15 +23,25 @@ TABLES['Appointments'] = (
 
 TABLES['Patients'] = (
     "CREATE TABLE `Patients` ("
-    "   `patient_id` int(10) NOT NULL AUTO_INCREMENT,"
-    "   `last_name` varchar(30) NOT NULL,"
-    "   `first_name` varchar(30) NOT NULL,"
-    "   `address` varchar(75) NOT NULL,"
-    "   `phone_number` varchar(12) NOT NULL,"
-    "   `email` varchar(25) NOT NULL,"
-    "   `ssn` varchar(11) NOT NULL,"
-    "   `insurance_provider` varchar(50) NOT NULL,"
+    "   `patient_id` INT NOT NULL AUTO_INCREMENT,"
+    "   `last_name` VARCHAR(30) NOT NULL,"
+    "   `first_name` VARCHAR(30) NOT NULL,"
+    "   `address` VARCHAR(75) NOT NULL,"
+    "   `phone_number` VARCHAR(12) NOT NULL,"
+    "   `email` VARCHAR(25) NOT NULL,"
+    "   `ssn` VARCHAR(11) NOT NULL,"
+    "   `insurance_provider` VARCHAR(50) NOT NULL,"
     "   PRIMARY KEY (`patient_id`)"
+    ") ENGINE=InnoDB")
+
+TABLES['Employees'] = (
+    "CREATE TABLE `Employees` ("
+    "   `employee_id` INT NOT NULL AUTO_INCREMENT,"
+    "   `last_name` VARCHAR(30) NOT NULL,"
+    "   `first_name` VARCHAR(30) NOT NULL,"
+    "   `type` TINYINT NOT NULL,"
+    "   `associated_id` INT NOT NULL,"
+    "   PRIMARY KEY (`employee_id`)"
     ") ENGINE=InnoDB")
 
 
