@@ -55,6 +55,17 @@ TABLES['Payment'] = (
     "   PRIMARY KEY (`invoice_number`)"
     ") ENGINE=InnoDB")
 
+TABLES['Reports'] = (
+    "CREATE TABLE `Reports` ("
+    "   `report_id` INT NOT NULL AUTO_INCREMENT,"
+    "   `type` TINYINT NOT NULL,"
+    "   `doctor_name` VARCHAR(30) NOT NULL,"
+    "   `patient_count` TINYINT NOT NULL,"
+    "   `income` DECIMAL(10,2) NOT NULL,"
+    "   PRIMARY KEY (`report_id`)"
+    ") ENGINE=InnoDB")
+
+
 
 
 def create_database(cursor, connection):
