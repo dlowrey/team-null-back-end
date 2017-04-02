@@ -64,6 +64,17 @@ TABLES['Reports'] = (
     ") ENGINE=InnoDB")
 
 
+TABLES['PatientRecords'] = (
+    "CREATE TABLE `PatientRecords` ("
+    "   `appointment_id` INT NOT NULL AUTO_INCREMENT,"
+    "   `weight` TINYINT NOT NULL,"
+    "   `height` VARCHAR(30) NOT NULL,"
+    "   `blood_pressure` TINYINT NOT NULL,"
+    "   `visit_reason` DECIMAL(10,2) NOT NULL,"
+    "   `treatment_content` VARCHAR(50),"
+    "   `prescription` VARCHAR(50)"
+    "   PRIMARY KEY (`appointment_id`)"
+    ") ENGINE=InnoDB")
 
 
 def create_database(cursor):
