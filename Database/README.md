@@ -37,6 +37,7 @@
 
 | Attribute | Type | Description |
 | --------- | ---- | ----------- |
+| appointment_id | AUTOINCREMENT Integer | Unique ID for appointment |
 | weight | Integer | Patient's weight in pounds during specific visit |
 | height | Integer | Patient's height in inches during specific visit |
 | blood_pressure | Integer | Patient's blood pressure during specific visit |
