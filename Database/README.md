@@ -31,6 +31,21 @@
 
 
 
+**Patient Records**
+* Patient physical information and treatment record
+* Primary key: appointment_id
+
+| Attribute | Type | Description |
+| --------- | ---- | ----------- |
+| weight | Integer | Patient's weight in pounds during specific visit |
+| height | Integer | Patient's height in inches during specific visit |
+| blood_pressure | Integer | Patient's blood pressure during specific visit |
+| visit_reason | String | Reason patient came to the hospital |
+| treatment_content | String | Details of treatment provided during specific visit |
+| prescription | String | Medication (if any) prescribed to patient |
+
+
+
 **Reports**
 * Daily and monthly report information
 * Primary key: report_id
