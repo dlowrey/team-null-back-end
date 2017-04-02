@@ -72,7 +72,7 @@ TABLES['PatientRecords'] = (
     "   `blood_pressure` TINYINT NOT NULL,"
     "   `visit_reason` DECIMAL(10,2) NOT NULL,"
     "   `treatment_content` VARCHAR(50),"
-    "   `prescription` VARCHAR(50)"
+    "   `prescription` VARCHAR(50),"
     "   PRIMARY KEY (`appointment_id`)"
     ") ENGINE=InnoDB")
 
@@ -109,11 +109,11 @@ def create_tables(cursor, connection):
     connect_to_database(connection)
     for name, query in TABLES.items():
         try:
-            print("Creating table {}: ".format(name), end='')
+            print("Creating table {} ".format(name))
             # Execute the CREATE xxx in TABLES
             cursor.execute(query)
         except mysql.connector.Error as mysql_error:
-            raise MySqlError(message='There was a problem creating table.',
+            raise MySqlError(message='There was a problem creating table {}. Please check your SQL Syntax.'.format(name),
                              args=mysql_error.args)
 
 
@@ -129,7 +129,7 @@ def main(username='', password=''):
         mysql_connection = mysql.connector.connect(user=username,
                                                    password=password)
     except mysql.connector.Error as err:
-        raise InputError(message='There was a problem connecting to the server.',
+        raise InputError(message='There was a problem connecting to the server. Please check your username and password',
                          args=err.args)
 
     # Get cursor from server connection
