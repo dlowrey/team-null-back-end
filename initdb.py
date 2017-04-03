@@ -15,7 +15,7 @@ TABLES['Appointments'] = (
     "   `employee_id` INT NOT NULL,"
     "   `patient_id` INT NOT NULL,"
     "   `date_time` DATETIME NOT NULL,"
-    "   `completed` BIT,"
+    "   `completed` BIT NOT NULL,"
     "   PRIMARY KEY (`appointment_id`)"
     ") ENGINE=InnoDB")
 
@@ -38,7 +38,7 @@ TABLES['Employees'] = (
     "   `last_name` VARCHAR(30) NOT NULL,"
     "   `first_name` VARCHAR(30) NOT NULL,"
     "   `type` TINYINT NOT NULL,"
-    "   `associated_id` INT NOT NULL,"
+    "   `associated_id` INT,"
     "   PRIMARY KEY (`employee_id`)"
     ") ENGINE=InnoDB")
 
@@ -48,7 +48,7 @@ TABLES['Payment'] = (
     "   `amount` DECIMAL(7,2) NOT NULL,"
     "   `payment_method` TINYINT NOT NULL,"
     "   `type` TINYINT NOT NULL,"
-    "   `date_paid` DATETIME NOT NULL,"
+    "   `date_paid` DATETIME,"
     "   `reference_number` INT,"
     "   PRIMARY KEY (`invoice_number`)"
     ") ENGINE=InnoDB")
@@ -67,10 +67,10 @@ TABLES['Reports'] = (
 TABLES['PatientRecords'] = (
     "CREATE TABLE `PatientRecords` ("
     "   `appointment_id` INT NOT NULL,"
-    "   `weight` TINYINT NOT NULL,"
-    "   `height` VARCHAR(30) NOT NULL,"
-    "   `blood_pressure` TINYINT NOT NULL,"
-    "   `visit_reason` DECIMAL(10,2) NOT NULL,"
+    "   `weight` TINYINT,"
+    "   `height` VARCHAR(30),"
+    "   `blood_pressure` TINYINT,"
+    "   `visit_reason` DECIMAL(10,2),"
     "   `treatment_content` VARCHAR(50),"
     "   `prescription` VARCHAR(50),"
     "   PRIMARY KEY (`appointment_id`)"
