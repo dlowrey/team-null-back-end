@@ -66,7 +66,7 @@ TABLES['Reports'] = (
 
 TABLES['PatientRecords'] = (
     "CREATE TABLE `PatientRecords` ("
-    "   `appointment_id` INT NOT NULL AUTO_INCREMENT,"
+    "   `appointment_id` INT NOT NULL,"
     "   `weight` TINYINT NOT NULL,"
     "   `height` VARCHAR(30) NOT NULL,"
     "   `blood_pressure` TINYINT NOT NULL,"
