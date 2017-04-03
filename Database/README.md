@@ -6,11 +6,11 @@
 
 | Attribute | Type | Description |
 | --------- | ---- | ----------- |
-| appointment_id | AUTOINCREMENT Integer | Unique ID for appointment |
-| employee_id | Integer | ID for associated doctor |
-| patient_id | Integer | ID for associated patient |
-| date_time | DateTime | Date and time of the appointment |
-| completed | TinyInt | Boolean: 1 for completed, 2 otherwise |
+| appointment_id | AUTOINCREMENT Integer not null | Unique ID for appointment |
+| employee_id | Integer not null | ID for associated doctor |
+| patient_id | Integer not null | ID for associated patient |
+| date_time | DateTime not null | Date and time of the appointment |
+| completed | Bit not null | Boolean: 1 for completed, 2 otherwise |
 
 
 
@@ -20,14 +20,14 @@
 
 | Attribute | Type | Description |
 | --------- | ---- | ----------- |
-| last_name | String | Patient's last name |
-| first_name | String | Patient's first name |
-| address | String | Patient's address |
-| phone_number | String | Patient's phone number |
-| email | String | Patient's email address |
-| ssn | String | Patient's social security number |
-| insurance_provider | String | Patient's insurance provider |
-| patient_id | AUTOINCREMENT Integer | Unique Patient ID |
+| patient_id | AUTOINCREMENT Integer not null | Unique Patient ID |
+| last_name | Varchar(30) not null | Patient's last name |
+| first_name | Varchar(30 not null | Patient's first name |
+| address | Varchar(75) not null | Patient's address |
+| phone_number | Varchar(12) not null | Patient's phone number |
+| email | Varchar(25) not null | Patient's email address |
+| ssn | Varchar(11) not null | Patient's social security number |
+| insurance_provider | Varchar(50) not null | Patient's insurance provider |
 
 
 
@@ -37,13 +37,13 @@
 
 | Attribute | Type | Description |
 | --------- | ---- | ----------- |
-| appointment_id | AUTOINCREMENT Integer | Unique ID for appointment |
-| weight | Integer | Patient's weight in pounds during specific visit |
-| height | Integer | Patient's height in inches during specific visit |
-| blood_pressure | Integer | Patient's blood pressure during specific visit |
-| visit_reason | String | Reason patient came to the hospital |
-| treatment_content | String | Details of treatment provided during specific visit |
-| prescription | String | Medication (if any) prescribed to patient |
+| appointment_id | Integer not null | The appointment's ID|
+| weight | TINYINT | Patient's weight in pounds during specific visit |
+| height | TINYINT | Patient's height in inches during specific visit |
+| blood_pressure | TINYINT | Patient's blood pressure during specific visit |
+| visit_reason | Varchar(50) | Reason patient came to the hospital |
+| treatment_content | Varchar(50) | Details of treatment provided during specific visit |
+| prescription | Varchar(50) | Medication (if any) prescribed to patient |
 
 
 
@@ -53,11 +53,11 @@
 
 | Attribute | Type | Description |
 | --------- | ---- | ----------- |
-| report_id | AUTOINCREMENT Integer | Unique report ID |
-| type | TinyInt | Boolean: 1 for Daily, 2 otherwise |
-| doctor_name | String | Doctor's name |
-| patient_count | Integer | Number of patients treated by doctor |
-| income | Float | Total revenue by doctor |
+| report_id | AUTOINCREMENT Integer not null | Unique report ID |
+| type | TinyInt not null | Boolean: 1 for Daily, 2 otherwise |
+| doctor_name | Varchar(30) not null | Doctor's name |
+| patient_count | Integer not null | Number of patients treated by doctor |
+| income | Decimal(10,2) not null | Total revenue by doctor |
 
 
 
@@ -67,10 +67,10 @@
 
 | Attribute | Type | Description |
 | --------- | ---- | ----------- |
-| type | TinyInt | 1: Doctor, 2: Nurse, 3: Staff, 4: CEO |
-| last_name | String | Employee's last name |
-| first_name | String | Employee's first name |
-| employee_id | AUTOINCREMENT Integer | Unique employee ID |
+| employee_id | AUTOINCREMENT Integer not null | Unique employee ID |
+| last_name | Varchar(30) not null | Employee's last name |
+| first_name | Varchar(30) not null | Employee's first name |
+| type | TinyInt not null | 1: Doctor, 2: Nurse, 3: Staff, 4: CEO |
 | associated_id | Integer | ID of the Doctor a Nurse is associated with |
 
 
@@ -81,9 +81,9 @@
 
 | Attribute | Type | Description |
 | --------- | ---- | ----------- |
-| amount | Float | Total cost of a visit |
-| payment_method | TinyInt | 1: Cash, 2: Credit, 3: Debit, 4: Check |
-| type | TinyInt | 1: Copay, 2: Invoice, 3: Penalty |
-| invoice_number | AUTOINCREMENT Integer | Unique invoice number |
+| invoice_number | AUTOINCREMENT Integer not null | Unique invoice number |
+| amount | Decimal(7,2) not null | Total cost of a visit |
+| payment_method | TinyInt not null | 1: Cash, 2: Credit, 3: Debit, 4: Check |
+| type | TinyInt not null | 1: Copay, 2: Invoice, 3: Penalty |
 | date_paid | DateTime | Date an invoice is paid |
 | reference_number | Integer | Reference number from card company |
