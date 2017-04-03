@@ -20,6 +20,7 @@
 
 | Attribute | Type | Description |
 | --------- | ---- | ----------- |
+| patient_id | AUTOINCREMENT Integer | Unique Patient ID |
 | last_name | String | Patient's last name |
 | first_name | String | Patient's first name |
 | address | String | Patient's address |
@@ -27,7 +28,6 @@
 | email | String | Patient's email address |
 | ssn | String | Patient's social security number |
 | insurance_provider | String | Patient's insurance provider |
-| patient_id | AUTOINCREMENT Integer | Unique Patient ID |
 
 
 
@@ -37,7 +37,7 @@
 
 | Attribute | Type | Description |
 | --------- | ---- | ----------- |
-| appointment_id | AUTOINCREMENT Integer | Unique ID for appointment |
+| appointment_id | Integer | The appointment's ID|
 | weight | Integer | Patient's weight in pounds during specific visit |
 | height | Integer | Patient's height in inches during specific visit |
 | blood_pressure | Integer | Patient's blood pressure during specific visit |
@@ -67,10 +67,10 @@
 
 | Attribute | Type | Description |
 | --------- | ---- | ----------- |
-| type | TinyInt | 1: Doctor, 2: Nurse, 3: Staff, 4: CEO |
+| employee_id | AUTOINCREMENT Integer | Unique employee ID |
 | last_name | String | Employee's last name |
 | first_name | String | Employee's first name |
-| employee_id | AUTOINCREMENT Integer | Unique employee ID |
+| type | TinyInt | 1: Doctor, 2: Nurse, 3: Staff, 4: CEO |
 | associated_id | Integer | ID of the Doctor a Nurse is associated with |
 
 
@@ -81,9 +81,9 @@
 
 | Attribute | Type | Description |
 | --------- | ---- | ----------- |
+| invoice_number | AUTOINCREMENT Integer | Unique invoice number |
 | amount | Float | Total cost of a visit |
 | payment_method | TinyInt | 1: Cash, 2: Credit, 3: Debit, 4: Check |
 | type | TinyInt | 1: Copay, 2: Invoice, 3: Penalty |
-| invoice_number | AUTOINCREMENT Integer | Unique invoice number |
 | date_paid | DateTime | Date an invoice is paid |
 | reference_number | Integer | Reference number from card company |
