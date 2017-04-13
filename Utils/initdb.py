@@ -1,12 +1,10 @@
 import mysql.connector
-
 from Utils.exceptions import InputError, MySqlError
 
 # Define constants
 DB_NAME = "HealthCareDB"
 
 TABLES = {}
-
 TABLES['Appointments'] = (
     "CREATE TABLE IF NOT EXISTS `Appointments` ("
     "   `appointment_id` INT NOT NULL AUTO_INCREMENT,"
@@ -81,13 +79,15 @@ def init_connection(username=None, password=None):
     Connects to a running MySQL server using a username/password
     and returns the connection if successful.
     
-    :arg username: the username of the account on the server to connect with
-    :arg password: the password of the account on the server to connect with
-    :return connection: the open connection to the MySQL server
-    :raises InputError: The username or password input was incorrect
+    Args:
+        username: the username of the account on the server to connect with
+        password: the password of the account on the server to connect with
+    Returns:
+        connection: the open connection to the MySQL server
+    Raises:
+        InputError: The username or password input was incorrect
     
     """
-    connection = None
     if not username or not password:
         username = input("Username: ")
         password = input("Password: ")
@@ -109,8 +109,10 @@ def init_database(connection):
     Creates the DB_NAME database and creates any tables defined
     in TABLES dictionary inside of the newly created database
     
-    :arg connection: the connection to the MySQL Server
-    :raise MySqlError: Raised if there is a connection error or SQL syntax error
+    Args:
+         connection: the connection to the MySQL Server
+    Raises:
+         MySqlError: Raised if there is a connection error or SQL syntax error
     """
     create_db = 'CREATE DATABASE IF NOT EXISTS {}'.format(DB_NAME)
     try:
