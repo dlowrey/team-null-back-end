@@ -1,5 +1,6 @@
 import mysql.connector
-from exceptions import InputError, MySqlError
+
+from Utils.exceptions import InputError, MySqlError
 
 # Define constants
 DB_NAME = "HealthCareDB"
