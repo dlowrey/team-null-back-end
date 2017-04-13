@@ -7,7 +7,7 @@ DB_NAME = "HealthCareDB"
 TABLES = {}
 
 TABLES['Appointments'] = (
-    "CREATE TABLE `Appointments` ("
+    "CREATE TABLE IF NOT EXISTS `Appointments` ("
     "   `appointment_id` INT NOT NULL AUTO_INCREMENT,"
     "   `employee_id` INT NOT NULL,"
     "   `patient_id` INT NOT NULL,"
@@ -17,7 +17,7 @@ TABLES['Appointments'] = (
     ") ENGINE=InnoDB")
 
 TABLES['Patients'] = (
-    "CREATE TABLE `Patients` ("
+    "CREATE TABLE IF NOT EXISTS `Patients` ("
     "   `patient_id` INT NOT NULL AUTO_INCREMENT,"
     "   `last_name` VARCHAR(30) NOT NULL,"
     "   `first_name` VARCHAR(30) NOT NULL,"
@@ -30,7 +30,7 @@ TABLES['Patients'] = (
     ") ENGINE=InnoDB")
 
 TABLES['Employees'] = (
-    "CREATE TABLE `Employees` ("
+    "CREATE TABLE IF NOT EXISTS `Employees` ("
     "   `employee_id` INT NOT NULL AUTO_INCREMENT,"
     "   `last_name` VARCHAR(30) NOT NULL,"
     "   `first_name` VARCHAR(30) NOT NULL,"
@@ -40,7 +40,7 @@ TABLES['Employees'] = (
     ") ENGINE=InnoDB")
 
 TABLES['Payment'] = (
-    "CREATE TABLE `Payment` ("
+    "CREATE TABLE IF NOT EXISTS `Payment` ("
     "   `invoice_number` INT NOT NULL AUTO_INCREMENT,"
     "   `amount` DECIMAL(7,2) NOT NULL,"
     "   `payment_method` TINYINT NOT NULL,"
@@ -51,7 +51,7 @@ TABLES['Payment'] = (
     ") ENGINE=InnoDB")
 
 TABLES['Reports'] = (
-    "CREATE TABLE `Reports` ("
+    "CREATE TABLE IF NOT EXISTS `Reports` ("
     "   `report_id` INT NOT NULL AUTO_INCREMENT,"
     "   `type` TINYINT NOT NULL,"
     "   `doctor_name` VARCHAR(30) NOT NULL,"
@@ -62,7 +62,7 @@ TABLES['Reports'] = (
 
 
 TABLES['PatientRecords'] = (
-    "CREATE TABLE `PatientRecords` ("
+    "CREATE TABLE IF NOT EXISTS `PatientRecords` ("
     "   `appointment_id` INT NOT NULL,"
     "   `weight` TINYINT,"
     "   `height` TINYINT,"
