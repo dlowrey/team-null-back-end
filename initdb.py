@@ -77,84 +77,45 @@ TABLES['PatientRecords'] = (
     ") ENGINE=InnoDB")
 
 
-def create_database(cursor):
-    """
-    Attempt to create the DB_NAME database
-    """
-    try:
-        create_sda_db = "CREATE DATABASE {}".format(DB_NAME)
-        print("Creating database {}".format(DB_NAME))
-        cursor.execute(create_sda_db)
-    except mysql.connector.Error as mysql_error:
-        raise MySqlError(message='Failed creating database.',
-                         args=mysql_error.args)
-
-
-def connect_to_database(connection):
-    """
-    Attempt to connect to DB_NAME database
-    """
-    try:
-        connection.database = DB_NAME
-    except mysql.connector.Error as mysql_error:
-        raise MySqlError(message='There was a problem connecting to the database.',
-                         args=mysql_error.args)
-
-
-def create_tables(cursor, connection):
-    """
-    Attempt to execute each CREATE statement in TABLES
-    to create tables.
-    """
-    connect_to_database(connection)
-    for name, query in TABLES.items():
-        try:
-            print("Creating table {} ".format(name))
-            # Execute the CREATE xxx in TABLES
-            cursor.execute(query)
-        except mysql.connector.Error as mysql_error:
-            raise MySqlError(message='There was a problem creating table {}. Please check your SQL Syntax.'.format(name),
-                             args=mysql_error.args)
-
-
-def main(username='', password=''):
-    if username == "" or password == "":
-        # Get username and password for desired account
-        username = input("Username (root or other account): ")
+def init_connection(username=None, password=None):
+    connection = None
+    if not username or not password:
+        username = input("Username: ")
         password = input("Password: ")
 
-    # Connect to the MySQL server with user credentials
-    # Will exit if MySQL Server is not started
     try:
-        mysql_connection = mysql.connector.connect(user=username,
-                                                   password=password)
+        connection = mysql.connector.connect(user=username,
+                                             password=password)
     except mysql.connector.Error as err:
-        raise InputError(message='There was a problem connecting to the server. Please check your username and password',
+        raise InputError(message='There was a problem connecting. Please check'
+                                 ' your username and password, and make sure'
+                                 ' the server is running.',
+                         args=err.args)
+    return connection
+
+
+def init_database(connection):
+    create_db = 'CREATE DATABASE IF NOT EXISTS {}'.format(DB_NAME)
+    try:
+        cursor = connection.cursor()
+        cursor.execute(create_db)  # Create the database
+        connection.database = DB_NAME  # Connect to the database
+
+        for name,query in TABLES.items():   # Create each table in the database
+            print('Creating table {}'.format(name))
+            cursor.execute(query)
+
+        cursor.close()
+    except mysql.connection.Error as err:
+        raise MySqlError(message='There was a problem initializing'
+                                 ' the database.',
                          args=err.args)
 
-    # Get cursor from server connection
-    mysql_cursor = mysql_connection.cursor()
 
-    # Set autocommit to false for batch
-    mysql_connection.autocommit = False
-
-    # Start a transaction
-    mysql_connection.start_transaction()
-
-    # Create database
-    create_database(mysql_cursor)
-
-    # Create tables
-    create_tables(mysql_cursor, mysql_connection)
-
-    # Commit transaction
-    mysql_connection.commit()
-
-    # Close cursor
-    mysql_cursor.close()
-
-    # Close connection
-    mysql_connection.close()
+def main(username=None, password=None):
+    cnx = init_connection(username, password)
+    init_database(cnx)
+    cnx.close()
 
 if __name__ == '__main__':
     try:
