@@ -6,8 +6,6 @@ from exceptions import InputError, MySqlError
 DB_NAME = "HealthCareDB"
 
 TABLES = {}
-# Create table statements
-# replace with own schema
 
 TABLES['Appointments'] = (
     "CREATE TABLE `Appointments` ("
@@ -78,6 +76,17 @@ TABLES['PatientRecords'] = (
 
 
 def init_connection(username=None, password=None):
+    """Initializes connection to running MySQL server
+    
+    Connects to a running MySQL server using a username/password
+    and returns the connection if successful.
+    
+    :arg username: the username of the account on the server to connect with
+    :arg password: the password of the account on the server to connect with
+    :return connection: the open connection to the MySQL server
+    :raises InputError: The username or password input was incorrect
+    
+    """
     connection = None
     if not username or not password:
         username = input("Username: ")
@@ -95,6 +104,14 @@ def init_connection(username=None, password=None):
 
 
 def init_database(connection):
+    """Initialize the database for use.
+    
+    Creates the DB_NAME database and creates any tables defined
+    in TABLES dictionary inside of the newly created database
+    
+    :arg connection: the connection to the MySQL Server
+    :raise MySqlError: Raised if there is a connection error or SQL syntax error
+    """
     create_db = 'CREATE DATABASE IF NOT EXISTS {}'.format(DB_NAME)
     try:
         cursor = connection.cursor()
@@ -106,7 +123,7 @@ def init_database(connection):
             cursor.execute(query)
 
         cursor.close()
-    except mysql.connection.Error as err:
+    except mysql.connector.Error as err:
         raise MySqlError(message='There was a problem initializing'
                                  ' the database.',
                          args=err.args)
