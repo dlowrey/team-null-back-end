@@ -4,7 +4,7 @@
   "description": "A back end server for the Healthcare website",
   "main": "app.js",
   "scripts": {
-    "test": "npm install express --save"
+    "test": 
   },
   "repository": {
     "type": "git",
