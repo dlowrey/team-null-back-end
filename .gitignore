@@ -15,8 +15,8 @@
 .idea/**/dynamic.xml
 .idea/**/uiDesigner.xml
 
-# node_module folder
-./node_modules
+# node_modules
+node_modules/
 
 # idea folder?
 .idea/
