@@ -5,14 +5,6 @@ router.use(bodyParser.urlencoded({ extended: false }));
 router.use(bodyParser.json());
 var connection = require('./database.js'); // MySQL connection
 
-// .../appointments GET
-router.get('/', (req, res) => {
-  var query = connection.query("SELECT * FROM APPOINTMENTS",
-                                (err, response, fields) => {
-                                  if (err) throw err;
-                                  res.send(response);
-                                });
-});
 
 // .../appointments POST
 router.post('/', (req, res) => {
@@ -22,12 +14,13 @@ router.post('/', (req, res) => {
      patient_id   : body.patient_id,
      date_time    : new Date(body.date_time),
      completed    : false
-   };
-   console.log(params);
+   }
    var query = connection.query("INSERT INTO APPOINTMENTS SET ?",
                                  params, (err, response, fields) => {
                                    if (err) throw err;
-                                   res.send('Appointement added!');
+                                   res.status(201);
+                                   res.location(response.insertId);
+                                   res.send();
                                  });
 });
 
@@ -44,9 +37,9 @@ router.put('/:uid', (req, res) => {
     var query = connection.query("UPDATE APPOINTMENTS SET ? WHERE ?", [params, uid],
                                  (err, response, fields) => {
                                    if (err) throw err;
-                                   res.send('Appointment updated');
+                                   res.status(200);
+                                   res.send(params);
                                  });
-    console.log(query.sql);
 });
 
 
@@ -55,8 +48,10 @@ router.delete('/:uid', (req, res) => {
     var query = connection.query("DELETE FROM APPOINTMENTS WHERE ?", uid,
                                  (err, response, fields) => {
                                    if (err) throw err;
-                                   res.send('Appointment deleted');
+                                   res.status(204);
+                                   res.send();
                                  });
 });
 
+// export
 module.exports = router
