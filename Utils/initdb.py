@@ -11,7 +11,7 @@ TABLES['Appointments'] = (
     "   `employee_id` INT NOT NULL,"
     "   `patient_id` INT NOT NULL,"
     "   `date_time` DATETIME NOT NULL,"
-    "   `completed` BIT NOT NULL,"
+    "   `completed` TINYINT NOT NULL,"
     "   PRIMARY KEY (`appointment_id`)"
     ") ENGINE=InnoDB")
 
