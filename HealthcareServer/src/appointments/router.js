@@ -27,9 +27,7 @@ router.post('/', (req, res) => {
 router.put('/:uid', (req, res) => {
   manager.modifyApp(req.body, (response) => {
     res.status(200);
-    res.location(response.insertID); // I'm still not 100% clear on this res.location function so I don't know if
-                                     // this is correct or needed.
-    res.send();
+    res.send(response.params); //I'm not sure if this is the proper way to send back what Nils is asking for.
   });
 });
 
