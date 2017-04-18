@@ -18,4 +18,4 @@ const modifyApp = (uid, params, callBack) => {
   console.log('Ran query: ' + query.sql); // Log query that was run
 }
 
-module.exports = {createApp}; // export all methods here
+module.exports = {createApp, modifyApp}; // export all methods here

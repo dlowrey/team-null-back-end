@@ -13,7 +13,7 @@ const createApp = (reqData, callBack) => {
   });
 }
 
-module.exports = {createApp}; //Was I supposed to add modifyApp in here? Like {createApp, modifyApp}
+
 
 const modifyApp = (reqData, callBack) => {
   let uid = { appointment_id : reqData.params.uid }; //I'm not sure if I'm pulling uid from the correct place.
@@ -25,8 +25,8 @@ const modifyApp = (reqData, callBack) => {
   };
   db.modifyApp(uid, params, (err, response, fields) => { //I assumed I had to pass uid separately from params.
     if (err) throw err;
-    callBack(response);
+    callBack(params);
   });
 }
 
-module.exports = (modifyApp);
+module.exports = (createApp, modifyApp);
