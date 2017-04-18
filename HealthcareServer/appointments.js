@@ -6,15 +6,18 @@ router.use(bodyParser.json());
 var connection = require('./database.js'); // MySQL connection
 
 
-// .../appointments POST
+/**
+* endpoint: xxxx/appointments/
+* Creates an appointment from the Appointments table
+**/
 router.post('/', (req, res) => {
-  var body = req.body;
-  var params = {
+  var body = req.body; // get the POST body
+  var params = {  // Create the SQL parameters
      employee_id  : body.employee_id,
      patient_id   : body.patient_id,
      date_time    : new Date(body.date_time),
      completed    : false
-   }
+   };
    var query = connection.query("INSERT INTO APPOINTMENTS SET ?",
                                  params, (err, response, fields) => {
                                    if (err) throw err;
@@ -24,10 +27,13 @@ router.post('/', (req, res) => {
                                  });
 });
 
-
+/**
+* endpoint: xxxx/appointments/[appointment UID]
+* Updates a specified appointment from the Appointments table
+**/
 router.put('/:uid', (req, res) => {
-    var body = req.body;
-    var uid = { appointment_id : req.params.uid };
+    var body = req.body; // get the POST body
+    var uid = { appointment_id : req.params.uid }; // Create SQL parameters
     var params = {
       employee_id : body.employee_id,
       patient_id  : body.patient_id,
@@ -42,9 +48,12 @@ router.put('/:uid', (req, res) => {
                                  });
 });
 
-
+/**
+* endpoint: xxxx/appointments/[appointment UID]
+* Deletes a specified appointment from the Appointments table
+**/
 router.delete('/:uid', (req, res) => {
-    var uid = { appointment_id : req.params.uid };
+    var uid = { appointment_id : req.params.uid }; // get the query string arg
     var query = connection.query("DELETE FROM APPOINTMENTS WHERE ?", uid,
                                  (err, response, fields) => {
                                    if (err) throw err;
