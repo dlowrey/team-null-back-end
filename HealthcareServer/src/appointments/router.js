@@ -23,6 +23,16 @@ router.post('/', (req, res) => {
 * endpoint: xxxx/appointments/[appointment UID]
 * Updates a specified appointment from the Appointments table
 **/
+
+router.put('/:uid', (req, res) => {
+  manager.modifyApp(req.body, (response) => {
+    res.status(200);
+    res.location(response.insertID);
+    res.send();
+  });
+});
+
+/**
 router.put('/:uid', (req, res) => {
     var body = req.body; // get the POST body
     var uid = { appointment_id : req.params.uid }; // Create SQL parameters
@@ -39,6 +49,7 @@ router.put('/:uid', (req, res) => {
                                    res.send(params);
                                  });
 });
+**/
 
 /**
 * endpoint: xxxx/appointments/[appointment UID]

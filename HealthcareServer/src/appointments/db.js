@@ -9,4 +9,13 @@ const createApp = (params, callBack) => {
   console.log('Ran query: ' + query.sql); // Log query that was run
 }
 
+const modifyApp = (uid, params, callBack) => {
+  // Modify appointments
+  let query = connection.query("UPDATE APPOINTMENTS SET ? WHERE ?",
+                                 [params, uid],(err, response, fields) => {
+                                    callback(err, response, fields);
+                                 });
+  console.log('Ran query: ' + query.sql); // Log query that was run
+}
+
 module.exports = {createApp}; // export all methods here
