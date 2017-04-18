@@ -29,4 +29,4 @@ const modifyApp = (reqData, callBack) => {
   });
 }
 
-module.exports = (createApp, modifyApp);
+module.exports = {createApp, modifyApp};

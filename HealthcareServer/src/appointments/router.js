@@ -27,7 +27,7 @@ router.post('/', (req, res) => {
 router.put('/:uid', (req, res) => {
   manager.modifyApp(req, (response) => {
     res.status(200);
-    res.send(response.params); //I'm not sure if this is the proper way to send back what Nils is asking for.
+    res.send(response); //I'm not sure if this is the proper way to send back what Nils is asking for.
   });
 });
 
