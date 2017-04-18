@@ -1,12 +1,12 @@
-var mysql = require('mysql');
+const connection = require('../db-connection.js'); // Get connection to MySQL
 
-// Establish connection
-var connection = mysql.createConnection({
-    host      :'localhost',
-    user      :'root',
-    password  :'password',
-    database  :'healthcaredb'
-  });
+const createApp = (params, callBack) => {
+  // Insert appointments
+  let query = connection.query("INSERT INTO APPOINTMENTS SET ?",
+                                params, (err, response, fields) => {
+                                  callBack(err, response, fields);
+                                });
+  console.log('Ran query: ' + query.sql); // Log query that was run
+}
 
-// Export connection
-module.exports = connection;
+module.exports = {createApp}; // export all methods here

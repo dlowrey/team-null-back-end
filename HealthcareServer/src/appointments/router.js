@@ -1,9 +1,10 @@
-var express = require('express');
-var router = express.Router();
-var bodyParser = require('body-parser'); // To parse HTML post body
+const express = require('express');
+const router = express.Router();
+const bodyParser = require('body-parser'); // To parse HTML post body
+const manager = require('./manager.js'); // Handle request logic
 router.use(bodyParser.urlencoded({ extended: false }));
 router.use(bodyParser.json());
-var connection = require('./db.js'); // MySQL connection
+
 
 
 /**
@@ -11,20 +12,11 @@ var connection = require('./db.js'); // MySQL connection
 * Creates an appointment from the Appointments table
 **/
 router.post('/', (req, res) => {
-  var body = req.body; // get the POST body
-  var params = {  // Create the SQL parameters
-     employee_id  : body.employee_id,
-     patient_id   : body.patient_id,
-     date_time    : new Date(body.date_time),
-     completed    : false
-   };
-   var query = connection.query("INSERT INTO APPOINTMENTS SET ?",
-                                 params, (err, response, fields) => {
-                                   if (err) throw err;
-                                   res.status(201);
-                                   res.location(response.insertId);
-                                   res.send();
-                                 });
+  manager.createApp(req.body, (response) => {
+    res.status(201);
+    res.location(response.insertId);
+    res.send();
+  });
 });
 
 /**
