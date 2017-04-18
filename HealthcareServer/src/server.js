@@ -1,7 +1,7 @@
 var express = require('express');
 var app = express();
 var bodyParser = require('body-parser');
-var appointments = require('./appointments');
+var appointments = require('./appointments/router');
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 

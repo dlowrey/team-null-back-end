@@ -39,6 +39,9 @@ node_modules/
 # mpeltonen/sbt-idea plugin
 .idea_modules/
 
+#what
+.__pycache__/
+
 # JIRA plugin
 atlassian-ide-plugin.xml
 

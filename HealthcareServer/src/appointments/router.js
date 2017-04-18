@@ -3,7 +3,7 @@ var router = express.Router();
 var bodyParser = require('body-parser'); // To parse HTML post body
 router.use(bodyParser.urlencoded({ extended: false }));
 router.use(bodyParser.json());
-var connection = require('./database.js'); // MySQL connection
+var connection = require('./db.js'); // MySQL connection
 
 
 /**
