@@ -52,6 +52,15 @@ const getUncompApps = (req, callback) => {
   });
 }
 
+const getUncompAppsByPatient = (req, callback) => {
+  let month = req.params.month;
+  let params = { patient_id : req.params.uid };
+  db.getUncompAppsByPatient([month, params], (err, response, fields) => {
+    if (err) throw err;
+    callback(response);
+  });
+}
+
 
 const getAppsByPatient = (req, callback) => {
   let patient_id = { patient_id : req.params.uid };
@@ -61,4 +70,4 @@ const getAppsByPatient = (req, callback) => {
   });
 }
 module.exports = {createApp, modifyApp, deleteApp,
-                  getUncompApps, getAppsByPatient};
+                  getUncompApps, getAppsByPatient, getUncompAppsByPatient};

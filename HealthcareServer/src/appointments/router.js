@@ -57,6 +57,18 @@ router.get('/uncompleted/:month', (req, res) => {
 * enpoint: xxx/appointments/uncompleted/[month]
 * Returns a JSONArray of all uncompleted appointments for [month]
 **/
+router.get('/patient/uncompleted/:uid/:month', (req, res) => {
+  manager.getUncompAppsByPatient(req, (response) => {
+    res.status(200);
+    res.send(response);
+  });
+});
+
+
+/**
+* enpoint: xxx/appointments/uncompleted/[month]
+* Returns a JSONArray of all uncompleted appointments for [month]
+**/
 router.get('/patient/:uid', (req, res) => {
   manager.getAppsByPatient(req, (response) => {
     res.status(200);

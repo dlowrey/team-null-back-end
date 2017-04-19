@@ -38,14 +38,24 @@ const getUncompApps = (params, callback) => {
   console.log('Ran query: ' + query.sql); // Log query that was run
 }
 
-const getAppsByPatient = (params, callback) => {
-  // Delete appointments
-  let query = connection.query("SELECT * FROM APPOINTMENTS WHERE ?",
+const getUncompAppsByPatient = (params, callback) => {
+  // Get all incomplete appointments for month in params
+  let query = connection.query("SELECT * FROM APPOINTMENTS WHERE " +
+                                " MONTH(date_time) = ? AND ?",
                                 params, (err, response, fields) => {
                                   callback(err, response, fields);
                                 });
   console.log('Ran query: ' + query.sql); // Log query that was run
 }
 
+const getAppsByPatient = (params, callback) => {
+  // Delete appointments
+  let query = connection.query("SELECT * FROM APPOINTMENTS WHERE ? AND ?",
+                                params, 0, (err, response, fields) => {
+                                  callback(err, response, fields);
+                                });
+  console.log('Ran query: ' + query.sql); // Log query that was run
+}
+
 module.exports = {createApp, modifyApp, deleteApp,
-                  getUncompApps, getAppsByPatient}; // export all methods here
+                  getUncompApps, getAppsByPatient, getUncompAppsByPatient}; // export all methods here
