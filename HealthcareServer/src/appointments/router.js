@@ -1,10 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const bodyParser = require('body-parser'); // To parse HTML post body
 const manager = require('./manager.js'); // Handle request logic
-router.use(bodyParser.urlencoded({ extended: false }));
-router.use(bodyParser.json());
-
 
 
 /**
@@ -12,7 +8,7 @@ router.use(bodyParser.json());
 * Creates an appointment from the Appointments table
 **/
 router.post('/', (req, res) => {
-  manager.createApp(req.body, (response) => {
+  manager.createApp(req, (response) => {
     res.status(201);
     res.location(response.insertId);
     res.send();
@@ -25,9 +21,9 @@ router.post('/', (req, res) => {
 **/
 
 router.put('/:uid', (req, res) => {
-  manager.modifyApp(req, (response) => {
+  manager.modifyApp(req, (updatedParams) => {
     res.status(200);
-    res.send(response); //I'm not sure if this is the proper way to send back what Nils is asking for.
+    res.send(updatedParams); 
   });
 });
 

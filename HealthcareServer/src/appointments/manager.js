@@ -1,31 +1,38 @@
 const db = require('./db.js');
+const express = require('express');
+const router = express.Router();
+const bodyParser = require('body-parser'); // To parse HTML post body
+router.use(bodyParser.urlencoded({ extended: false }));
+router.use(bodyParser.json());
 
-const createApp = (reqData, callBack) => {
+const createApp = (req, callback) => {
+  let body = req.body;
   let params = { // get parameters for the query
-    employee_id  : reqData.employee_id,
-    patient_id   : reqData.patient_id,
-    date_time    : new Date(reqData.date_time),
+    employee_id  : body.employee_id,
+    patient_id   : body.patient_id,
+    date_time    : new Date(body.date_time),
     completed    : false
   };
   db.createApp(params, (err, response, fields) => {
     if (err) throw err;
-    callBack(response); // send db response back to router 
+    callback(response); // send db response back to router
   });
 }
 
 
 
-const modifyApp = (reqData, callBack) => {
-  let uid = { appointment_id : reqData.params.uid }; //I'm not sure if I'm pulling uid from the correct place.
+const modifyApp = (req, callback) => {
+  let body = req.body;
+  let uid = { id : req.params.uid }; //I'm not sure if I'm pulling uid from the correct place.
   let params = {
-    employee_id  : reqData.employee_id,
-    patient_id   : reqData.patient_id,
-    date_time    : new Date(reqData.date_time),
-    completed    : false
+    employee_id  : body.employee_id,
+    patient_id   : body.patient_id,
+    date_time    : new Date(body.date_time),
+    completed    : body.completed
   };
-  db.modifyApp(uid, params, (err, response, fields) => { //I assumed I had to pass uid separately from params.
+  db.modifyApp([params, uid], (err, response, fields) => { //I assumed I had to pass uid separately from params.
     if (err) throw err;
-    callBack(params);
+    callback(params);
   });
 }
 
