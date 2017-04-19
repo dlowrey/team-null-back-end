@@ -37,7 +37,6 @@ const modifyApp = (req, callback) => {
 }
 
 const deleteApp = (req, callback) => {
-  let body = req.body;
   let uid = { id : req.params.uid };
 
   db.deleteApp(uid, (err, response, fields) => {

@@ -21,7 +21,7 @@ const modifyApp = (params, callback) => {
 const deleteApp = (params, callback) => {
   // Delete appointments
   let query = connection.query("DELETE FROM APPOINTMENTS WHERE ?",
-                                uid, (err, response, fields) => {
+                                params, (err, response, fields) => {
                                   callback(err, response, fields);
                                 });
   console.log('Ran query: ' + query.sql); // Log query that was run
