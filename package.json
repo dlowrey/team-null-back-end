@@ -1,7 +1,7 @@
 {
   "name": "healthcareserver",
   "version": "1.0.0",
-  "description": "Backend healthcare server",
+  "description": "Backend healthcare server for SE1 Project",
   "main": "./src/server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -11,7 +11,7 @@
     "type": "git",
     "url": "git+https://github.com/NilsG-S/team-null-back-end.git"
   },
-  "author": "",
+  "author": "Team Null",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/NilsG-S/team-null-back-end/issues"

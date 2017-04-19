@@ -49,7 +49,7 @@ const getAppsByPatient = (params, callback) => {
 }
 
 const getUncompAppsByPatient = (params, callback) => {
-  // Get all incomplete appointments for month in params
+  // Get all incomplete appointments for a patient by month
   let query = connection.query("SELECT * FROM APPOINTMENTS WHERE " +
                                 " MONTH(date_time) = ? AND ? AND ?",
                                 params, (err, response, fields) => {
