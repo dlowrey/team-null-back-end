@@ -1,8 +1,8 @@
 # Setting up the Express Server
 
 1. Download the correct Node for your OS [here](https://nodejs.org/en/)
-2. Open a command prompt and navigate to the /Healthcareserver directory
-4. Once inside /Healthcareserver, enter the command `npm install express`, press enter.
+2. Open a command prompt and navigate to the `/Healthcareserver` directory
+4. Once inside `/Healthcareserver`, enter the command `npm install express`, press enter.
 5. Next, enter the command `npm insall mysql`, press enter.
 6. Finally, enter the command `npm install body-parser`, press enter.
 7. Navigate to /Healthcareserver/src
