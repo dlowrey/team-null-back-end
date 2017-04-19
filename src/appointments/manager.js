@@ -98,7 +98,24 @@ const getUncompAppsByPatient = (req, callback) => {
   });
 }
 
+/**
+* getUncompAppsByDoctor: get uncompleted appointments by doctor and month
+*
+**/
+const getUncompAppsByDoctor = (req, callback) => {
+  let month = parseInt(req.params.month) + 1; // Front end passes 0 idx months
+  let employee_id = { employee_id : req.params.uid }; // employee_id
+  let completed = { completed : 0 }; // specify completed = 0 for uncompleted
+  // pass month, employee_id, and completed as JSONArray (order matters)
+  db.getUncompAppsByDoctor([month, employee_id, completed],
+     (err, response, fields) => {
+    if (err) throw err;
+    callback(response); // send JSONArray of all uncompleted appointments for
+                        // [employee_id] and [month]
+  });
+}
 
 // Export all functions so that router.js can find/use them in endpoints.
 module.exports = {createApp, modifyApp, deleteApp,
-                  getUncompApps, getAppsByPatient, getUncompAppsByPatient};
+                  getUncompApps, getAppsByPatient, getUncompAppsByPatient,
+                  getUncompAppsByDoctor};

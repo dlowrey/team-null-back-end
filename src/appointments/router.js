@@ -42,7 +42,7 @@ router.delete('/:uid', (req, res) => {
 
 
 /**
-* enpoint: xxx/appointments/uncompleted/[month]
+* endpoint: xxx/appointments/uncompleted/[month]
 * Returns a JSONArray of all uncompleted appointments for [month]
 **/
 router.get('/uncompleted/:month', (req, res) => {
@@ -54,8 +54,8 @@ router.get('/uncompleted/:month', (req, res) => {
 
 
 /**
-* enpoint: xxx/appointments/uncompleted/[month]
-* Returns a JSONArray of all uncompleted appointments for [month]
+* endpoint: xxx/appointments/patient/uncompleted/[patient UID]/[month]
+* Returns a JSONArray of all uncompleted appointments for [patient UID] in [month]
 **/
 router.get('/patient/uncompleted/:uid/:month', (req, res) => {
   manager.getUncompAppsByPatient(req, (response) => {
@@ -66,8 +66,8 @@ router.get('/patient/uncompleted/:uid/:month', (req, res) => {
 
 
 /**
-* enpoint: xxx/appointments/uncompleted/[month]
-* Returns a JSONArray of all uncompleted appointments for [month]
+* endpoint: xxx/appointments/patient/[patient UID]
+* Returns a JSONArray of all appointments for [patient UID]
 **/
 router.get('/patient/:uid', (req, res) => {
   manager.getAppsByPatient(req, (response) => {
@@ -76,6 +76,17 @@ router.get('/patient/:uid', (req, res) => {
   });
 });
 
+/**
+* endpoint: xxx/appointments/doctor/uncompleted/[employee UID]/[month]
+* Returns a JSONArray of all uncompleted appointments for
+* [employee UID] in [month]
+**/
+router.get('/doctor/uncompleted/:uid/:month', (req, res) => {
+  manager.getUncompAppsByDoctor(req, (response) => {
+    res.status(200);
+    res.send(response);
+  });
+});
 
 
 // export

@@ -79,6 +79,21 @@ const getUncompAppsByPatient = (params, callback) => {
   console.log('Ran query: ' + query.sql); // Log executed sql
 }
 
+/**
+* getUncompAppsByDoctor: get all uncompleted appointments for a doctor during
+*                         a specified month (available in params).
+* arg params: a JSONArray with [month, {employee_id}, {completed}]
+**/
+const getUncompAppsByDoctor = (params, callback) => {
+  let query = connection.query("SELECT * FROM APPOINTMENTS WHERE " +
+                                " MONTH(date_time) = ? AND ? AND ?",
+                                params, (err, response, fields) => {
+                                  callback(err, response, fields);
+                                });
+  console.log('Ran query: ' + query.sql); // Log executed sql
+}
+
 // Export all functions so that manager.js can find/use them in functions.
 module.exports = {createApp, modifyApp, deleteApp,
-                  getUncompApps, getAppsByPatient, getUncompAppsByPatient}; // export all methods here
+                  getUncompApps, getAppsByPatient, getUncompAppsByPatient,
+                  getUncompAppsByDoctor}; // export all methods here
