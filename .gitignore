@@ -2,15 +2,13 @@
 ## node_modules
 node_modules/
 
+
 ## idea folder
 .idea/
 
 ## File-based project format:
 *.iws
 
-
-## mpeltonen/sbt-idea plugin
-.idea_modules/
 
 ## some weird PyCharm file idk
 .__pycache__/
