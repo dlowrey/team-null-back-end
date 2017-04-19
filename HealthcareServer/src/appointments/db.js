@@ -38,4 +38,4 @@ const getUncompApps = (params, callback) => {
   console.log('Ran query: ' + query.sql); // Log query that was run
 }
 
-module.exports = {createApp, modifyApp, deleteApp}; // export all methods here
+module.exports = {createApp, modifyApp, deleteApp, getUncompApps}; // export all methods here

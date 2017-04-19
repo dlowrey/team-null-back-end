@@ -45,11 +45,11 @@ const deleteApp = (req, callback) => {
 }
 
 const getUncompApps = (req, callback) => {
-  let month = req.params.uid;
+  let month = req.params.month;
   db.getUncompApps(month, (err, response, fields) => {
     if (err) throw err;
-    callback(fields);
+    callback(response);
   });
 }
 
-module.exports = {createApp, modifyApp, deleteApp};
+module.exports = {createApp, modifyApp, deleteApp, getUncompApps};
