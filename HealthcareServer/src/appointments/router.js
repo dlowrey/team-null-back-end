@@ -23,7 +23,7 @@ router.post('/', (req, res) => {
 router.put('/:uid', (req, res) => {
   manager.modifyApp(req, (updatedParams) => {
     res.status(200);
-    res.send(updatedParams); 
+    res.send(updatedParams);
   });
 });
 
@@ -40,6 +40,17 @@ router.delete('/:uid', (req, res) => {
   });
 });
 
+
+/**
+* enpoint: xxx/appointments/uncompleted/[month]
+* Returns a JSONArray of all uncompleted appointments for [month]
+**/
+router.get('/uncompleted/:month', (req, res) => {
+  manager.getUncompApps(req, (response) => {
+    res.status(200);
+    res.send(response);
+  });
+});
 
 // export
 module.exports = router

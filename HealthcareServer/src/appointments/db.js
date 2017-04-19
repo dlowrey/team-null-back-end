@@ -27,4 +27,15 @@ const deleteApp = (params, callback) => {
   console.log('Ran query: ' + query.sql); // Log query that was run
 }
 
+
+const getUncompApps = (params, callback) => {
+  // Get all incomplete appointments for month in params
+  let query = connection.query("SELECT * FROM APPOINTMENTS WHERE " +
+                                " MONTH(date_time) = ? AND completed = 0",
+                                params, (err, response, fields) => {
+                                  callback(err, response, fields);
+                                });
+  console.log('Ran query: ' + query.sql); // Log query that was run
+}
+
 module.exports = {createApp, modifyApp, deleteApp}; // export all methods here
