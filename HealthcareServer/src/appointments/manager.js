@@ -37,8 +37,8 @@ const modifyApp = (req, callback) => {
 }
 
 const deleteApp = (req, callback) => {
-  let uid = { id : req.params.uid };
-  db.deleteApp(uid, (err, response, fields) => {
+  let appointment_id = { id : req.params.uid };
+  db.deleteApp(appointment_id, (err, response, fields) => {
     if (err) throw err;
     callback(response);
   });
@@ -52,4 +52,13 @@ const getUncompApps = (req, callback) => {
   });
 }
 
-module.exports = {createApp, modifyApp, deleteApp, getUncompApps};
+
+const getAppsByPatient = (req, callback) => {
+  let patient_id = { patient_id : req.params.uid };
+  db.getAppsByPatient(patient_id, (err, response, fields) => {
+    if (err) throw err;
+    callback(response);
+  });
+}
+module.exports = {createApp, modifyApp, deleteApp,
+                  getUncompApps, getAppsByPatient};

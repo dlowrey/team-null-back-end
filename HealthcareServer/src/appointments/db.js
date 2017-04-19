@@ -38,4 +38,14 @@ const getUncompApps = (params, callback) => {
   console.log('Ran query: ' + query.sql); // Log query that was run
 }
 
-module.exports = {createApp, modifyApp, deleteApp, getUncompApps}; // export all methods here
+const getAppsByPatient = (params, callback) => {
+  // Delete appointments
+  let query = connection.query("SELECT * FROM APPOINTMENTS WHERE ?",
+                                params, (err, response, fields) => {
+                                  callback(err, response, fields);
+                                });
+  console.log('Ran query: ' + query.sql); // Log query that was run
+}
+
+module.exports = {createApp, modifyApp, deleteApp,
+                  getUncompApps, getAppsByPatient}; // export all methods here
