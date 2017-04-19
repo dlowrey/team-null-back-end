@@ -5,18 +5,21 @@ const bodyParser = require('body-parser'); // To parse HTML post body
 router.use(bodyParser.urlencoded({ extended: false }));
 router.use(bodyParser.json());
 
-
+/**
+* createApp: create an appointment
+*
+**/
 const createApp = (req, callback) => {
-  let body = req.body;
-  let params = { // get parameters for the query
+  let body = req.body; // get post body
+  let params = { // get parameters of appointment to be created
     employee_id  : body.employee_id,
     patient_id   : body.patient_id,
     date_time    : new Date(body.date_time),
-    completed    : false
+    completed    : false // by default the appointment is not completed
   };
   db.createApp(params, (err, response, fields) => {
     if (err) throw err;
-    callback(response); // send db response back to router
+    callback(response); // send response info from query back
   });
 }
 
