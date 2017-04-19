@@ -38,7 +38,6 @@ const modifyApp = (req, callback) => {
 
 const deleteApp = (req, callback) => {
   let uid = { id : req.params.uid };
-
   db.deleteApp(uid, (err, response, fields) => {
     if (err) throw err;
     callback(response);
