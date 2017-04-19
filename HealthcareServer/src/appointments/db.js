@@ -12,10 +12,19 @@ const createApp = (params, callback) => {
 const modifyApp = (params, callback) => {
   // Modify appointments
   let query = connection.query("UPDATE APPOINTMENTS SET ? WHERE ?",
-                                 params,(err, response, fields) => {
+                                 params, (err, response, fields) => {
                                     callback(err, response, fields);
                                  });
   console.log('Ran query: ' + query.sql); // Log query that was run
 }
 
-module.exports = {createApp, modifyApp}; // export all methods here
+const deleteApp = (params, callback) => {
+  // Delete appointments
+  let query = connection.query("DELETE FROM APPOINTMENTS WHERE ?",
+                                uid, (err, response, fields) => {
+                                  callback(err, response, fields);
+                                });
+  console.log('Ran query: ' + query.sql); // Log query that was run
+}
+
+module.exports = {createApp, modifyApp, deleteApp}; // export all methods here

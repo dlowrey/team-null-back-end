@@ -23,17 +23,27 @@ const createApp = (req, callback) => {
 
 const modifyApp = (req, callback) => {
   let body = req.body;
-  let uid = { id : req.params.uid }; //I'm not sure if I'm pulling uid from the correct place.
+  let uid = { id : req.params.uid };
   let params = {
     employee_id  : body.employee_id,
     patient_id   : body.patient_id,
     date_time    : new Date(body.date_time),
     completed    : body.completed
   };
-  db.modifyApp([params, uid], (err, response, fields) => { //I assumed I had to pass uid separately from params.
+  db.modifyApp([params, uid], (err, response, fields) => {
     if (err) throw err;
     callback(params);
   });
 }
 
-module.exports = {createApp, modifyApp};
+const deleteApp = (req, callback) => {
+  let body = req.body;
+  let uid = { id : req.params.uid };
+
+  db.deleteApp(uid, (err, response, fields) => {
+    if (err) throw err;
+    callback(response);
+  });
+}
+
+module.exports = {createApp, modifyApp, deleteApp};
