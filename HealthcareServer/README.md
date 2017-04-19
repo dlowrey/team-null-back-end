@@ -1,6 +1,6 @@
 # Setting up the Express Server
 
-#### Downloade Node.js
+#### Downloade `Node.js`
 Download the correct Node for your OS [here](https://nodejs.org/en/)
 1. Open a command prompt and navigate to the /Healthcareserver directory
 2. Once inside /Healthcareserver, enter the command `npm install express`, press enter.
