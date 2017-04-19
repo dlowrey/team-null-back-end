@@ -31,7 +31,17 @@ const deleteApp = (params, callback) => {
 const getUncompApps = (params, callback) => {
   // Get all incomplete appointments for month in params
   let query = connection.query("SELECT * FROM APPOINTMENTS WHERE " +
-                                " MONTH(date_time) = ? AND completed = 0",
+                                " MONTH(date_time) = ? AND ?",
+                                params, (err, response, fields) => {
+                                  callback(err, response, fields);
+                                });
+  console.log('Ran query: ' + query.sql); // Log query that was run
+}
+
+
+const getAppsByPatient = (params, callback) => {
+  // Get all appointments by patient_id
+  let query = connection.query("SELECT * FROM APPOINTMENTS WHERE ?",
                                 params, (err, response, fields) => {
                                   callback(err, response, fields);
                                 });
@@ -41,17 +51,8 @@ const getUncompApps = (params, callback) => {
 const getUncompAppsByPatient = (params, callback) => {
   // Get all incomplete appointments for month in params
   let query = connection.query("SELECT * FROM APPOINTMENTS WHERE " +
-                                " MONTH(date_time) = ? AND ?",
+                                " MONTH(date_time) = ? AND ? AND ?",
                                 params, (err, response, fields) => {
-                                  callback(err, response, fields);
-                                });
-  console.log('Ran query: ' + query.sql); // Log query that was run
-}
-
-const getAppsByPatient = (params, callback) => {
-  // Delete appointments
-  let query = connection.query("SELECT * FROM APPOINTMENTS WHERE ? AND ?",
-                                params, 0, (err, response, fields) => {
                                   callback(err, response, fields);
                                 });
   console.log('Ran query: ' + query.sql); // Log query that was run

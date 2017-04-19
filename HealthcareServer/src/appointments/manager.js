@@ -45,26 +45,28 @@ const deleteApp = (req, callback) => {
 }
 
 const getUncompApps = (req, callback) => {
-  let month = req.params.month;
-  db.getUncompApps(month, (err, response, fields) => {
+  let month = parseInt(req.params.month) + 1; // Front end passes 0 idx months
+  let completed = {completed : 0 };
+  db.getUncompApps([month, completed], (err, response, fields) => {
+    if (err) throw err;
+    callback(response);
+  });
+}
+
+const getAppsByPatient = (req, callback) => {
+  let patient_id = { patient_id : req.params.uid };
+  db.getAppsByPatient(patient_id, (err, response, fields) => {
     if (err) throw err;
     callback(response);
   });
 }
 
 const getUncompAppsByPatient = (req, callback) => {
-  let month = req.params.month;
-  let params = { patient_id : req.params.uid };
-  db.getUncompAppsByPatient([month, params], (err, response, fields) => {
-    if (err) throw err;
-    callback(response);
-  });
-}
-
-
-const getAppsByPatient = (req, callback) => {
+  let month = parseInt(req.params.month) + 1; // Front end passes 0 idx months
   let patient_id = { patient_id : req.params.uid };
-  db.getAppsByPatient(patient_id, (err, response, fields) => {
+  let completed = { completed : 0 };
+  db.getUncompAppsByPatient([month, patient_id, completed],
+     (err, response, fields) => {
     if (err) throw err;
     callback(response);
   });
