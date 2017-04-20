@@ -31,7 +31,6 @@ const modifyApp = (req, callback) => {
   let body = req.body; // Get body of request
   let uid = { id : req.params.uid }; // uid of appointment in URL
   let params = { // Get field values to update to
-    id           : req.params.uid, // needed when we send our params back
     employee_id  : body.employee_id,
     patient_id   : body.patient_id,
     date_time    : new Date(body.date_time),
@@ -40,6 +39,7 @@ const modifyApp = (req, callback) => {
   // Pass uid and params as a JSONArray (order matters)
   db.modifyApp([params, uid], (err, response, fields) => {
     if (err) throw err;
+    params.id = req.params.uid; // add the ID to the response
     callback(params); // send back the updated appointment fields
   });
 }
