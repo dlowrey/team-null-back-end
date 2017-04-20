@@ -14,7 +14,10 @@ const modifyRecord = (params, callback) => {
   console.log('Ran query: ' + query.sql); // Log executed sql
 }
 
-
+/**
+* getRecordById: retreieve a patient record by appointment_id
+* arg params: a JSONobject with {appointment_id}
+**/
 const getRecordById = (params, callback) => {
   // get record by id
   let query = connection.query("SELECT * FROM PATIENTRECORDS WHERE ?",
