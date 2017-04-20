@@ -21,4 +21,4 @@ MySQL's Python Connector currently only supports Python 3.4. If you do not have 
 10. Click Next until you get to the **Accounts and Roles** set up page. Here you will need to add a password for the **root** user. Make it something you will remember! You can also add another user account if you would like.
 11. Keep all default settings from here on out.
 
-You can now access the MySQL Community server and modify databases through the MySQL WorkBench app that was installed on your device. The python ````python initdb.py```` script will set up a test database and a test table for you if you run it and give it your root account credentials.
+You can now access the MySQL Community server and modify databases through the MySQL WorkBench app that was installed on your device. The python script `initdb.py` will set up all required `healthcaredb` databases, tables, and triggers required for the server.
