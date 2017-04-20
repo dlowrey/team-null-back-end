@@ -39,6 +39,7 @@ const modifyApp = (req, callback) => {
   // Pass uid and params as a JSONArray (order matters)
   db.modifyApp([params, uid], (err, response, fields) => {
     if (err) throw err;
+    params.id = req.params.uid; // add the ID to the response
     callback(params); // send back the updated appointment fields
   });
 }
