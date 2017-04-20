@@ -24,9 +24,23 @@ const modifyRecord = (req, callback) => {
   // Pass uid and params as a JSONArray (order matters)
   db.modifyRecord([params, appointment_id], (err, response, fields) => {
     if (err) throw err;
+    params.appointment_id = req.params.uid; // add appointment_id to response
     callback(params); // send back the updated appointment fields
   });
 }
 
 
-module.exports = {modifyRecord};
+/**
+* getRecordById: get the record for a specific appointment id
+*
+**/
+const getRecordById = (req, callback) => {
+  let appointment_id = { appointment_id : req.params.uid };
+  db.getRecordById(appointment_id, (err, response, fields) => {
+    if (err) throw err;
+    callback(response); // send back fields related to appointment_id
+  });
+}
+
+
+module.exports = {modifyRecord, getRecordById};

@@ -28,11 +28,13 @@ const modifyApp = (params, callback) => {
 
 /**
 * deleteApp: delete an appointment by id
-* arg params: JSON with {id}
+* arg params: JSONArray with [{id}, {appointment_id}]
+* this function deletes the record in appointments and in patinetrecords
 **/
 const deleteApp = (params, callback) => {
   // Delete appointments
-  let query = connection.query("DELETE FROM APPOINTMENTS WHERE ?",
+  let query = connection.query("DELETE FROM APPOINTMENTS WHERE ?;" +
+                               "DELETE FROM PATIENTRECORDS WHERE ?;",
                                 params, (err, response, fields) => {
                                   callback(err, response, fields);
                                 });

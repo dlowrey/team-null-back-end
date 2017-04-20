@@ -39,6 +39,7 @@ const modifyApp = (req, callback) => {
   // Pass uid and params as a JSONArray (order matters)
   db.modifyApp([params, uid], (err, response, fields) => {
     if (err) throw err;
+    params.id = req.params.uid; // add the ID to the response
     callback(params); // send back the updated appointment fields
   });
 }
@@ -49,7 +50,8 @@ const modifyApp = (req, callback) => {
 **/
 const deleteApp = (req, callback) => {
   let uid = { id : req.params.uid }; // uid of appointment in URL
-  db.deleteApp(uid, (err, response, fields) => {
+  let appointment_id = { appointment_id : req.params.uid }; // id in patientrecs
+  db.deleteApp([uid, appointment_id], (err, response, fields) => {
     if (err) throw err;
     callback(response); // send response back, response is unused for delete
   });
