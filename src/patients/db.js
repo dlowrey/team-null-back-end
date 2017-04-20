@@ -13,4 +13,16 @@ const createPatient = (params, callback) => {
   console.log('Ran query: ' + query.sql); // Log executed sql
 }
 
-module.exports = {createPatient};
+/**
+* getAllPatients: get a list of all patients
+*
+**/
+const getAllPatients = (callback) => {
+  let query = connection.query("SELECT * FROM PATIENTS",
+                                (err, response, fields) => {
+                                  callback(err, response, fields);
+                                });
+  console.log('Ran query: ' + query.sql); // Log executed sql
+}
+
+module.exports = {createPatient, getAllPatients};
