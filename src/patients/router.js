@@ -9,6 +9,7 @@ const manager = require('./manager.js'); // Handle request logic
 router.post('/', (req, res) => {
   manager.createPatient(req, (response) => {
     res.status(201);
+    res.location(response.insertId);
     res.send();
   });
 });
