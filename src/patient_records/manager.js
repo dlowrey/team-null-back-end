@@ -22,8 +22,11 @@ const modifyRecord = (req, callback) => {
     prescription      : body.prescription
   };
   // Pass uid and params as a JSONArray (order matters)
-  db.modifyRecord([params, uid], (err, response, fields) => {
+  db.modifyRecord([params, appointment_id], (err, response, fields) => {
     if (err) throw err;
     callback(params); // send back the updated appointment fields
   });
 }
+
+
+module.exports = {modifyRecord};

@@ -8,7 +8,7 @@ router.put('/:uid', (req, res) => {
     res.status(200);
     res.send(updatedParams);
   });
-}
+});
 
 // export
 module.exports = router

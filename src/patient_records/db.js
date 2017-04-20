@@ -13,3 +13,6 @@ const modifyRecord = (params, callback) => {
                                  });
   console.log('Ran query: ' + query.sql); // Log executed sql
 }
+
+
+module.exports = {modifyRecord};
