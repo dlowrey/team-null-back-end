@@ -19,7 +19,9 @@ const getPaymentById = (params, callback) => {
 const modifyPayment = (params, uid, callback) => {
   // Modify payment
   let query = connection.query("UPDATE PAYMENT SET ? WHERE ?",   //Updates based on the request
-                                 params);
+                                 params, (err,response,fields) => {
+                                 if (err) throw err;
+                                 });
   console.log('Ran query: ' + query.sql); // Log executed sql
   let query2 = connection.query("SELECT * FROM PAYMENT WHERE ?",   //Runs another query that returns
                                  uid, (err, response, fields) => { //what the API requested.
