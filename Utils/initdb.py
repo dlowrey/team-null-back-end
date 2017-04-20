@@ -53,9 +53,9 @@ TABLES['Payment'] = (
 TABLES['Reports'] = (
     "CREATE TABLE IF NOT EXISTS `Reports` ("
     "   `id` INT NOT NULL AUTO_INCREMENT,"
-    "   `type` TINYINT NOT NULL,"
+    "   `type` SMALLINT NOT NULL,"
     "   `doctor_name` VARCHAR(30) NOT NULL,"
-    "   `patient_count` TINYINT NOT NULL,"
+    "   `patient_count` SMALLINT NOT NULL,"
     "   `total_income` DECIMAL(10,2) NOT NULL,"
     "   PRIMARY KEY (`id`)"
     ") ENGINE=InnoDB")
@@ -63,9 +63,9 @@ TABLES['Reports'] = (
 TABLES['PatientRecords'] = (
     "CREATE TABLE IF NOT EXISTS `PatientRecords` ("
     "   `appointment_id` INT NOT NULL,"
-    "   `weight` TINYINT,"
-    "   `height` TINYINT,"
-    "   `blood_pressure` TINYINT,"
+    "   `weight` SMALLINT,"
+    "   `height` SMALLINT,"
+    "   `blood_pressure` SMALLINT,"
     "   `reason` Varchar(50),"
     "   `treatment_content` VARCHAR(50),"
     "   `prescription` VARCHAR(50),"
