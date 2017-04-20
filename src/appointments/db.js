@@ -54,7 +54,7 @@ const getUncompApps = (params, callback) => {
 }
 
 /**
-* getAppsByPatient: get all appointments for a patinet (completed or uncomplete)
+* getAppsByPatient: get all appointments for a patient (completed or uncomplete)
 * arg params: a JSONArray with [{patient_id}]
 **/
 const getAppsByPatient = (params, callback) => {
