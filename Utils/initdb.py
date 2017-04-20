@@ -41,6 +41,7 @@ TABLES['Employees'] = (
 TABLES['Payment'] = (
     "CREATE TABLE IF NOT EXISTS `Payment` ("
     "   `id` INT NOT NULL AUTO_INCREMENT,"
+    "   `appointment_id` INT NOT NULL,"
     "   `amount` DECIMAL(7,2) NOT NULL,"
     "   `method` TINYINT NOT NULL,"
     "   `type` TINYINT NOT NULL,"
@@ -52,7 +53,6 @@ TABLES['Payment'] = (
 TABLES['Reports'] = (
     "CREATE TABLE IF NOT EXISTS `Reports` ("
     "   `id` INT NOT NULL AUTO_INCREMENT,"
-    "   `appointment_id` INT NOT NULL,"
     "   `type` TINYINT NOT NULL,"
     "   `doctor_name` VARCHAR(30) NOT NULL,"
     "   `patient_count` TINYINT NOT NULL,"
@@ -76,10 +76,10 @@ TABLES['PatientRecords'] = (
 
 def init_connection(username=None, password=None):
     """Initializes connection to running MySQL server
-    
+
     Connects to a running MySQL server using a username/password
     and returns the connection if successful.
-    
+
     Args:
         username: the username of the account on the server to connect with
         password: the password of the account on the server to connect with
@@ -87,7 +87,7 @@ def init_connection(username=None, password=None):
         connection: the open connection to the MySQL server
     Raises:
         InputError: The username or password input was incorrect
-    
+
     """
     if not username or not password:
         username = input("Username: ")
@@ -106,10 +106,10 @@ def init_connection(username=None, password=None):
 
 def init_database(connection):
     """Initialize the database for use.
-    
+
     Creates the DB_NAME database and creates any tables defined
     in TABLES dictionary inside of the newly created database
-    
+
     Args:
          connection: the connection to the MySQL Server
     Raises:
