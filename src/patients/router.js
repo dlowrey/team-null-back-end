@@ -24,5 +24,16 @@ router.get('/', (req, res) => {
   });
 });
 
+/**
+* endpoint: xxx/patients/[patient UID]
+* Returns patient information for [patient UID]
+**/
+router.get('/:uid', (req, res) => {
+  manager.getPatientById(req, (response) => {
+    res.status(200);
+    res.send(response);
+  });
+});
+
 // export
 module.exports = router

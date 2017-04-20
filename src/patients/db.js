@@ -25,4 +25,17 @@ const getAllPatients = (callback) => {
   console.log('Ran query: ' + query.sql); // Log executed sql
 }
 
-module.exports = {createPatient, getAllPatients};
+/**
+* getPatientById: get patient information by id
+* arg params: a JSONArray with [{id}]
+**/
+const getPatientById = (params, callback) => {
+  let query = connection.query("SELECT * FROM PATIENTS WHERE ?",
+                                params, (err, response, fields) => {
+                                  callback(err, response, fields);
+                                });
+  console.log('Ran query: ' + query.sql); // Log executed sql
+}
+
+// Export all functions so that manager.js can find/use them in functions.
+module.exports = {createPatient, getAllPatients, getPatientById};

@@ -37,7 +37,17 @@ const getAllPatients = (req, callback) => {
   });
 }
 
-
+/**
+* getPatientById: get patient information by id
+*
+**/
+const getPatientById = (req, callback) => {
+  let id = { id : req.params.uid }; // patient_id
+  db.getPatientById(id, (err, response, fields) => {
+    if (err) throw err;
+    callback(response); // send JSONArray of all appointments for [patient_id]
+  });
+}
 
 // Export all functions so that router.js can find/use them in endpoints.
-module.exports = {createPatient, getAllPatients};
+module.exports = {createPatient, getAllPatients, getPatientById};
