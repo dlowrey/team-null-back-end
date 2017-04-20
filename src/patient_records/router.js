@@ -6,7 +6,7 @@ const manager = require('./manager.js'); // Handle request logic
 router.put('/:uid', (req, res) => {
   manager.modifyRecord(req, (updatedParams) => {
     res.status(200);
-    res.send(updatedParams);
+    res.send(updatedParams); // send updated patient record parameters back
   });
 });
 
