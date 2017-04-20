@@ -13,5 +13,16 @@ router.get('/:uid', (req, res) => {
   });
 });
 
+/**
+* endpoint: xxx/payments/[payment UID]
+* Modifies the payment with [payment UID]
+**/
+router.put('/:uid', (req, res) => {
+  manager.modifyPayment(req, (updatedParams) => {
+    res.status(200);
+    res.send(updatedParams);
+  });
+});
+
 // export
 module.exports = router
