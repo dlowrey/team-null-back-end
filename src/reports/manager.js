@@ -14,9 +14,21 @@ const getAllDailyReports = (req, callback) => {
   let daily = { type : 1 }; // type = 1 for daily reports
   db.getAllDailyReports(daily, (err, response, fields) => {
     if (err) throw err;
-    callback(response); // send JSONArray of all uncompleted apps for [month]
+    callback(response); // send JSONArray of all daily reports
+  });
+}
+
+/**
+* getAllMonthlyReports: get all monthly reports
+*
+**/
+const getAllMonthlyReports = (req, callback) => {
+  let monthly = { type : 2 }; // type = 1 for daily reports
+  db.getAllMonthlyReports(monthly, (err, response, fields) => {
+    if (err) throw err;
+    callback(response); // send JSONArray of all monthly reports
   });
 }
 
 
-module.exports = {getAllDailyReports};
+module.exports = {getAllDailyReports, getAllMonthlyReports};

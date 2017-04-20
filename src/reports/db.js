@@ -13,5 +13,18 @@ const getAllDailyReports = (params, callback) => {
   console.log('Ran query: ' + query.sql); // Log executed sql
 }
 
+/**
+* getAllMonthlyReports: get all monthly reports
+* arg params: a JSONObject with {type}
+**/
+const getAllMonthlyReports = (params, callback) => {
+  let query = connection.query("SELECT * FROM REPORTS WHERE ?",
+                                params, (err, response, fields) => {
+                                  callback(err, response, fields);
+                                });
+  console.log('Ran query: ' + query.sql); // Log executed sql
+}
 
-module.exports = {getAllDailyReports};
+
+
+module.exports = {getAllDailyReports, getAllMonthlyReports};
