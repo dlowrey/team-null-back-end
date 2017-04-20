@@ -41,5 +41,5 @@ You can navigate to _localhost:3000/_ in your web browser and should get the tex
 get this text, please see the Command Window for any errors that may need fixing. 
 
 **NOTE**: currently the only way to test enpoints in the healthcareserver is by using an application to send HTTP Requests
-to localhost:3000/[enpoint here]. We use [Postman](https://www.getpostman.com/) to send HTTP Get, Post, Put, Delete methods to the 
+to _localhost:3000/[enpoint here]_. We use [Postman](https://www.getpostman.com/) to send HTTP Get, Post, Put, Delete methods to the 
 running server. All POST content must be in **x-www-form-urlencoded** format.
