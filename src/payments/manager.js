@@ -32,7 +32,7 @@ const modifyPayment = (req, callback) => {
     reference_number : body.reference_number
   };
   // Pass uid and params as a JSONArray (order matters)
-  db.modifyPayment([params, uid], uid, (err, response, fields) => { //I sent uid again as another parameter
+  db.modifyPayment([params, uid, uid], (err, response, fields) => { //Sent uid again as another parameter
     if (err) throw err;                                             //for the second query
     callback(response); // send back the updated payment fields
   });
