@@ -28,6 +28,8 @@
   // Export connection
   module.exports = connection;
   ```
+  Then save the `db-connection.js` file
+  
 5. Once all dependencies are done installing, you can start the server by entering:
   ```
   C:\Projects\team-null-back-end> npm start
