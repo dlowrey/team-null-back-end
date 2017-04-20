@@ -60,7 +60,6 @@ TABLES['Reports'] = (
     "   PRIMARY KEY (`id`)"
     ") ENGINE=InnoDB")
 
-
 TABLES['PatientRecords'] = (
     "CREATE TABLE IF NOT EXISTS `PatientRecords` ("
     "   `appointment_id` INT NOT NULL,"
@@ -72,6 +71,13 @@ TABLES['PatientRecords'] = (
     "   `prescription` VARCHAR(50),"
     "   PRIMARY KEY (`appointment_id`)"
     ") ENGINE=InnoDB")
+
+TRIGGERS = {}
+TRIGGERS['appointment_added'] = ("CREATE TRIGGER new_appointment_added "
+                                 "AFTER INSERT ON Appointments "
+                                 "FOR EACH ROW "
+                                 "INSERT INTO PatientRecords (appointment_id) "
+                                 "VALUES (NEW.id);")
 
 
 def init_connection(username=None, password=None):
@@ -121,9 +127,13 @@ def init_database(connection):
         cursor.execute(create_db)  # Create the database
         connection.database = DB_NAME  # Connect to the database
 
-        for name,query in TABLES.items():   # Create each table in the database
+        for name, query in TABLES.items():  # Create each table in the database
             print('Creating table {}'.format(name))
             cursor.execute(query)
+
+        for name, sql in TRIGGERS.items():  # Create any triggers in TRIGGERS
+            print('Creating trigger {}'.format(name))
+            cursor.execute(sql)
 
         cursor.close()
     except mysql.connector.Error as err:
@@ -136,6 +146,7 @@ def main(username=None, password=None):
     cnx = init_connection(username, password)
     init_database(cnx)
     cnx.close()
+
 
 if __name__ == '__main__':
     try:
