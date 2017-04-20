@@ -20,6 +20,8 @@ MySQL's Python Connector currently only supports Python 3.4. If you do not have 
 You can now access the MySQL Community server and modify databases through the MySQL WorkBench app that was installed on your device.
 Use the MySQL Notifier installed on your device to start the server. 
 
-The python script `initdb.py` will set up all required `healthcaredb` databases, tables, and triggers required for the server. To run it, open a command prompt:
-`C:\> python C:\Programs\team-null-back-end\Utils\initdb.py`
+The python script `initdb.py` will set up all required `healthcaredb` databases, tables, and triggers required for the server. To run it, open a command prompt and enter
+```
+C:\> python "C:\Programs\team-null-back-end\Utils\initdb.py"
+```
 Where `python` is the command to your Python 3.4 python.exe file and `C:\Programs\team-null-back-end\Utils\initdb.py` is the file path to the initdb.py script in the repo you cloned on your machine. 
