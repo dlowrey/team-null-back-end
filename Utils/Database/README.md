@@ -38,9 +38,9 @@
 | Attribute | Type | Description |
 | --------- | ---- | ----------- |
 | appointment_id | Integer not null | The appointment's ID|
-| weight | TINYINT | Patient's weight in pounds during specific visit |
-| height | TINYINT | Patient's height in inches during specific visit |
-| blood_pressure | TINYINT | Patient's blood pressure during specific visit |
+| weight | SMALLINT | Patient's weight in pounds during specific visit |
+| height | SMALLINT | Patient's height in inches during specific visit |
+| blood_pressure | SMALLINT | Patient's blood pressure during specific visit |
 | reason | Varchar(50) | Reason patient came to the hospital |
 | treatment_content | Varchar(50) | Details of treatment provided during specific visit |
 | prescription | Varchar(50) | Medication (if any) prescribed to patient |
@@ -54,7 +54,7 @@
 | Attribute | Type | Description |
 | --------- | ---- | ----------- |
 | id | AUTOINCREMENT Integer not null | Unique report ID |
-| type | TinyInt not null | Boolean: 1 for Daily, 2 otherwise |
+| type | TINYINT not null | Boolean: 1 for Daily, 2 otherwise |
 | doctor_name | Varchar(30) not null | Doctor's name |
 | patient_count | Integer not null | Number of patients treated by doctor |
 | total_income | Decimal(10,2) not null | Total revenue by doctor |
