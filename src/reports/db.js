@@ -6,7 +6,7 @@ const connection = require('../db-connection.js'); // Get connection to MySQL
 * arg params: a JSONObject with {type}
 **/
 const getAllDailyReports = (params, callback) => {
-  let query = connection.query("SELECT * FROM REPORTS WHERE ?",
+  let query = connection.query("SELECT * FROM reports WHERE ?",
                                 params, (err, response, fields) => {
                                   callback(err, response, fields);
                                 });
@@ -18,7 +18,7 @@ const getAllDailyReports = (params, callback) => {
 * arg params: a JSONObject with {type}
 **/
 const getAllMonthlyReports = (params, callback) => {
-  let query = connection.query("SELECT * FROM REPORTS WHERE ?",
+  let query = connection.query("SELECT * FROM reports WHERE ?",
                                 params, (err, response, fields) => {
                                   callback(err, response, fields);
                                 });

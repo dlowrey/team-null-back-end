@@ -19,7 +19,7 @@ const createApp = (params, callback) => {
 **/
 const modifyApp = (params, callback) => {
   // Modify appointments
-  let query = connection.query("UPDATE APPOINTMENTS SET ? WHERE ?",
+  let query = connection.query("UPDATE appointments SET ? WHERE ?",
                                  params, (err, response, fields) => {
                                     callback(err, response, fields);
                                  });
@@ -33,8 +33,8 @@ const modifyApp = (params, callback) => {
 **/
 const deleteApp = (params, callback) => {
   // Delete appointments
-  let query = connection.query("DELETE FROM APPOINTMENTS WHERE ?;" +
-                               "DELETE FROM PATIENTRECORDS WHERE ?;",
+  let query = connection.query("DELETE FROM appointments WHERE ?;" +
+                               "DELETE FROM patientrecords WHERE ?;",
                                 params, (err, response, fields) => {
                                   callback(err, response, fields);
                                 });
@@ -47,7 +47,7 @@ const deleteApp = (params, callback) => {
 **/
 const getUncompApps = (params, callback) => {
   // Get all incomplete appointments for month in params
-  let query = connection.query("SELECT * FROM APPOINTMENTS WHERE " +
+  let query = connection.query("SELECT * FROM appointments WHERE " +
                                 " MONTH(date_time) = ? AND ?",
                                 params, (err, response, fields) => {
                                   callback(err, response, fields);
@@ -60,7 +60,7 @@ const getUncompApps = (params, callback) => {
 * arg params: a JSONArray with [{patient_id}]
 **/
 const getAppsByPatient = (params, callback) => {
-  let query = connection.query("SELECT * FROM APPOINTMENTS WHERE ?",
+  let query = connection.query("SELECT * FROM appointments WHERE ?",
                                 params, (err, response, fields) => {
                                   callback(err, response, fields);
                                 });
@@ -73,7 +73,7 @@ const getAppsByPatient = (params, callback) => {
 * arg params: a JSONArray with [month, {patient_id}, {completed}]
 **/
 const getUncompAppsByPatient = (params, callback) => {
-  let query = connection.query("SELECT * FROM APPOINTMENTS WHERE " +
+  let query = connection.query("SELECT * FROM appointments WHERE " +
                                 " MONTH(date_time) = ? AND ? AND ?",
                                 params, (err, response, fields) => {
                                   callback(err, response, fields);
@@ -87,7 +87,7 @@ const getUncompAppsByPatient = (params, callback) => {
 * arg params: a JSONArray with [month, {employee_id}, {completed}]
 **/
 const getUncompAppsByDoctor = (params, callback) => {
-  let query = connection.query("SELECT * FROM APPOINTMENTS WHERE " +
+  let query = connection.query("SELECT * FROM appointments WHERE " +
                                 " MONTH(date_time) = ? AND ? AND ?",
                                 params, (err, response, fields) => {
                                   callback(err, response, fields);

@@ -2,11 +2,11 @@ import mysql.connector
 from exceptions import InputError, MySqlError
 
 # Define constants
-DB_NAME = "HealthCareDB"
+DB_NAME = "healthcaredb"
 
 TABLES = {}
-TABLES['Appointments'] = (
-    "CREATE TABLE IF NOT EXISTS `Appointments` ("
+TABLES['appointments'] = (
+    "CREATE TABLE IF NOT EXISTS `appointments` ("
     "   `id` INT NOT NULL AUTO_INCREMENT,"
     "   `employee_id` INT NOT NULL,"
     "   `patient_id` INT NOT NULL,"
@@ -15,8 +15,8 @@ TABLES['Appointments'] = (
     "   PRIMARY KEY (`id`)"
     ") ENGINE=InnoDB")
 
-TABLES['Patients'] = (
-    "CREATE TABLE IF NOT EXISTS `Patients` ("
+TABLES['patients'] = (
+    "CREATE TABLE IF NOT EXISTS `patients` ("
     "   `id` INT NOT NULL AUTO_INCREMENT,"
     "   `last_name` VARCHAR(30) NOT NULL,"
     "   `first_name` VARCHAR(30) NOT NULL,"
@@ -28,8 +28,8 @@ TABLES['Patients'] = (
     "   PRIMARY KEY (`id`)"
     ") ENGINE=InnoDB")
 
-TABLES['Employees'] = (
-    "CREATE TABLE IF NOT EXISTS `Employees` ("
+TABLES['employees'] = (
+    "CREATE TABLE IF NOT EXISTS `employees` ("
     "   `id` INT NOT NULL AUTO_INCREMENT,"
     "   `last_name` VARCHAR(30) NOT NULL,"
     "   `first_name` VARCHAR(30) NOT NULL,"
@@ -38,8 +38,8 @@ TABLES['Employees'] = (
     "   PRIMARY KEY (`id`)"
     ") ENGINE=InnoDB")
 
-TABLES['Payment'] = (
-    "CREATE TABLE IF NOT EXISTS `Payment` ("
+TABLES['payments'] = (
+    "CREATE TABLE IF NOT EXISTS `payments` ("
     "   `id` INT NOT NULL AUTO_INCREMENT,"
     "   `appointment_id` INT NOT NULL,"
     "   `amount` DECIMAL(7,2) NOT NULL,"
@@ -50,8 +50,8 @@ TABLES['Payment'] = (
     "   PRIMARY KEY (`id`)"
     ") ENGINE=InnoDB")
 
-TABLES['Reports'] = (
-    "CREATE TABLE IF NOT EXISTS `Reports` ("
+TABLES['reports'] = (
+    "CREATE TABLE IF NOT EXISTS `reports` ("
     "   `id` INT NOT NULL AUTO_INCREMENT,"
     "   `type` SMALLINT NOT NULL,"
     "   `doctor_name` VARCHAR(30) NOT NULL,"
@@ -60,13 +60,13 @@ TABLES['Reports'] = (
     "   PRIMARY KEY (`id`)"
     ") ENGINE=InnoDB")
 
-TABLES['PatientRecords'] = (
-    "CREATE TABLE IF NOT EXISTS `PatientRecords` ("
+TABLES['patientrecords'] = (
+    "CREATE TABLE IF NOT EXISTS `patientrecords` ("
     "   `appointment_id` INT NOT NULL,"
     "   `weight` SMALLINT,"
     "   `height` SMALLINT,"
     "   `blood_pressure` SMALLINT,"
-    "   `reason` Varchar(50),"
+    "   `reason` VARCHAR(50),"
     "   `treatment_content` VARCHAR(50),"
     "   `prescription` VARCHAR(50),"
     "   PRIMARY KEY (`appointment_id`)"
@@ -74,9 +74,9 @@ TABLES['PatientRecords'] = (
 
 TRIGGERS = {}
 TRIGGERS['appointment_added'] = ("CREATE TRIGGER new_appointment_added "
-                                 "AFTER INSERT ON Appointments "
+                                 "AFTER INSERT ON appointments "
                                  "FOR EACH ROW "
-                                 "INSERT INTO PatientRecords (appointment_id) "
+                                 "INSERT INTO patientrecords (appointment_id) "
                                  "VALUES (NEW.id);")
 
 

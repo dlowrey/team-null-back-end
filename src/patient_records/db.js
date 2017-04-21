@@ -7,7 +7,7 @@ const connection = require('../db-connection.js'); // Get connection to MySQL
 **/
 const modifyRecord = (params, callback) => {
   // Modify patient record
-  let query = connection.query("UPDATE PATIENTRECORDS SET ? WHERE ?",
+  let query = connection.query("UPDATE patientrecords SET ? WHERE ?",
                                  params, (err, response, fields) => {
                                     callback(err, response, fields);
                                  });
@@ -20,7 +20,7 @@ const modifyRecord = (params, callback) => {
 **/
 const getRecordById = (params, callback) => {
   // get record by id
-  let query = connection.query("SELECT * FROM PATIENTRECORDS WHERE ?",
+  let query = connection.query("SELECT * FROM patientrecords WHERE ?",
                                 params, (err, response, fields) => {
                                   callback(err, response, fields);
                                 });

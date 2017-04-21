@@ -5,7 +5,7 @@ const connection = require('../db-connection.js'); // Get connection to MySQL
 * arg params: a JSONArray with [{id}]
 **/
 const getPaymentById = (params, callback) => {
-  let query = connection.query("SELECT * FROM PAYMENT WHERE ?",
+  let query = connection.query("SELECT * FROM payments WHERE ?",
                                 params, (err, response, fields) => {
                                   callback(err, response, fields);
                                 });
@@ -18,8 +18,8 @@ const getPaymentById = (params, callback) => {
 **/
 const modifyPayment = (params, callback) => {
   // Modify payment
-  let query = connection.query("UPDATE PAYMENT SET ? WHERE ?;"+
-                               "SELECT * FROM PAYMENT WHERE ?;",   //Updates based on the request
+  let query = connection.query("UPDATE payments SET ? WHERE ?;"+
+                               "SELECT * FROM payments WHERE ?;",   //Updates based on the request
                                  params, (err,response,fields) => {
                                    callback(err, response[1], fields);
                                  });
