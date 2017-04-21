@@ -6,7 +6,7 @@ const connection = require('../db-connection.js'); // Get connection to MySQL
 **/
 const createApp = (params, callback) => {
   // Insert appointments
-  let query = connection.query("INSERT INTO APPOINTMENTS SET ?",
+  let query = connection.query("INSERT INTO appointments SET ?",
                                 params, (err, response, fields) => {
                                   callback(err, response, fields);
                                 });
