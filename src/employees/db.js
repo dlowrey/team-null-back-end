@@ -6,7 +6,7 @@ const connection = require('../db-connection.js'); // Get connection to MySQL
 **/
 const getAllDoctors = (params, callback) => {
   // Gets a list of all doctors
-  let query = connection.query("SELECT * FROM EMPLOYEES WHERE ?",
+  let query = connection.query("SELECT * FROM employees WHERE ?",
                                 params, (err, response, fields) => {
                                   callback(err, response, fields);
                                 });
