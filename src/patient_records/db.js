@@ -22,7 +22,7 @@ const getRecordById = (params, callback) => {
   // get record by id
   let query = connection.query("SELECT * FROM PATIENTRECORDS WHERE ?",
                                 params, (err, response, fields) => {
-                                  callback(err, response, fields);
+                                  callback(err, response[0], fields);
                                 });
   console.log('Ran query: ' + query.sql);
 }
