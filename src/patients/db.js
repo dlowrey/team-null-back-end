@@ -32,7 +32,7 @@ const getAllPatients = (callback) => {
 const getPatientById = (params, callback) => {
   let query = connection.query("SELECT * FROM patients WHERE ?",
                                 params, (err, response, fields) => {
-                                  callback(err, response, fields);
+                                  callback(err, response[0], fields);
                                 });
   console.log('Ran query: ' + query.sql); // Log executed sql
 }

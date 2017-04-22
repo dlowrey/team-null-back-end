@@ -7,7 +7,7 @@ const connection = require('../db-connection.js'); // Get connection to MySQL
 const getPaymentById = (params, callback) => {
   let query = connection.query("SELECT * FROM payments WHERE ?",
                                 params, (err, response, fields) => {
-                                  callback(err, response, fields);
+                                  callback(err, response[0], fields);
                                 });
   console.log('Ran query: ' + query.sql); // Log executed sql
 }
