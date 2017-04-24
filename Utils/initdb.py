@@ -42,8 +42,8 @@ TABLES['payments'] = (
     "CREATE TABLE IF NOT EXISTS `payments` ("
     "   `id` INT NOT NULL AUTO_INCREMENT,"
     "   `appointment_id` INT NOT NULL,"
-    "   `amount` DECIMAL(7,2) NOT NULL,"
-    "   `method` TINYINT NOT NULL,"
+    "   `amount` DECIMAL(7,2) ,"
+    "   `method` TINYINT ,"
     "   `type` TINYINT NOT NULL,"
     "   `date_paid` DATETIME,"
     "   `reference_number` INT,"
@@ -73,11 +73,28 @@ TABLES['patientrecords'] = (
     ") ENGINE=InnoDB")
 
 TRIGGERS = {}
-TRIGGERS['appointment_added'] = ("CREATE TRIGGER new_appointment_added "
+TRIGGERS['appointment_added'] = ("CREATE TRIGGER appointment_added "
                                  "AFTER INSERT ON appointments "
-                                 "FOR EACH ROW "
+                                 "FOR EACH ROW BEGIN "
                                  "INSERT INTO patientrecords (appointment_id) "
-                                 "VALUES (NEW.id);")
+                                 "VALUES (NEW.id); "
+                                 "INSERT INTO payments (appointment_id, type) "
+                                 "VALUES (NEW.id, 1); "
+                                 "INSERT INTO payments (appointment_id, type) "
+                                 "VALUES (NEW.id, 2); "
+                                 "END;"
+                                 )
+TRIGGERS['appointment_deleted'] = ("CREATE TRIGGER appointment_deleted "
+                                   "AFTER DELETE ON appointments "
+                                   "FOR EACH ROW BEGIN "
+                                   "DELETE FROM patientrecords WHERE "
+                                   "appointment_id = OLD.id; "
+                                   "DELETE FROM payments WHERE appointment_id "
+                                   "= OLD.id; "
+                                   "INSERT INTO payments "
+                                   "(appointment_id, amount, type) "
+                                   "VALUES(OLD.id, 25, 3); "
+                                   "END;")
 
 
 def init_connection(username=None, password=None):
@@ -137,8 +154,7 @@ def init_database(connection):
 
         cursor.close()
     except mysql.connector.Error as err:
-        raise MySqlError(message='There was a problem initializing'
-                                 ' the database.',
+        raise MySqlError(message=err.msg,
                          args=err.args)
 
 

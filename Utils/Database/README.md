@@ -75,7 +75,7 @@
 
 
 
-**Payment**
+**Payments**
 * Payment information
 * Primary key: id
 
