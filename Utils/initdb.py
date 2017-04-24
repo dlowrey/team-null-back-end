@@ -91,9 +91,6 @@ TRIGGERS['appointment_deleted'] = ("CREATE TRIGGER appointment_deleted "
                                    "appointment_id = OLD.id; "
                                    "DELETE FROM payments WHERE appointment_id "
                                    "= OLD.id; "
-                                   "INSERT INTO payments "
-                                   "(appointment_id, amount, type) "
-                                   "VALUES(OLD.id, 25, 3); "
                                    "END;")
 
 def init_connection(username=None, password=None):
