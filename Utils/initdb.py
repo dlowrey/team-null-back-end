@@ -115,7 +115,20 @@ TRIGGERS['daily_reports'] = ("CREATE EVENT daily_report ON SCHEDULE "
                              "WHERE DAY(a.date_time) = DAY(NOW()) "
                              "GROUP BY a.employee_id; "
                              )
-TRIGGERS['monthly_reports'] = ()
+TRIGGERS['monthly_reports'] = ("CREATE EVENT monthly_report ON SCHEDULE "
+                               "EVERY 1 MONTH "
+                               "STARTS '2017-05-01 21:00:00' "
+                               "ON COMPLETION PRESERVE ENABLE "
+                               "DO "
+                               "INSERT INTO reports (type, doctor_name, "
+                               "patient_count, total_income) "
+                               "SELECT 2, r.doctor_name, COUNT("
+                               "r.patient_count), SUM(r.total_income) "
+                               "FROM reports r "
+                               "WHERE MONTH(r.date_time) = MONTH(CURRENT_DATE "
+                               "- INTERVAL 1 MONTH) "
+                               "AND r.type = 1 "
+                               "GROUP BY r.doctor_name;")
 
 def init_connection(username=None, password=None):
     """Initializes connection to running MySQL server

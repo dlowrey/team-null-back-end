@@ -58,6 +58,7 @@
 | doctor_name | Varchar(30) not null | Doctor's name |
 | patient_count | Integer not null | Number of patients treated by doctor |
 | total_income | Decimal(10,2) not null | Total revenue by doctor |
+| date_time    | DATETIME DEFAULT CURRENT_TIMESTAMP | Date report record was inserted |
 
 
 
