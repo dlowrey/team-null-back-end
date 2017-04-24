@@ -31,4 +31,18 @@ VALUES
 (6, 10, '2017-05-06 10:30:00', 0)
 ;
 
+INSERT INTO patients (last_name, first_name, address, phone_number, email, ssn, insurance_provider)
+VALUES
+('Worthy', 'Bill', '2408 Mac Davis Lane', '8062457894', 'bill@worthy.com', '696969699', 'We Aint Got U'),
+('Smith', 'John', '123 15th St', '5554125123', 'j.smith@gmail.com', '555555555', 'State Farm'),
+('Sanders', 'Jane', '512 Clover St', '5554105092', 'jane.smith@gmail.com', '555660000', 'Blue Cross'),
+('Candy', 'Steve', '614 Erie St', '8063022059', 'candyman@gmail.com', '555103029', 'State Farm'),
+('Pratt', 'Chris', '501 Huron St', '5556019809', 'c.pratt@marvel.com', '550206819', 'We Aint Got U'),
+('Smithers', 'Diane', '200 Simpson Ave', '5593120928', 'diane.smithers@gmail.com', '691554018', 'State Farm'),
+('Prady', 'Dick', '90 Forest Lane', '5553015681', 'jprady@yahoo.com', '195279650', 'Blue Cross'),
+('Clinton', 'Harry', '1216 Quaker Ave', '8064221037', 'h.clinton@hotmail.com', '210732892', 'State Farm'),
+('Blake', 'Aaron', '702 Peele St', '2029701739', 'a_a_ron.blake@gmail.com', '501962381', 'Key Insurance'),
+('Ferguson', 'George', '682 Needful St', '6666666666', 'g.ferguson@king.com', '666666666', 'Beast Insurance')
+;
+
 
