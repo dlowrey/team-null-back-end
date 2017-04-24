@@ -96,7 +96,6 @@ TRIGGERS['appointment_deleted'] = ("CREATE TRIGGER appointment_deleted "
                                    "VALUES(OLD.id, 25, 3); "
                                    "END;")
 
-
 def init_connection(username=None, password=None):
     """Initializes connection to running MySQL server
 
