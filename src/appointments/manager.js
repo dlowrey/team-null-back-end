@@ -50,8 +50,7 @@ const modifyApp = (req, callback) => {
 **/
 const deleteApp = (req, callback) => {
   let uid = { id : req.params.uid }; // uid of appointment in URL
-  let appointment_id = { appointment_id : req.params.uid }; // id in patientrecs
-  db.deleteApp([uid, appointment_id], (err, response, fields) => {
+  db.deleteApp(uid, (err, response, fields) => {
     if (err) throw err;
     callback(response); // send response back, response is unused for delete
   });
