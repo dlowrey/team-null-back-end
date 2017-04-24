@@ -57,6 +57,7 @@ TABLES['reports'] = (
     "   `doctor_name` VARCHAR(30) NOT NULL,"
     "   `patient_count` SMALLINT NOT NULL,"
     "   `total_income` DECIMAL(10,2) NOT NULL,"
+    "   `date_time` DATETIME DEFAULT CURRENT_TIMESTAMP "
     "   PRIMARY KEY (`id`)"
     ") ENGINE=InnoDB")
 
@@ -73,6 +74,7 @@ TABLES['patientrecords'] = (
     ") ENGINE=InnoDB")
 
 TRIGGERS = {}
+
 TRIGGERS['appointment_added'] = ("CREATE TRIGGER appointment_added "
                                  "AFTER INSERT ON appointments "
                                  "FOR EACH ROW BEGIN "
@@ -84,6 +86,7 @@ TRIGGERS['appointment_added'] = ("CREATE TRIGGER appointment_added "
                                  "VALUES (NEW.id, 2); "
                                  "END;"
                                  )
+
 TRIGGERS['appointment_deleted'] = ("CREATE TRIGGER appointment_deleted "
                                    "AFTER DELETE ON appointments "
                                    "FOR EACH ROW BEGIN "
@@ -92,6 +95,27 @@ TRIGGERS['appointment_deleted'] = ("CREATE TRIGGER appointment_deleted "
                                    "DELETE FROM payments WHERE appointment_id "
                                    "= OLD.id; "
                                    "END;")
+
+TRIGGERS['daily_reports'] = ("CREATE EVENT daily_report ON SCHEDULE "
+                             "EVERY 1 DAY "
+                             "STARTS '2017-05-01 21:00:00' "
+                             "ON COMPLETION PRESERVE ENABLE "
+                             "DO "
+                             "INSERT INTO reports (type, doctor_name, "
+                             "patient_count, total_income) "
+                             "SELECT 1, CONCAT(e.first_name,' ', "
+                             "e.last_name), COUNT(a.patient_id), p.amount "
+                             "FROM appointments AS a "
+                             "INNER JOIN (SELECT appointment_id, SUM(amount) "
+                             "AS amount FROM payments GROUP BY "
+                             "appointment_id) AS p "
+                             "ON p.appointment_id = a.id "
+                             "INNER JOIN employees AS e ON e.id = "
+                             "a.employee_id "
+                             "WHERE DAY(a.date_time) = DAY(NOW()) "
+                             "GROUP BY a.employee_id; "
+                             )
+TRIGGERS['monthly_reports'] = ()
 
 def init_connection(username=None, password=None):
     """Initializes connection to running MySQL server
