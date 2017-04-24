@@ -64,9 +64,9 @@ TABLES['reports'] = (
 TABLES['patientrecords'] = (
     "CREATE TABLE IF NOT EXISTS `patientrecords` ("
     "   `appointment_id` INT NOT NULL,"
-    "   `weight` SMALLINT,"
-    "   `height` SMALLINT,"
-    "   `blood_pressure` SMALLINT,"
+    "   `weight` SMALLINT DEFAULT 0,"
+    "   `height` SMALLINT DEFAULT 0,"
+    "   `blood_pressure` SMALLINT DEFAULT 0,"
     "   `reason` VARCHAR(50),"
     "   `treatment_content` VARCHAR(50),"
     "   `prescription` VARCHAR(50),"
