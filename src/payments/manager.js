@@ -12,7 +12,7 @@ router.use(bodyParser.json());
 const getPaymentById = (req, callback) => {
   let id = { id : req.params.uid }; // id in the Payment table
   db.getPaymentById(id, (err, response, fields) => {
-    if (err) throw err;
+    if (err) console.log(err);
     callback(response); // send payment information
   });
 }
@@ -33,7 +33,7 @@ const modifyPayment = (req, callback) => {
   };
   // Pass uid and params as a JSONArray (order matters)
   db.modifyPayment([params, uid, uid], (err, response, fields) => { //Sent uid again as another parameter
-    if (err) throw err;                                             //for the second query
+    if (err) console.log(err);                                             //for the second query
     callback(response); // send back the updated payment fields
   });
 }

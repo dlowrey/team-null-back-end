@@ -13,7 +13,7 @@ router.use(bodyParser.json());
 const getAllDoctors = (req, callback) => {
   let type = { type : 1 }; // Employee type 1 is doctors
   db.getAllDoctors(type, (err, response, fields) => {
-    if (err) throw err;
+    if (err) console.log(err);
     callback(response); // send JSONArray of all doctors
   });
 }

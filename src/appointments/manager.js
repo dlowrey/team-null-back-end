@@ -18,7 +18,7 @@ const createApp = (req, callback) => {
     completed    : false // by default the appointment is not completed
   };
   db.createApp(params, (err, response, fields) => {
-    if (err) throw err;
+    if (err) console.log(err);
     callback(response); // send response info from query back
   });
 }
@@ -38,7 +38,7 @@ const modifyApp = (req, callback) => {
   };
   // Pass uid and params as a JSONArray (order matters)
   db.modifyApp([params, uid], (err, response, fields) => {
-    if (err) throw err;
+    if (err) console.log(err);
     params.id = req.params.uid; // add the ID to the response
     callback(params); // send back the updated appointment fields
   });
@@ -51,7 +51,7 @@ const modifyApp = (req, callback) => {
 const deleteApp = (req, callback) => {
   let uid = { id : req.params.uid }; // uid of appointment in URL
   db.deleteApp(uid, (err, response, fields) => {
-    if (err) throw err;
+    if (err) console.log(err);
     callback(response); // send response back, response is unused for delete
   });
 }
@@ -65,7 +65,7 @@ const getUncompApps = (req, callback) => {
   let completed = {completed : 0 }; // specify completed = 0 for uncompleted
   // pass month and completed as JSONArray (order matters)
   db.getUncompApps([month, completed], (err, response, fields) => {
-    if (err) throw err;
+    if (err) console.log(err);
     callback(response); // send JSONArray of all uncompleted apps for [month]
   });
 }
@@ -77,7 +77,7 @@ const getUncompApps = (req, callback) => {
 const getAppsByPatient = (req, callback) => {
   let patient_id = { patient_id : req.params.uid }; // patient_id
   db.getAppsByPatient(patient_id, (err, response, fields) => {
-    if (err) throw err;
+    if (err) console.log(err);
     callback(response); // send JSONArray of all appointments for [patient_id]
   });
 }
@@ -93,7 +93,7 @@ const getUncompAppsByPatient = (req, callback) => {
   // pass month, patient_id, and completed as JSONArray (order matters)
   db.getUncompAppsByPatient([month, patient_id, completed],
      (err, response, fields) => {
-    if (err) throw err;
+    if (err) console.log(err);
     callback(response); // send JSONArray of all uncompleted appointments for
                         // [patient_id] and [month]
   });
@@ -110,7 +110,7 @@ const getUncompAppsByDoctor = (req, callback) => {
   // pass month, employee_id, and completed as JSONArray (order matters)
   db.getUncompAppsByDoctor([month, employee_id, completed],
      (err, response, fields) => {
-    if (err) throw err;
+    if (err) console.log(err);
     callback(response); // send JSONArray of all uncompleted appointments for
                         // [employee_id] and [month]
   });

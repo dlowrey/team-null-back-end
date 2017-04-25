@@ -23,7 +23,7 @@ const modifyRecord = (req, callback) => {
   };
   // Pass uid and params as a JSONArray (order matters)
   db.modifyRecord([params, appointment_id], (err, response, fields) => {
-    if (err) throw err;
+    if (err) console.log(err);
     params.appointment_id = req.params.uid; // add appointment_id to response
     callback(params); // send back the updated appointment fields
   });
@@ -37,7 +37,7 @@ const modifyRecord = (req, callback) => {
 const getRecordById = (req, callback) => {
   let appointment_id = { appointment_id : req.params.uid };
   db.getRecordById(appointment_id, (err, response, fields) => {
-    if (err) throw err;
+    if (err) console.log(err);
     callback(response); // send back fields related to appointment_id
   });
 }
