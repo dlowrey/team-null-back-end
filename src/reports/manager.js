@@ -13,7 +13,7 @@ router.use(bodyParser.json());
 const getAllDailyReports = (req, callback) => {
   let daily = { type : 1 }; // type = 1 for daily reports
   db.getAllDailyReports(daily, (err, response, fields) => {
-    if (err) throw err;
+    if (err) console.log(err);
     callback(response); // send JSONArray of all daily reports
   });
 }
@@ -25,7 +25,7 @@ const getAllDailyReports = (req, callback) => {
 const getAllMonthlyReports = (req, callback) => {
   let monthly = { type : 2 }; // type = 1 for daily reports
   db.getAllMonthlyReports(monthly, (err, response, fields) => {
-    if (err) throw err;
+    if (err) console.log(err);
     callback(response); // send JSONArray of all monthly reports
   });
 }

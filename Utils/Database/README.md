@@ -38,9 +38,9 @@
 | Attribute | Type | Description |
 | --------- | ---- | ----------- |
 | appointment_id | Integer not null | The appointment's ID|
-| weight | SMALLINT | Patient's weight in pounds during specific visit |
-| height | SMALLINT | Patient's height in inches during specific visit |
-| blood_pressure | SMALLINT | Patient's blood pressure during specific visit |
+| weight | SMALLINT DEFAULT 0 | Patient's weight in pounds during specific visit |
+| height | SMALLINT DEFAULT 0 | Patient's height in inches during specific visit |
+| blood_pressure | SMALLINT DEFAULT 0 | Patient's blood pressure during specific visit |
 | reason | Varchar(50) | Reason patient came to the hospital |
 | treatment_content | Varchar(50) | Details of treatment provided during specific visit |
 | prescription | Varchar(50) | Medication (if any) prescribed to patient |
@@ -58,6 +58,7 @@
 | doctor_name | Varchar(30) not null | Doctor's name |
 | patient_count | Integer not null | Number of patients treated by doctor |
 | total_income | Decimal(10,2) not null | Total revenue by doctor |
+| date_time    | DATETIME DEFAULT CURRENT_TIMESTAMP | Date report record was inserted |
 
 
 
@@ -75,7 +76,7 @@
 
 
 
-**Payment**
+**Payments**
 * Payment information
 * Primary key: id
 

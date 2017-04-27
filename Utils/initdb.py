@@ -42,8 +42,8 @@ TABLES['payments'] = (
     "CREATE TABLE IF NOT EXISTS `payments` ("
     "   `id` INT NOT NULL AUTO_INCREMENT,"
     "   `appointment_id` INT NOT NULL,"
-    "   `amount` DECIMAL(7,2) NOT NULL,"
-    "   `method` TINYINT NOT NULL,"
+    "   `amount` DECIMAL(7,2) ,"
+    "   `method` TINYINT ,"
     "   `type` TINYINT NOT NULL,"
     "   `date_paid` DATETIME,"
     "   `reference_number` INT,"
@@ -57,15 +57,16 @@ TABLES['reports'] = (
     "   `doctor_name` VARCHAR(30) NOT NULL,"
     "   `patient_count` SMALLINT NOT NULL,"
     "   `total_income` DECIMAL(10,2) NOT NULL,"
+    "   `date_time` DATETIME DEFAULT CURRENT_TIMESTAMP,"
     "   PRIMARY KEY (`id`)"
     ") ENGINE=InnoDB")
 
 TABLES['patientrecords'] = (
     "CREATE TABLE IF NOT EXISTS `patientrecords` ("
     "   `appointment_id` INT NOT NULL,"
-    "   `weight` SMALLINT,"
-    "   `height` SMALLINT,"
-    "   `blood_pressure` SMALLINT,"
+    "   `weight` SMALLINT DEFAULT 0,"
+    "   `height` SMALLINT DEFAULT 0,"
+    "   `blood_pressure` SMALLINT DEFAULT 0,"
     "   `reason` VARCHAR(50),"
     "   `treatment_content` VARCHAR(50),"
     "   `prescription` VARCHAR(50),"
@@ -73,12 +74,61 @@ TABLES['patientrecords'] = (
     ") ENGINE=InnoDB")
 
 TRIGGERS = {}
-TRIGGERS['appointment_added'] = ("CREATE TRIGGER new_appointment_added "
-                                 "AFTER INSERT ON appointments "
-                                 "FOR EACH ROW "
-                                 "INSERT INTO patientrecords (appointment_id) "
-                                 "VALUES (NEW.id);")
 
+TRIGGERS['appointment_added'] = ("CREATE TRIGGER appointment_added "
+                                 "AFTER INSERT ON appointments "
+                                 "FOR EACH ROW BEGIN "
+                                 "INSERT INTO patientrecords (appointment_id) "
+                                 "VALUES (NEW.id); "
+                                 "INSERT INTO payments (appointment_id, type) "
+                                 "VALUES (NEW.id, 1); "
+                                 "INSERT INTO payments (appointment_id, type) "
+                                 "VALUES (NEW.id, 2); "
+                                 "END;"
+                                 )
+
+TRIGGERS['appointment_deleted'] = ("CREATE TRIGGER appointment_deleted "
+                                   "AFTER DELETE ON appointments "
+                                   "FOR EACH ROW BEGIN "
+                                   "DELETE FROM patientrecords WHERE "
+                                   "appointment_id = OLD.id; "
+                                   "DELETE FROM payments WHERE appointment_id "
+                                   "= OLD.id; "
+                                   "END;")
+
+TRIGGERS['daily_reports'] = ("CREATE EVENT daily_report ON SCHEDULE "
+                             "EVERY 1 DAY "
+                             "STARTS CONCAT(CURDATE(),' ', '21:00:00') "
+                             "ON COMPLETION PRESERVE ENABLE "
+                             "DO "
+                             "INSERT INTO reports (type, doctor_name, "
+                             "patient_count, total_income) "
+                             "SELECT 1, CONCAT(e.first_name,' ', "
+                             "e.last_name), COUNT(a.patient_id), p.amount "
+                             "FROM appointments AS a "
+                             "INNER JOIN (SELECT appointment_id, SUM(amount) "
+                             "AS amount FROM payments GROUP BY "
+                             "appointment_id) AS p "
+                             "ON p.appointment_id = a.id "
+                             "INNER JOIN employees AS e ON e.id = "
+                             "a.employee_id "
+                             "WHERE DAY(a.date_time) = DAY(NOW()) "
+                             "GROUP BY a.employee_id; "
+                             )
+TRIGGERS['monthly_reports'] = ("CREATE EVENT monthly_report ON SCHEDULE "
+                               "EVERY 1 MONTH "
+                               "STARTS '2015-05-01 00:00:00' "
+                               "ON COMPLETION PRESERVE ENABLE "
+                               "DO "
+                               "INSERT INTO reports (type, doctor_name, "
+                               "patient_count, total_income) "
+                               "SELECT 2, r.doctor_name, COUNT("
+                               "r.patient_count), SUM(r.total_income) "
+                               "FROM reports r "
+                               "WHERE MONTH(r.date_time) = MONTH(CURRENT_DATE "
+                               "- INTERVAL 1 MONTH) "
+                               "AND r.type = 1 "
+                               "GROUP BY r.doctor_name;")
 
 def init_connection(username=None, password=None):
     """Initializes connection to running MySQL server
@@ -137,8 +187,7 @@ def init_database(connection):
 
         cursor.close()
     except mysql.connector.Error as err:
-        raise MySqlError(message='There was a problem initializing'
-                                 ' the database.',
+        raise MySqlError(message=err.msg,
                          args=err.args)
 
 

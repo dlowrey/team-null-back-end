@@ -33,8 +33,7 @@ const modifyApp = (params, callback) => {
 **/
 const deleteApp = (params, callback) => {
   // Delete appointments
-  let query = connection.query("DELETE FROM appointments WHERE ?;" +
-                               "DELETE FROM patientrecords WHERE ?;",
+  let query = connection.query("DELETE FROM appointments WHERE ?;" ,
                                 params, (err, response, fields) => {
                                   callback(err, response, fields);
                                 });

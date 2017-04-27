@@ -21,7 +21,7 @@ const createPatient = (req, callback) => {
     insurance_provider : body.insurance_provider
   };
   db.createPatient(params, (err, response, fields) => {
-    if (err) throw err;
+    if (err) console.log(err);
     callback(response); // send response info from query back
   });
 }
@@ -32,7 +32,7 @@ const createPatient = (req, callback) => {
 **/
 const getAllPatients = (req, callback) => {
   db.getAllPatients((err, response, fields) => {
-    if (err) throw err;
+    if (err) console.log(err);
     callback(response); // send response info from query back
   });
 }
@@ -44,7 +44,7 @@ const getAllPatients = (req, callback) => {
 const getPatientById = (req, callback) => {
   let id = { id : req.params.uid }; // patient_id
   db.getPatientById(id, (err, response, fields) => {
-    if (err) throw err;
+    if (err) console.log(err);
     callback(response); // send JSONArray of all appointments for [patient_id]
   });
 }
