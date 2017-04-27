@@ -12,3 +12,7 @@ node_modules/
 
 ## some weird PyCharm file idk
 Utils/__pycache__/
+
+
+# npm debug
+npm-debug.log
