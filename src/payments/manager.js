@@ -11,7 +11,8 @@ router.use(bodyParser.json());
 **/
 const getPaymentById = (req, callback) => {
   let id = { id : req.params.uid };
-  db.getPaymentById(id, (err, response, fields) => {
+  let type = { type : 2 };
+  db.getPaymentById([id, type], (err, response, fields) => {
     if (err) console.log(err);
     callback(response); // send payment information
   });

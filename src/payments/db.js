@@ -1,11 +1,11 @@
 const connection = require('../db-connection.js'); // Get connection to MySQL
 
 /**
-* getPaymentById: get copay payment information by id
+* getPaymentById: get invoice payment information by id
 * arg params: a JSONObject with {id}
 **/
 const getPaymentById = (params, callback) => {
-  let query = connection.query("SELECT * FROM payments WHERE ?;",
+  let query = connection.query("SELECT * FROM payments WHERE ? AND ?;",
                                 params, (err, response, fields) => {
                                   callback(err, response[0], fields);
                                 });
