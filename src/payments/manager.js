@@ -6,37 +6,70 @@ router.use(bodyParser.urlencoded({ extended: false }));
 router.use(bodyParser.json());
 
 /**
-* getPaymentById: get payment information by payment ID
+* getPaymentById: get  payment information by appointment_id
 *
 **/
 const getPaymentById = (req, callback) => {
-  let id = { id : req.params.uid }; // id in the Payment table
-  db.getPaymentById(id, (err, response, fields) => {
+  let id = { id : req.params.uid };
+  let type = { type : 2 };
+  db.getPaymentById([id, type], (err, response, fields) => {
     if (err) console.log(err);
     callback(response); // send payment information
   });
 }
 
 /**
-* modifyPayment: Update a payment with id = uid
+* getCopayByApp: get copay payment information by appointment_id
 *
 **/
-const modifyPayment = (req, callback) => {
-  let body = req.body; // Get body of request
-  let uid = { id : req.params.uid }; // uid of payment in URL
-  let params = { // Get field values to update to
-    amount           : body.amount,
-    method           : body.method,
-    type             : body.type,
-    date_paid        : new Date(body.date_paid),
-    reference_number : body.reference_number
-  };
-  // Pass uid and params as a JSONArray (order matters)
-  db.modifyPayment([params, uid, uid], (err, response, fields) => { //Sent uid again as another parameter
-    if (err) console.log(err);                                             //for the second query
-    callback(response); // send back the updated payment fields
+const getCopayByApp = (req, callback) => {
+  let appointment_id = { appointment_id : req.params.appointment_id };
+  let type = { type : 1 };
+  db.getCopayByApp([appointment_id, type], (err, response, fields) => {
+    if (err) console.log(err);
+    callback(response); // send payment information
   });
 }
 
+/**
+* modifyCopay: Update a copayment by appointment_id
+*
+**/
+const modifyCopay = (req, callback) => {
+  let body = req.body; // Get body of request
+  let appointment_id = { appointment_id : req.params.appointment_id };
+  let type = { type : 1 }; // type of payment (1 = copay)
+  let fields = { // Get values to update to
+    method           : body.method,
+    date_paid        : new Date(),
+  };
+  // params for two queries in db.js
+  let params = [fields, appointment_id, type, appointment_id, type];
+  // Pass uid and params as a JSONArray (order matters)
+  db.modifyCopay(params, (err, response, fields) => {
+    if (err) console.log(err);
+    callback(response); // send back the updated payment object
+  });
+}
+
+/**
+* modifyInvoice: Update an invoice payment by appointment_id
+*
+**/
+const modifyInvoice = (req, callback) => {
+  let body = req.body; // Get body of request
+  let appointment_id = { appointment_id : req.params.appointment_id };
+  let type = { type : 2 }; // type of payment (2 = invoice)
+  let fields = { // Get values to update to
+    method           : body.method,
+    date_paid        : new Date(),
+  };
+  let params = [fields, appointment_id, type, appointment_id, type];
+  // Pass uid and params as a JSONArray (order matters)
+  db.modifyInvoice([params, appointment_id, type], (err, response, fields) => {
+    if (err) console.log(err);
+    callback(response); // send back the updated payment object
+  });
+}
 // Export all functions so that router.js can find/use them in endpoints.
-module.exports = {getPaymentById, modifyPayment};
+module.exports = {getPaymentById, getCopayByApp, modifyCopay, modifyInvoice};
