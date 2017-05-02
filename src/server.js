@@ -8,6 +8,7 @@ const patientRecords = require('./patient_records/router');
 const reports = require('./reports/router');
 const employees = require('./employees/router');
 const payments = require('./payments/router');
+const auth = require('./auth/router');
 
 const app = express();
 
@@ -40,3 +41,6 @@ app.use('/employees', employees);
 
 // router for payments
 app.use('/payments', payments);
+
+// router for authorization
+app.use('/auth', auth);
