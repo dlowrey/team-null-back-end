@@ -12,12 +12,12 @@ router.post('/', (req, res) => {
     if (response.length != 0){
         res.status(200);
         res.send(response[0]);     // Index 0 of the response is sent so that response is an object, not an array.
-    };
+    }
 // If there is no match, response is an empty JSON, so response.length is 0.
     if (response.length == 0){
         res.status(401);
         res.send(response);        // This sends the empty JSON array
-    };
+    }
   });
 });
 
