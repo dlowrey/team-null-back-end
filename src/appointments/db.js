@@ -1,5 +1,4 @@
 const db = require('../db-connection.js'); // Get connection to MySQL
-const connection = db.connection;
 
 /**
 * createApp: create an appointment
@@ -88,7 +87,20 @@ const getUncompAppsByDoctor = (params, callback) => {
                 });
 }
 
+const sendInvoice = (info, callback) => {
+  db.executeSQL("SELECT pa.amount, pa.id, p.email " +
+                "FROM appointments as a " +
+                "INNER JOIN patients as p " +
+                "ON a.patient_id = p.id " +
+                "INNER JOIN payments as pa " +
+                "ON pa.appointment_id = a.id " +
+                "WHERE type = 2 AND ?;",
+                info, (err, response, fields) => {
+                  callback(response[0]);
+                });
+}
+
 // Export all functions so that manager.js can find/use them in functions.
 module.exports = {createApp, modifyApp, deleteApp,
                   getUncompApps, getAppsByPatient, getUncompAppsByPatient,
-                  getUncompAppsByDoctor}; // export all methods here
+                  getUncompAppsByDoctor, sendInvoice}; // export all methods here
