@@ -1,15 +1,14 @@
-const connection = require('../db-connection.js'); // Get connection to MySQL
+const db = require('../db-connection.js'); // Get connection to MySQL
 
 /**
 * getPaymentById: get invoice payment information by id
 * arg params: a JSONObject with {id}
 **/
 const getPaymentById = (params, callback) => {
-  let query = connection.query("SELECT * FROM payments WHERE ? AND ?;",
-                                params, (err, response, fields) => {
-                                  callback(err, response[0], fields);
-                                });
-  console.log('Ran query: ' + query.sql); // Log executed sql
+  db.executeSQL("SELECT * FROM payments WHERE ? AND ?;",
+                params, (err, response, fields) => {
+                        callback(err, response[0], fields);
+                });
 }
 
 /**
@@ -17,11 +16,10 @@ const getPaymentById = (params, callback) => {
 * arg params: a JSONArray with [{appointment_id}, {type}]
 **/
 const getCopayByApp = (params, callback) => {
-  let query = connection.query("SELECT * FROM payments WHERE ? and ?",
-                                params, (err, response, fields) => {
-                                  callback(err, response[0], fields);
-                                });
-  console.log('Ran query: ' + query.sql); // Log executed sql
+  db.executeSQL("SELECT * FROM payments WHERE ? and ?",
+                params, (err, response, fields) => {
+                        callback(err, response[0], fields);
+                });
 }
 
 /**
@@ -31,12 +29,11 @@ const getCopayByApp = (params, callback) => {
 **/
 const modifyCopay = (params, callback) => {
   // Modify payment
-  let query = connection.query("UPDATE payments SET ? WHERE ? AND ?;" +
-                               "SELECT * FROM payments WHERE ? AND ?;",
-                                 params, (err,response,fields) => {
-                                   callback(err, response[1], fields);
-                                 });
-  console.log('Ran query: ' + query.sql); // Log executed sql
+  db.executeSQL("UPDATE payments SET ? WHERE ? AND ?;" +
+                "SELECT * FROM payments WHERE ? AND ?;",
+                params, (err,response,fields) => {
+                        callback(err, response[1], fields);
+                });
 }
 
 /**
@@ -46,12 +43,11 @@ const modifyCopay = (params, callback) => {
 **/
 const modifyInvoice = (params, callback) => {
   // Modify payment
-  let query = connection.query("UPDATE payments SET ? WHERE ? AND ?;" +
-                               "SELECT * FROM payments WHERE ? AND ?;",
-                                 params, (err,response,fields) => {
-                                   callback(err, response[1], fields);
-                                 });
-  console.log('Ran query: ' + query.sql); // Log executed sql
+  db.executeSQL("UPDATE payments SET ? WHERE ? AND ?;" +
+                "SELECT * FROM payments WHERE ? AND ?;",
+                params, (err,response,fields) => {
+                         callback(err, response[1], fields);
+                });
 }
 
 // Export all functions so that router.js can find/use them in endpoints.

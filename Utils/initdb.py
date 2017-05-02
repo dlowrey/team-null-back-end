@@ -120,7 +120,7 @@ TRIGGERS['daily_reports'] = ("CREATE EVENT daily_report ON SCHEDULE "
                              )
 TRIGGERS['monthly_reports'] = ("CREATE EVENT monthly_report ON SCHEDULE "
                                "EVERY 1 MONTH "
-                               "STARTS '2015-05-01 00:00:00' "
+                               "STARTS CONCAT(YEAR(CURDATE()),'-',MONTH(CURDATE()) + 1, '-01 00:00:00') "
                                "ON COMPLETION PRESERVE ENABLE "
                                "DO "
                                "INSERT INTO reports (type, doctor_name, "
