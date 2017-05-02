@@ -1,4 +1,5 @@
-const connection = require('../db-connection.js'); // Get connection to MySQL
+const db = require('../db-connection.js'); // Get connection to MySQL
+const connection = db.connection;
 
 
 /**
@@ -7,11 +8,10 @@ const connection = require('../db-connection.js'); // Get connection to MySQL
 **/
 const modifyRecord = (params, callback) => {
   // Modify patient record
-  let query = connection.query("UPDATE patientrecords SET ? WHERE ?",
-                                 params, (err, response, fields) => {
-                                    callback(err, response, fields);
-                                 });
-  console.log('Ran query: ' + query.sql); // Log executed sql
+  db.executeSQL("UPDATE patientrecords SET ? WHERE ?",
+                params, (err, response, fields) => {
+                        callback(err, response, fields);
+                });
 }
 
 /**
@@ -20,11 +20,10 @@ const modifyRecord = (params, callback) => {
 **/
 const getRecordById = (params, callback) => {
   // get record by id
-  let query = connection.query("SELECT * FROM patientrecords WHERE ?",
-                                params, (err, response, fields) => {
-                                  callback(err, response[0], fields);
-                                });
-  console.log('Ran query: ' + query.sql);
+  db.executeSQL("SELECT * FROM patientrecords WHERE ?",
+                params, (err, response, fields) => {
+                        callback(err, response[0], fields);
+                });
 }
 
 module.exports = {modifyRecord, getRecordById};

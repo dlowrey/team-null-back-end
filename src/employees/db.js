@@ -1,4 +1,5 @@
-const connection = require('../db-connection.js'); // Get connection to MySQL
+const db = require('../db-connection.js'); // Get connection to MySQL
+const connection = db.connection;
 
 /**
 * getAllDoctors: get a list of all doctors
@@ -6,11 +7,10 @@ const connection = require('../db-connection.js'); // Get connection to MySQL
 **/
 const getAllDoctors = (params, callback) => {
   // Gets a list of all doctors
-  let query = connection.query("SELECT * FROM employees WHERE ?",
-                                params, (err, response, fields) => {
-                                  callback(err, response, fields);
-                                });
-  console.log('Ran query: ' + query.sql); // Log executed sql
+  db.executeSQL("SELECT * FROM employees WHERE ?",
+                params, (err, response, fields) => {
+                        callback(err, response, fields);
+                });
 }
 
 module.exports = {getAllDoctors};

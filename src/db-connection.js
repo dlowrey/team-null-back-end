@@ -9,9 +9,15 @@ const dbConfig = {
   connectionLimit : 10
 };
 
-const pool = mysql.createPool(dbConfig);
+const pool = mysql.createPool(dbConfig); // create a pool of 10 connections
 
-// Function to handle any and all database queries
+/**
+* executeSQL: execute sql against the databse in dbConfig
+* get a connection from the connection pool
+* execute the statement in the variable sql and send the
+* response back to the calling function through callback
+* release the connection back to the pool
+**/
 const executeSQL = (sql, params, callback) => {
   pool.getConnection((err, cnx) => {
     if(err) {

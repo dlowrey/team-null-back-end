@@ -1,4 +1,4 @@
-const connection = require('../db-connection.js'); // Get connection to MySQL
+const db = require('../db-connection.js'); // Get connection to MySQL
 
 /**
 * createPatient: create a patient
@@ -6,11 +6,10 @@ const connection = require('../db-connection.js'); // Get connection to MySQL
 **/
 const createPatient = (params, callback) => {
   // Create a patient
-  let query = connection.query("INSERT INTO patients SET ?",
-                                params, (err, response, fields) => {
-                                  callback(err, response, fields);
-                                });
-  console.log('Ran query: ' + query.sql); // Log executed sql
+  db.executeSQL("INSERT INTO patients SET ?",
+                params, (err, response, fields) => {
+                        callback(err, response, fields);
+                });
 }
 
 /**
@@ -18,11 +17,10 @@ const createPatient = (params, callback) => {
 *
 **/
 const getAllPatients = (callback) => {
-  let query = connection.query("SELECT * FROM patients",
-                                (err, response, fields) => {
-                                  callback(err, response, fields);
-                                });
-  console.log('Ran query: ' + query.sql); // Log executed sql
+  db.executeSQL("SELECT * FROM patients",
+                (err, response, fields) => {
+                      callback(err, response, fields);
+                });
 }
 
 /**
@@ -30,11 +28,10 @@ const getAllPatients = (callback) => {
 * arg params: a JSONArray with [{id}]
 **/
 const getPatientById = (params, callback) => {
-  let query = connection.query("SELECT * FROM patients WHERE ?",
-                                params, (err, response, fields) => {
-                                  callback(err, response[0], fields);
-                                });
-  console.log('Ran query: ' + query.sql); // Log executed sql
+  db.executeSQL("SELECT * FROM patients WHERE ?",
+                params, (err, response, fields) => {
+                        callback(err, response[0], fields);
+                });
 }
 
 // Export all functions so that manager.js can find/use them in functions.

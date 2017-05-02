@@ -1,6 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
+const db = require('./db-connection.js');
 
 const appointments = require('./appointments/router');
 const patients = require('./patients/router');
