@@ -35,6 +35,7 @@ TABLES['employees'] = (
     "   `first_name` VARCHAR(30) NOT NULL,"
     "   `type` TINYINT NOT NULL,"
     "   `associated_id` INT,"
+    "   `password` VARCHAR(30) NOT NULL,"
     "   PRIMARY KEY (`id`)"
     ") ENGINE=InnoDB")
 

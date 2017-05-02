@@ -1,19 +1,19 @@
-INSERT INTO employees(`last_name`, `first_name`, `type`, `associated_id`) 
+INSERT INTO employees(`last_name`, `first_name`, `type`, `associated_id`,`password`)
 VALUES
-	('Smith', 'Bill', 4, null),
-	('Lowrey', 'Dane', 1, 7),
-	('Griswold-Steiner', 'Nils', 1, 8),
-	('Woodson', 'Joyelle', 1, 9 ),
-	('Inting', 'Jared', 1, 10 ),
-	('Shin','Michael', 1, 11 ),
-	('Collins', 'Tyler', 2, 2),
-	('Gaubert', 'Jack', 2, 3),
-	('Kirk', 'Connor', 2, 4),
-	('Two', 'Quincy', 2, 5),
-	('LaComb', 'Shelby', 2, 6),
-	('Lowrey', 'Jenna', 3, null),
-	('Mitts', 'Lynn', 3, null),
-	('Halpart', 'Jim', 3, null)
+	('Smith', 'Bill', 4, null,'pass1'),
+	('Lowrey', 'Dane', 1, 7,'pass2'),
+	('Griswold-Steiner', 'Nils', 1, 8,'pass3'),
+	('Woodson', 'Joyelle', 1, 9,'pass4'),
+	('Inting', 'Jared', 1, 10,'pass5'),
+	('Shin','Michael', 1, 11,'pass6'),
+	('Collins', 'Tyler', 2, 2,'pass7'),
+	('Gaubert', 'Jack', 2, 3,'pass8'),
+	('Kirk', 'Connor', 2, 4,'pass9'),
+	('Two', 'Quincy', 2, 5,'pass10'),
+	('LaComb', 'Shelby', 2, 6,'pass11'),
+	('Lowrey', 'Jenna', 3, null,'pass12'),
+	('Mitts', 'Lynn', 3, null,'pass13'),
+	('Halpart', 'Jim', 3, null,'pass14')
 ;
 
 
