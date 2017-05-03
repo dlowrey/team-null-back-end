@@ -1,5 +1,4 @@
 const db = require('../db-connection.js'); // Get connection to MySQL
-const connection = db.connection;
 
 /**
 * getAllDoctors: get a list of all doctors

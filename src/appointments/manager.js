@@ -2,6 +2,7 @@ const db = require('./db.js');
 const express = require('express');
 const router = express.Router();
 const bodyParser = require('body-parser'); // To parse HTML post body
+const mailer = require('../mailer.js');
 router.use(bodyParser.urlencoded({ extended: false }));
 router.use(bodyParser.json());
 
@@ -42,6 +43,14 @@ const modifyApp = (req, callback) => {
     params.id = req.params.uid; // add the ID to the response
     callback(params); // send back the updated appointment fields
   });
+
+  if (body.completed == 1){ // send an email if appt was completed
+    // get email receipient related to the appointment_id
+    db.sendInvoice({appointment_id : req.params.uid},(response) => {
+        mailer.sendInvoice(response); // send the fields to the mailer
+      });
+  }
+
 }
 
 /**
