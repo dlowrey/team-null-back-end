@@ -43,7 +43,7 @@ let transporter = mailer.createTransport({
     }
 });
   ```
-  
+  Then save the `mailer.js` file
 6. Once all dependencies are done installing, you can start the server by entering:
   ```
   C:\Projects\team-null-back-end> npm start
