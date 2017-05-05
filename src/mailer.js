@@ -5,7 +5,7 @@ let transporter = mailer.createTransport({
     service: 'gmail',
     auth: {
         user: 'fakehealthcareforyou@gmail.com',
-        pass: 'se1teamnull'
+        pass: ''
     }
 });
 
@@ -32,21 +32,21 @@ const sendInvoice = (data) => {
       if (error) {
           return console.log(error);
       }
-      console.log('Message %s sent: %s', info.messageId, info.response);
+      console.log('Invoice email sent to ' + data.email);
   });
 }
 
 const sendPenalty = (data) => {
 
-  let body = "Hello "+data.name+",\nyou have failed to complete your appointment on " +
+  let body = "Hello "+data.name+",\nYou have failed to complete your appointment on " +
              data.date_time + ". As a result, you are being charged a penalty " +
-             "payment of "+data.amount+".  Please use the invoice number:\n" + data.id +
-             "\nto complete your payment online at [enpoint here].\nThank you!"
+             "payment of $"+data.amount+".  Please use the invoice number " + data.id +
+             "to complete your payment online at [enpoint here].\n\nThank you!"
   // setup email data with unicode symbols
   let mailOptions = {
       from: '"FakeHealthcare" <fakehealthcareforyou@gmail.com>', // sender address
       to: data.email, // list of receivers
-      subject: 'Your Hospital Invoice', // Subject line
+      subject: 'Penalty Payment', // Subject line
       text: body // plain text body
   };
 
@@ -55,14 +55,13 @@ const sendPenalty = (data) => {
       if (error) {
           return console.log(error);
       }
-      console.log('Message %s sent: %s', info.messageId, info.response);
+      console.log('Penalty email sent to ' + data.email);
   });
 }
 
 
 
 const sendReceipt = (data) => {
-
     let body = "Hello, this is an automated receiept for " + data.name +
                ".\n\nThank you for your business with Team null's Healthcare.\n\n" +
                "You payed your bill amount of " + data.amount + " in full " +
@@ -80,7 +79,7 @@ const sendReceipt = (data) => {
         if (error) {
             return console.log(error);
         }
-        console.log('Message %s sent: %s', info.messageId, info.response);
+        console.log('Receipt email sent to ' + data.email);
     });
 }
 

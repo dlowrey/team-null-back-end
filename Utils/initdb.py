@@ -102,14 +102,6 @@ TRIGGERS['appointment_deleted'] = ("CREATE TRIGGER appointment_deleted "
                                    "END;")
 
 EVENTS = dict()
-EVENTS['uncompleted_appointments'] = ("CREATE EVENT uncompleted_appointments ON SCHEDULE "
-                                    "EVERY 1 DAY "
-                                    "STARTS CONCAT(CURDATE(),' ', '20:00:00') "
-                                    "ON COMPLETION PRESERVE ENABLE "
-                                    "DO "
-                                    "UPDATE appointments SET completed = 2 "
-                                    "WHERE DAY(date_time) = DAY(NOW());")
-
 EVENTS['daily_reports'] = ("CREATE EVENT daily_report ON SCHEDULE "
                              "EVERY 1 DAY "
                              "STARTS CONCAT(CURDATE(),' ', '21:00:00') "
