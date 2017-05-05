@@ -1,7 +1,8 @@
-const db = require('./db.js');
+const db = require('./db.js'); // to connect to MySQL
 const express = require('express');
 const router = express.Router();
 const bodyParser = require('body-parser'); // To parse HTML post body
+const mailer = require('../mailer.js'); // to send emails
 router.use(bodyParser.urlencoded({ extended: false }));
 router.use(bodyParser.json());
 
@@ -66,10 +67,15 @@ const modifyInvoice = (req, callback) => {
   };
   let params = [fields, appointment_id, type, appointment_id, type];
   // Pass uid and params as a JSONArray (order matters)
-  db.modifyInvoice([params, appointment_id, type], (err, response, fields) => {
+  db.modifyInvoice(params, (err, response, fields) => {
     if (err) console.log(err);
     callback(response); // send back the updated payment object
   });
+
+  db.sendReceipt([appointment_id, type],(response) => {
+      mailer.sendReceipt(response); // send the fields to the mailer
+    });
+
 }
 // Export all functions so that router.js can find/use them in endpoints.
 module.exports = {getPaymentById, getCopayByApp, modifyCopay, modifyInvoice};
