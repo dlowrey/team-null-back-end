@@ -3,6 +3,7 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const db = require('./db-connection.js');
 const appointments = require('./appointments/router');
+const cron = require('./cron-jobs/crons');
 const patients = require('./patients/router');
 const patientRecords = require('./patient_records/router');
 const reports = require('./reports/router');
