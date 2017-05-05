@@ -5,7 +5,7 @@ let transporter = mailer.createTransport({
     service: 'gmail',
     auth: {
         user: 'fakehealthcareforyou@gmail.com',
-        pass: 'se1teamnull'
+        pass: ''
     }
 });
 
