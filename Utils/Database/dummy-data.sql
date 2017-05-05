@@ -33,7 +33,7 @@ VALUES
 
 INSERT INTO patients (last_name, first_name, address, phone_number, email, ssn, insurance_provider)
 VALUES
-('Worthy', 'Bill', '2408 Mac Davis Lane', '8062457894', 'bill@worthy.com', '696969699', 'We Aint Got U'),
+('Worthy', 'Bill', '2408 Mac Davis Lane', '8062457894', 'dane.r.lowrey@gmail.com', '696969699', 'We Aint Got U'),
 ('Smith', 'John', '123 15th St', '5554125123', 'j.smith@gmail.com', '555555555', 'State Farm'),
 ('Sanders', 'Jane', '512 Clover St', '5554105092', 'jane.smith@gmail.com', '555660000', 'Blue Cross'),
 ('Candy', 'Steve', '614 Erie St', '8063022059', 'candyman@gmail.com', '555103029', 'State Farm'),

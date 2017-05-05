@@ -54,20 +54,19 @@ const modifyCopay = (req, callback) => {
 }
 
 /**
-* modifyInvoice: Update an invoice payment by appointment_id
+* modifyInvoice: Update a payment by id
 *
 **/
-const modifyInvoice = (req, callback) => {
+const modifyPaymentById = (req, callback) => {
   let body = req.body; // Get body of request
-  let appointment_id = { appointment_id : req.params.appointment_id };
-  let type = { type : 2 }; // type of payment (2 = invoice)
+  let id = { id : req.params.uid };
   let fields = { // Get values to update to
     method           : body.method,
     date_paid        : new Date(),
   };
-  let params = [fields, appointment_id, type, appointment_id, type];
+  let params = [fields, id, id];
   // Pass uid and params as a JSONArray (order matters)
-  db.modifyInvoice(params, (err, response, fields) => {
+  db.modifyPaymentById(params, (err, response, fields) => {
     if (err) console.log(err);
     callback(response); // send back the updated payment object
   });
@@ -78,4 +77,4 @@ const modifyInvoice = (req, callback) => {
 
 }
 // Export all functions so that router.js can find/use them in endpoints.
-module.exports = {getPaymentById, getCopayByApp, modifyCopay, modifyInvoice};
+module.exports = {getPaymentById, getCopayByApp, modifyCopay, modifyPaymentById};

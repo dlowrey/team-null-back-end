@@ -5,7 +5,7 @@ let transporter = mailer.createTransport({
     service: 'gmail',
     auth: {
         user: 'fakehealthcareforyou@gmail.com',
-        pass: ''
+        pass: 'se1teamnull'
     }
 });
 
@@ -38,9 +38,9 @@ const sendInvoice = (data) => {
 
 const sendPenalty = (data) => {
 
-  let body = "Hello,\nyou have failed to complete your appointment on " +
+  let body = "Hello "+data.name+",\nyou have failed to complete your appointment on " +
              data.date_time + ". As a result, you are being charged a penalty " +
-             "payment of $25. Please use the invoice number:\n" + data.id +
+             "payment of "+data.amount+".  Please use the invoice number:\n" + data.id +
              "\nto complete your payment online at [enpoint here].\nThank you!"
   // setup email data with unicode symbols
   let mailOptions = {

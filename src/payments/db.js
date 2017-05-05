@@ -41,10 +41,10 @@ const modifyCopay = (params, callback) => {
 * arg params: a JSONArray with [{updateParams}, {appointment_id}, {type},
                                 {appointment_id}, {type}]
 **/
-const modifyInvoice = (params, callback) => {
+const modifyPaymentById = (params, callback) => {
   // Modify payment
-  db.executeSQL("UPDATE payments SET ? WHERE ? AND ?;" +
-                "SELECT * FROM payments WHERE ? AND ?;",
+  db.executeSQL("UPDATE payments SET ? WHERE ?;" +
+                "SELECT * FROM payments WHERE ?;",
                 params, (err,response,fields) => {
                          callback(err, response[1], fields);
                 });
@@ -63,4 +63,4 @@ const sendReceipt = (params, callback) => {
 
 // Export all functions so that router.js can find/use them in endpoints.
 module.exports = {getPaymentById, getCopayByApp, modifyCopay,
-                  modifyInvoice, sendReceipt};
+                  modifyPaymentById, sendReceipt};

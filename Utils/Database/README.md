@@ -10,7 +10,7 @@
 | employee_id | Integer not null | ID for associated doctor |
 | patient_id | Integer not null | ID for associated patient |
 | date_time | DateTime not null | Date and time of the appointment |
-| completed | TinyInt not null | Boolean: 1 for completed, 2 otherwise |
+| completed | TinyInt not null | Boolean: 0 for uncompleted, 1 for completed, 2 for penalty |
 
 
 

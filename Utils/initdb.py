@@ -4,7 +4,7 @@ from exceptions import InputError, MySqlError
 # Define constants
 DB_NAME = "healthcaredb"
 
-TABLES = {}
+TABLES = dict()
 TABLES['appointments'] = (
     "CREATE TABLE IF NOT EXISTS `appointments` ("
     "   `id` INT NOT NULL AUTO_INCREMENT,"
@@ -22,7 +22,7 @@ TABLES['patients'] = (
     "   `first_name` VARCHAR(30) NOT NULL,"
     "   `address` VARCHAR(75) NOT NULL,"
     "   `phone_number` VARCHAR(12) NOT NULL,"
-    "   `email` VARCHAR(25) NOT NULL,"
+    "   `email` VARCHAR(50) NOT NULL,"
     "   `ssn` VARCHAR(11) NOT NULL,"
     "   `insurance_provider` VARCHAR(50) NOT NULL,"
     "   PRIMARY KEY (`id`)"
@@ -42,7 +42,7 @@ TABLES['employees'] = (
 TABLES['payments'] = (
     "CREATE TABLE IF NOT EXISTS `payments` ("
     "   `id` INT NOT NULL AUTO_INCREMENT,"
-    "   `appointment_id` INT NOT NULL,"
+    "   `appointment_id` INT,"
     "   `amount` DECIMAL(7,2) ,"
     "   `method` TINYINT ,"
     "   `type` TINYINT NOT NULL,"
@@ -74,8 +74,7 @@ TABLES['patientrecords'] = (
     "   PRIMARY KEY (`appointment_id`)"
     ") ENGINE=InnoDB")
 
-TRIGGERS = {}
-
+TRIGGERS = dict()
 TRIGGERS['appointment_added'] = ("CREATE TRIGGER appointment_added "
                                  "AFTER INSERT ON appointments "
                                  "FOR EACH ROW BEGIN "
@@ -87,6 +86,9 @@ TRIGGERS['appointment_added'] = ("CREATE TRIGGER appointment_added "
                                  "INSERT INTO payments (appointment_id, type, "
                                  " amount) "
                                  "VALUES (NEW.id, 2, RAND()*(1300-100)+100); "
+                                 "INSERT INTO payments (appointment_id, type, "
+                                 " amount) "
+                                 "VALUES (NEW.id, 3, 25);"
                                  "END;"
                                  )
 
@@ -99,7 +101,16 @@ TRIGGERS['appointment_deleted'] = ("CREATE TRIGGER appointment_deleted "
                                    "= OLD.id; "
                                    "END;")
 
-TRIGGERS['daily_reports'] = ("CREATE EVENT daily_report ON SCHEDULE "
+EVENTS = dict()
+EVENTS['uncompleted_appointments'] = ("CREATE EVENT uncompleted_appointments ON SCHEDULE "
+                                    "EVERY 1 DAY "
+                                    "STARTS CONCAT(CURDATE(),' ', '20:00:00') "
+                                    "ON COMPLETION PRESERVE ENABLE "
+                                    "DO "
+                                    "UPDATE appointments SET completed = 2 "
+                                    "WHERE DAY(date_time) = DAY(NOW());")
+
+EVENTS['daily_reports'] = ("CREATE EVENT daily_report ON SCHEDULE "
                              "EVERY 1 DAY "
                              "STARTS CONCAT(CURDATE(),' ', '21:00:00') "
                              "ON COMPLETION PRESERVE ENABLE "
@@ -118,7 +129,7 @@ TRIGGERS['daily_reports'] = ("CREATE EVENT daily_report ON SCHEDULE "
                              "WHERE DAY(a.date_time) = DAY(NOW()) "
                              "GROUP BY a.employee_id; "
                              )
-TRIGGERS['monthly_reports'] = ("CREATE EVENT monthly_report ON SCHEDULE "
+EVENTS['monthly_reports'] = ("CREATE EVENT monthly_report ON SCHEDULE "
                                "EVERY 1 MONTH "
                                "STARTS CONCAT(YEAR(CURDATE()),'-',MONTH(CURDATE()) + 1, '-01 00:00:00') "
                                "ON COMPLETION PRESERVE ENABLE "
@@ -132,6 +143,7 @@ TRIGGERS['monthly_reports'] = ("CREATE EVENT monthly_report ON SCHEDULE "
                                "- INTERVAL 1 MONTH) "
                                "AND r.type = 1 "
                                "GROUP BY r.doctor_name;")
+
 
 def init_connection(username=None, password=None):
     """Initializes connection to running MySQL server
@@ -186,6 +198,9 @@ def init_database(connection):
 
         for name, sql in TRIGGERS.items():  # Create any triggers in TRIGGERS
             print('Creating trigger {}'.format(name))
+            cursor.execute(sql)
+        for name, sql in EVENTS.items():  # Create any events in EVENTS
+            print('Creating event {}'.format(name))
             cursor.execute(sql)
 
         cursor.close()
