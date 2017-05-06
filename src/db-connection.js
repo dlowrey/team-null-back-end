@@ -1,5 +1,5 @@
 const mysql = require('mysql');
-const credentials = require('credentials');
+const credentials = require('./credentials.js');
 const dbConfig = {
   host      :'localhost',
   user      :credentials.dbUser,

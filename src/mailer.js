@@ -1,5 +1,5 @@
 const mailer = require('nodemailer');
-const credentials = require('credentials.js');
+const credentials = require('./credentials.js');
 // create reusable transporter object using the default SMTP transport
 let transporter = mailer.createTransport({
     service: 'gmail',
