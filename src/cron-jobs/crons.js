@@ -3,11 +3,7 @@ const db = require('./db.js');
 const mailer = require('../mailer.js');
 
 
-<<<<<<< HEAD
 let markUncompleted = cron.schedule('0 21 * * *', () => {
-=======
-let markUncompleted = cron.schedule('* * * * *', () => {
->>>>>>> 03d3cd64b422823da61858433f6a2be64cf00b7a
   console.log('CRON JOB: setting uncompleted appointments.');
 
   let completed = { completed : 2 };
