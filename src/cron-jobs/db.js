@@ -44,7 +44,7 @@ const dailyReports = (callback) => {
                  "INNER JOIN employees AS e ON e.id = " +
                  "a.employee_id " +
                  "WHERE DAY(a.date_time) = DAY(NOW()) " +
-                 "AND a.completed = 1 " +
+                 "AND a.completed in (1, 2) " +
                  "GROUP BY a.employee_id; ", callback);
 }
 
