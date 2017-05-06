@@ -3,13 +3,13 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const db = require('./db-connection.js');
 const appointments = require('./appointments/router');
+const cron = require('./cron-jobs/crons');
 const patients = require('./patients/router');
 const patientRecords = require('./patient_records/router');
 const reports = require('./reports/router');
 const employees = require('./employees/router');
 const payments = require('./payments/router');
 const auth = require('./auth/router');
-
 const app = express();
 
 app.use(bodyParser.urlencoded({ extended: false }));

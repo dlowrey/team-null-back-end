@@ -4,7 +4,7 @@ from exceptions import InputError, MySqlError
 # Define constants
 DB_NAME = "healthcaredb"
 
-TABLES = {}
+TABLES = dict()
 TABLES['appointments'] = (
     "CREATE TABLE IF NOT EXISTS `appointments` ("
     "   `id` INT NOT NULL AUTO_INCREMENT,"
@@ -22,7 +22,7 @@ TABLES['patients'] = (
     "   `first_name` VARCHAR(30) NOT NULL,"
     "   `address` VARCHAR(75) NOT NULL,"
     "   `phone_number` VARCHAR(12) NOT NULL,"
-    "   `email` VARCHAR(25) NOT NULL,"
+    "   `email` VARCHAR(50) NOT NULL,"
     "   `ssn` VARCHAR(11) NOT NULL,"
     "   `insurance_provider` VARCHAR(50) NOT NULL,"
     "   PRIMARY KEY (`id`)"
@@ -42,7 +42,7 @@ TABLES['employees'] = (
 TABLES['payments'] = (
     "CREATE TABLE IF NOT EXISTS `payments` ("
     "   `id` INT NOT NULL AUTO_INCREMENT,"
-    "   `appointment_id` INT NOT NULL,"
+    "   `appointment_id` INT,"
     "   `amount` DECIMAL(7,2) ,"
     "   `method` TINYINT ,"
     "   `type` TINYINT NOT NULL,"
@@ -74,8 +74,7 @@ TABLES['patientrecords'] = (
     "   PRIMARY KEY (`appointment_id`)"
     ") ENGINE=InnoDB")
 
-TRIGGERS = {}
-
+TRIGGERS = dict()
 TRIGGERS['appointment_added'] = ("CREATE TRIGGER appointment_added "
                                  "AFTER INSERT ON appointments "
                                  "FOR EACH ROW BEGIN "
@@ -87,6 +86,9 @@ TRIGGERS['appointment_added'] = ("CREATE TRIGGER appointment_added "
                                  "INSERT INTO payments (appointment_id, type, "
                                  " amount) "
                                  "VALUES (NEW.id, 2, RAND()*(1300-100)+100); "
+                                 "INSERT INTO payments (appointment_id, type, "
+                                 " amount) "
+                                 "VALUES (NEW.id, 3, 25);"
                                  "END;"
                                  )
 
@@ -98,40 +100,6 @@ TRIGGERS['appointment_deleted'] = ("CREATE TRIGGER appointment_deleted "
                                    "DELETE FROM payments WHERE appointment_id "
                                    "= OLD.id; "
                                    "END;")
-
-TRIGGERS['daily_reports'] = ("CREATE EVENT daily_report ON SCHEDULE "
-                             "EVERY 1 DAY "
-                             "STARTS CONCAT(CURDATE(),' ', '21:00:00') "
-                             "ON COMPLETION PRESERVE ENABLE "
-                             "DO "
-                             "INSERT INTO reports (type, doctor_name, "
-                             "patient_count, total_income) "
-                             "SELECT 1, CONCAT(e.first_name,' ', "
-                             "e.last_name), COUNT(a.patient_id), p.amount "
-                             "FROM appointments AS a "
-                             "INNER JOIN (SELECT appointment_id, SUM(amount) "
-                             "AS amount FROM payments GROUP BY "
-                             "appointment_id) AS p "
-                             "ON p.appointment_id = a.id "
-                             "INNER JOIN employees AS e ON e.id = "
-                             "a.employee_id "
-                             "WHERE DAY(a.date_time) = DAY(NOW()) "
-                             "GROUP BY a.employee_id; "
-                             )
-TRIGGERS['monthly_reports'] = ("CREATE EVENT monthly_report ON SCHEDULE "
-                               "EVERY 1 MONTH "
-                               "STARTS CONCAT(YEAR(CURDATE()),'-',MONTH(CURDATE()) + 1, '-01 00:00:00') "
-                               "ON COMPLETION PRESERVE ENABLE "
-                               "DO "
-                               "INSERT INTO reports (type, doctor_name, "
-                               "patient_count, total_income) "
-                               "SELECT 2, r.doctor_name, COUNT("
-                               "r.patient_count), SUM(r.total_income) "
-                               "FROM reports r "
-                               "WHERE MONTH(r.date_time) = MONTH(CURRENT_DATE "
-                               "- INTERVAL 1 MONTH) "
-                               "AND r.type = 1 "
-                               "GROUP BY r.doctor_name;")
 
 def init_connection(username=None, password=None):
     """Initializes connection to running MySQL server

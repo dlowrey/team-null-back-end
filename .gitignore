@@ -16,3 +16,5 @@ Utils/__pycache__/
 
 # npm debug
 npm-debug.log
+
+src/credentials.js

@@ -1,9 +1,9 @@
 const mysql = require('mysql');
-
+const credentials = require('./credentials.js');
 const dbConfig = {
   host      :'localhost',
-  user      :'root',
-  password  :'password',
+  user      :credentials.dbUser,
+  password  : credentials.dbPass,
   database  :'healthcaredb',
   multipleStatements : true,
   connectionLimit : 10
