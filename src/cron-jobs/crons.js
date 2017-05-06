@@ -3,7 +3,7 @@ const db = require('./db.js');
 const mailer = require('../mailer.js');
 
 /**
-* markUncompleted: search for and mark uncompleted appointments at 9pm every
+* markUncompleted: search for and mark uncompleted appointments at 8pm every
 *                 day, then send out penalty payment emails
 * ('0 0 21 * * *') = ('SEC MIN HOUR DAYMONTH MONTH DAYWEEK')
 **/
