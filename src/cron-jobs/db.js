@@ -6,8 +6,9 @@ const db = require('../db-connection');
 * param params: a jsonobject with {completed:}
 **/
 const markUncompleted = (params, callback) => {
-  db.executeSQL("UPDATE appointments SET ? " +
-                "WHERE DAY(date_time) = DAY(NOW());",
+  db.executeSQL("UPDATE appointments SET completed = 2 " +
+                "WHERE DAY(date_time) = DAY(NOW()) " +
+                "AND completed = 0;",
                 params, (err, response, fields) => {
                   callback(response); // don't really care about the res.
                 });
@@ -18,7 +19,7 @@ const markUncompleted = (params, callback) => {
 * for appointmnets who have completed = 2
 * param info: a JSONARRAY of  [{completed status}, {payment type}]
 **/
-const sendPenalty = (info, callback) => {
+const sendPenalty = (callback) => {
   db.executeSQL("SELECT pa.amount, pa.id, p.email, a.date_time, " +
                 "CONCAT(p.first_name, ' ', p.last_name) as name " +
                 "FROM appointments as a " +
@@ -26,8 +27,7 @@ const sendPenalty = (info, callback) => {
                 "ON a.patient_id = p.id " +
                 "INNER JOIN payments as pa " +
                 "ON pa.appointment_id = a.id " +
-                "WHERE ? AND ?;",
-                info, callback);
+                "WHERE a.completed = 2 AND pa.type = 3;", callback);
 }
 
 
@@ -44,7 +44,8 @@ const dailyReports = (callback) => {
                  "INNER JOIN employees AS e ON e.id = " +
                  "a.employee_id " +
                  "WHERE DAY(a.date_time) = DAY(NOW()) " +
-                 "GROUP BY a.employee_id; ", null, callback);
+                 "AND a.completed = 1 " +
+                 "GROUP BY a.employee_id; ", callback);
 }
 
 const monthlyReports = (callback) => {
@@ -56,9 +57,9 @@ const monthlyReports = (callback) => {
                   "WHERE MONTH(r.date_time) = MONTH(CURRENT_DATE " +
                   "- INTERVAL 1 MONTH) " +
                   "AND r.type = 1 " +
-                  "GROUP BY r.doctor_name;",null, callback);
+                  "GROUP BY r.doctor_name;", callback);
 }
 
 
 
-module.exports = {sendPenalty, markUncompleted, dailyReports};
+module.exports = {sendPenalty, markUncompleted, dailyReports, monthlyReports};

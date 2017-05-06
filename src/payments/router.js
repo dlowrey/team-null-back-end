@@ -39,7 +39,7 @@ router.put('/copay/:appointment_id', (req, res) => {
 * endpoint: xxx/payments/[payment appointment_id]
 * Modifies the payment with [payment appointment_id]
 **/
-router.put('/invoice/:uid', (req, res) => {
+router.put('/:uid', (req, res) => {
   manager.modifyPaymentById(req, (updatedParams) => {
     res.status(200);
     res.send(updatedParams);

@@ -7,32 +7,33 @@ const mailer = require('../mailer.js');
 *                 day, then send out penalty payment emails
 * ('0 21 * * *') = ('MIN HOUR DAYMONTH MONTH DAYWEEK')
 **/
-const markUncompleted = cron.schedule('0 21 * * *', () => {
-  console.log('CRON JOB: setting uncompleted appointments.');
+const markUncompleted = cron.schedule('0 0 20 * * *', () => {
+  console.log('CRON JOB: setting uncompleted appointments.\n');
 
-  let completed = { completed : 2 }; // completed status for missed apps.
-  let type = { type : 3 }; // type of payment for penalties
-  db.markUncompleted(completed, (err, response, fields) => { // db mark completed = 2
+  db.markUncompleted((err, response, fields) => { // db mark completed = 2
     if (err) console.log(err);
-    db.sendPenalty([completed, type],(err, response, fields) => { // send emails
+    db.sendPenalty((err, response, fields) => { // send emails
       if (err) console.log(err);
-      for(let i = 0; i < response.length; i++) { // multiple missed apps
-        mailer.sendPenalty(response[i]);
+        for(let i = 0; i < response.length; i++) { // multiple missed apps
+          mailer.sendPenalty(response[i]);
+
       }
     });
   });
-});
+}, true);
 
 
-const dailyReports = cron.schedule('0 21 * * *', () => {
+const dailyReports = cron.schedule('0 0 21 * * *', () => {
+  console.log('CRON JOB: gathering information for daily report')
   db.dailyReports((err, response, fields) => {
-    console.log(fields);
+    // console.log('Daily  Reports: ' + fields.message);
   });
 });
 
 
-const monthlyReports = cron.schedule('0 21 * * *', () => {
+const monthlyReports = cron.schedule('0 0 0 1 * *', () => {
+  console.log('CRON JOB: gathering information for monthly report')
   db.monthlyReports((err, response, fields) => {
-    console.log(fields);
+    // console.log('Monthly  Reports: ' + fields.message);
   });
 });
