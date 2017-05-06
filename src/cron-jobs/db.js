@@ -17,7 +17,6 @@ const markUncompleted = (params, callback) => {
 /**
 * sendPenalty: select all of the payment and patient information
 * for appointmnets who have completed = 2
-* param info: a JSONARRAY of  [{completed status}, {payment type}]
 **/
 const sendPenalty = (callback) => {
   db.executeSQL("SELECT pa.amount, pa.id, p.email, a.date_time, " +
@@ -30,7 +29,12 @@ const sendPenalty = (callback) => {
                 "WHERE a.completed = 2 AND pa.type = 3;", callback);
 }
 
-
+/**
+* dailyReports: select all information needed for a daily report and insert
+*               into reports table
+* daily report consists of type = 1 for daily, doctor name, total patients
+* treated, and total income for the day.
+**/
 const dailyReports = (callback) => {
   db.executeSQL( "INSERT INTO reports (type, doctor_name, " +
                  "patient_count, total_income) " +
@@ -48,6 +52,12 @@ const dailyReports = (callback) => {
                  "GROUP BY a.employee_id; ", callback);
 }
 
+/**
+* dailyReports: select all information needed for a monthly report and insert
+*               into reports table
+* daily report consists of type = 2 for monthly, doctor name, total patients
+* treated, and total income for the month.
+**/
 const monthlyReports = (callback) => {
   db.executeSQL( "INSERT INTO reports (type, doctor_name, " +
                   "patient_count, total_income) " +
