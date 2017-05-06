@@ -101,42 +101,6 @@ TRIGGERS['appointment_deleted'] = ("CREATE TRIGGER appointment_deleted "
                                    "= OLD.id; "
                                    "END;")
 
-EVENTS = dict()
-EVENTS['daily_reports'] = ("CREATE EVENT daily_report ON SCHEDULE "
-                             "EVERY 1 DAY "
-                             "STARTS CONCAT(CURDATE(),' ', '21:00:00') "
-                             "ON COMPLETION PRESERVE ENABLE "
-                             "DO "
-                             "INSERT INTO reports (type, doctor_name, "
-                             "patient_count, total_income) "
-                             "SELECT 1, CONCAT(e.first_name,' ', "
-                             "e.last_name), COUNT(a.patient_id), p.amount "
-                             "FROM appointments AS a "
-                             "INNER JOIN (SELECT appointment_id, SUM(amount) "
-                             "AS amount FROM payments GROUP BY "
-                             "appointment_id) AS p "
-                             "ON p.appointment_id = a.id "
-                             "INNER JOIN employees AS e ON e.id = "
-                             "a.employee_id "
-                             "WHERE DAY(a.date_time) = DAY(NOW()) "
-                             "GROUP BY a.employee_id; "
-                             )
-EVENTS['monthly_reports'] = ("CREATE EVENT monthly_report ON SCHEDULE "
-                               "EVERY 1 MONTH "
-                               "STARTS CONCAT(YEAR(CURDATE()),'-',MONTH(CURDATE()) + 1, '-01 00:00:00') "
-                               "ON COMPLETION PRESERVE ENABLE "
-                               "DO "
-                               "INSERT INTO reports (type, doctor_name, "
-                               "patient_count, total_income) "
-                               "SELECT 2, r.doctor_name, COUNT("
-                               "r.patient_count), SUM(r.total_income) "
-                               "FROM reports r "
-                               "WHERE MONTH(r.date_time) = MONTH(CURRENT_DATE "
-                               "- INTERVAL 1 MONTH) "
-                               "AND r.type = 1 "
-                               "GROUP BY r.doctor_name;")
-
-
 def init_connection(username=None, password=None):
     """Initializes connection to running MySQL server
 
@@ -190,9 +154,6 @@ def init_database(connection):
 
         for name, sql in TRIGGERS.items():  # Create any triggers in TRIGGERS
             print('Creating trigger {}'.format(name))
-            cursor.execute(sql)
-        for name, sql in EVENTS.items():  # Create any events in EVENTS
-            print('Creating event {}'.format(name))
             cursor.execute(sql)
 
         cursor.close()

@@ -12,11 +12,27 @@ const markUncompleted = cron.schedule('0 21 * * *', () => {
 
   let completed = { completed : 2 }; // completed status for missed apps.
   let type = { type : 3 }; // type of payment for penalties
-  db.markUncompleted(completed, (response) => { // db mark completed = 2
-    db.sendPenalty([completed, type],(response) => { // send emails
+  db.markUncompleted(completed, (err, response, fields) => { // db mark completed = 2
+    if (err) console.log(err);
+    db.sendPenalty([completed, type],(err, response, fields) => { // send emails
+      if (err) console.log(err);
       for(let i = 0; i < response.length; i++) { // multiple missed apps
         mailer.sendPenalty(response[i]);
       }
     });
+  });
+});
+
+
+const dailyReports = cron.schedule('0 21 * * *', () => {
+  db.dailyReports((err, response, fields) => {
+    console.log(fields);
+  });
+});
+
+
+const monthlyReports = cron.schedule('0 21 * * *', () => {
+  db.monthlyReports((err, response, fields) => {
+    console.log(fields);
   });
 });
