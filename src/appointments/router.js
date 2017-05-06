@@ -10,7 +10,7 @@ const manager = require('./manager.js'); // Handle request logic
 router.post('/', (req, res) => {
   manager.createApp(req, (response) => {
     res.status(201);
-    res.setHeader("Access-Control-Allow-Origin", "Location"); // allow access to Head
+    res.setHeader("Access-Control-Expose-Headers", "Location"); // allow access to Head
     res.location(response.insertId);
     res.send();
   });
