@@ -7,13 +7,12 @@ router.use(bodyParser.urlencoded({ extended: false }));
 router.use(bodyParser.json());
 
 /**
-* getPaymentById: get  payment information by appointment_id
+* getPaymentById: get  payment information by id
 *
 **/
 const getPaymentById = (req, callback) => {
   let id = { id : req.params.uid };
-  let type = { type : 2 };
-  db.getPaymentById([id, type], (err, response, fields) => {
+  db.getPaymentById(id, (err, response, fields) => {
     if (err) console.log(err);
     callback(response); // send payment information
   });

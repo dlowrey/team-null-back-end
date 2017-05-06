@@ -5,7 +5,7 @@ const db = require('../db-connection.js'); // Get connection to MySQL
 * arg params: a JSONObject with {id}
 **/
 const getPaymentById = (params, callback) => {
-  db.executeSQL("SELECT * FROM payments WHERE ? AND ?;",
+  db.executeSQL("SELECT * FROM payments WHERE ?;",
                 params, (err, response, fields) => {
                         callback(err, response[0], fields);
                 });
