@@ -5,8 +5,8 @@ const connection = require('../db-connection.js'); // Get connection to MySQL
 * args params: a JSON with {id,password}
 **/
 const login = (params, callback) => {
-  let query = connection.query("SELECT id, last_name, first_name, type, " +
-                               "associated_id FROM employees WHERE ? AND ?",
+  let query = connection.query('SELECT id, last_name, first_name, type, ' +
+                               'associated_id FROM employees WHERE ? AND ?',
                                 params, (err, response, fields) => {
                                   callback(err, response, fields);
                                 });

@@ -6,7 +6,7 @@ const db = require('../db-connection.js'); // Get connection to MySQL
 **/
 const createPatient = (params, callback) => {
   // Create a patient
-  db.executeSQL("INSERT INTO patients SET ?",
+  db.executeSQL('INSERT INTO patients SET ?',
                 params, (err, response, fields) => {
                         callback(err, response, fields);
                 });
@@ -17,7 +17,7 @@ const createPatient = (params, callback) => {
 *
 **/
 const getAllPatients = (callback) => {
-  db.executeSQL("SELECT * FROM patients",
+  db.executeSQL('SELECT * FROM patients',
                 (err, response, fields) => {
                       callback(err, response, fields);
                 });
@@ -28,7 +28,7 @@ const getAllPatients = (callback) => {
 * arg params: a JSONArray with [{id}]
 **/
 const getPatientById = (params, callback) => {
-  db.executeSQL("SELECT * FROM patients WHERE ?",
+  db.executeSQL('SELECT * FROM patients WHERE ?',
                 params, (err, response, fields) => {
                         callback(err, response[0], fields);
                 });

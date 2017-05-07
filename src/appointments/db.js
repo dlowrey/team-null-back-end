@@ -6,11 +6,9 @@ const db = require('../db-connection.js'); // Get connection to MySQL
 **/
 const createApp = (params, callback) => {
   // Insert appointments
-  db.executeSQL("INSERT INTO appointments SET ?",
-                params, (err, response, fields) => {
-                        callback(err, response, fields);
-                });
-}
+  const sql = 'INSERT INTO appointments SET ?';
+  db.executeSQL(sql, params, callback);
+};
 
 /**
 * modifyApp: update an appointment by id
@@ -18,11 +16,9 @@ const createApp = (params, callback) => {
 **/
 const modifyApp = (params, callback) => {
   // Modify appointments
-  db.executeSQL("UPDATE appointments SET ? WHERE ?",
-                params, (err, response, fields) => {
-                        callback(err, response, fields);
-                });
-}
+  const sql = 'UPDATE appointments SET ? WHERE ?';
+  db.executeSQL(sql, params, callback);
+};
 
 /**
 * deleteApp: delete an appointment by id
@@ -31,11 +27,9 @@ const modifyApp = (params, callback) => {
 **/
 const deleteApp = (params, callback) => {
   // Delete appointments
-  db.executeSQL("DELETE FROM appointments WHERE ?;" ,
-                params, (err, response, fields) => {
-                        callback(err, response, fields);
-                });
-}
+  const sql = 'DELETE FROM appointments WHERE ?';
+  db.executeSQL(sql, params, callback);
+};
 
 /**
 * getUncompApps: get all uncompleted appointments for a month
@@ -43,23 +37,19 @@ const deleteApp = (params, callback) => {
 **/
 const getUncompApps = (params, callback) => {
   // Get all incomplete appointments for month in params
-  db.executeSQL("SELECT * FROM appointments WHERE " +
-                " MONTH(date_time) = ? AND ?",
-                params, (err, response, fields) => {
-                        callback(err, response, fields);
-                });
-}
+  const sql = 'SELECT * FROM appointments WHERE MONTH(date_time) = ? AND ?';
+  db.executeSQL(sql, params, callback);
+};
 
 /**
 * getAppsByPatient: get all appointments for a patient (completed or uncomplete)
 * arg params: a JSONArray with [{patient_id}]
 **/
 const getAppsByPatient = (params, callback) => {
-  db.executeSQL("SELECT * FROM appointments WHERE ?",
-                params, (err, response, fields) => {
-                        callback(err, response, fields);
-                });
-}
+  // get all appointments for a patient
+  const sql = 'SELECT * FROM appointments WHERE ?';
+  db.executeSQL(sql, params, callback);
+};
 
 /**
 * getUncompAppsByPatient: get all uncompleted appointments for a patient during
@@ -67,12 +57,10 @@ const getAppsByPatient = (params, callback) => {
 * arg params: a JSONArray with [month, {patient_id}, {completed}]
 **/
 const getUncompAppsByPatient = (params, callback) => {
-  db.executeSQL("SELECT * FROM appointments WHERE " +
-                " MONTH(date_time) = ? AND ? AND ?",
-                params, (err, response, fields) => {
-                        callback(err, response, fields);
-                });
-}
+  // get uncompleted appointments for a patient
+  const sql = 'SELECT * FROM appointments WHERE MONTH(date_time) = ? AND ? AND ?';
+  db.executeSQL(sql, params, callback);
+};
 
 /**
 * getUncompAppsByDoctor: get all uncompleted appointments for a doctor during
@@ -80,27 +68,26 @@ const getUncompAppsByPatient = (params, callback) => {
 * arg params: a JSONArray with [month, {employee_id}, {completed}]
 **/
 const getUncompAppsByDoctor = (params, callback) => {
-  db.executeSQL("SELECT * FROM appointments WHERE " +
-                " MONTH(date_time) = ? AND ? AND ?",
-                params, (err, response, fields) => {
-                        callback(err, response, fields);
-                });
-}
+  // get uncompleted appointmets for a doctor
+  const sql = 'SELECT * FROM appointments WHERE MONTH(date_time) = ? AND ? AND ?';
+  db.executeSQL(sql, params, callback);
+};
 
-const sendInvoice = (info, callback) => {
-  db.executeSQL("SELECT pa.amount, pa.id, p.email " +
-                "FROM appointments as a " +
-                "INNER JOIN patients as p " +
-                "ON a.patient_id = p.id " +
-                "INNER JOIN payments as pa " +
-                "ON pa.appointment_id = a.id " +
-                "WHERE type = 2 AND ?;",
-                info, (err, response, fields) => {
-                  callback(response[0]);
-                });
-}
+const sendInvoice = (params, callback) => {
+  const sql = 'SELECT pa.amount, pa.id, p.email FROM appointments as a ' +
+    'INNER JOIN patients as p ON a.patient_id = p.id ' +
+    'INNER JOIN payments as pa ON pa.appointment_id = a.id WHERE type = 2 AND ?;';
+  db.executeSQL(sql, params, callback);
+};
 
 // Export all functions so that manager.js can find/use them in functions.
-module.exports = {createApp, modifyApp, deleteApp,
-                  getUncompApps, getAppsByPatient, getUncompAppsByPatient,
-                  getUncompAppsByDoctor, sendInvoice}; // export all methods here
+module.exports = {
+  createApp,
+  modifyApp,
+  deleteApp,
+  getUncompApps,
+  getAppsByPatient,
+  getUncompAppsByPatient,
+  getUncompAppsByDoctor,
+  sendInvoice,
+}; // export all methods here

@@ -70,7 +70,7 @@ const modifyPaymentById = (req, callback) => {
     callback(response); // send back the updated payment object
   });
 
-  db.sendReceipt([appointment_id, type],(response) => {
+  db.sendReceipt([id, type],(response) => {
       mailer.sendReceipt(response); // send the fields to the mailer
     });
 

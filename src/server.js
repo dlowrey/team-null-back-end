@@ -1,9 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
-const db = require('./db-connection.js');
 const appointments = require('./appointments/router');
-const cron = require('./cron-jobs/crons');
 const patients = require('./patients/router');
 const patientRecords = require('./patient_records/router');
 const reports = require('./reports/router');
@@ -16,11 +14,11 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(cors());
 
-app.get('/', function (req, res) {
+app.get('/', (req, res) => {
   res.send('Hello World!');
 });
 
-app.listen(3000, function () {
+app.listen(3000, () => {
   console.log('Example app listening on port 3000!');
 });
 

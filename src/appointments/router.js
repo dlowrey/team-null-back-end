@@ -1,6 +1,7 @@
 const express = require('express');
-const router = express.Router();
 const manager = require('./manager.js'); // Handle request logic
+const router = express.Router();
+
 
 
 /**
@@ -10,7 +11,7 @@ const manager = require('./manager.js'); // Handle request logic
 router.post('/', (req, res) => {
   manager.createApp(req, (response) => {
     res.status(201);
-    res.setHeader("Access-Control-Expose-Headers", "Location"); // allow access to Head
+    res.setHeader('Access-Control-Expose-Headers', 'Location'); // allow access to Head
     res.location(response.insertId);
     res.send();
   });
@@ -91,4 +92,4 @@ router.get('/doctor/uncompleted/:uid/:month', (req, res) => {
 
 
 // export
-module.exports = router
+module.exports = router;
