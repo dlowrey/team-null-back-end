@@ -46,8 +46,8 @@ const modifyApp = (req, callback) => {
 
   if (body.completed == 1){ // send an email if appt was completed
     // get email receipient related to the appointment_id
-    db.sendInvoice({appointment_id : req.params.uid},(response) => {
-        mailer.sendInvoice(response); // send the fields to the mailer
+    db.sendInvoice({appointment_id : req.params.uid},(err, response, fields) => {
+        mailer.sendInvoice(response[0]); // send the fields to the mailer
       });
   }
 
