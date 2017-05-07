@@ -7,7 +7,7 @@ const db = require('../db-connection.js'); // Get connection to MySQL
 **/
 const modifyRecord = (params, callback) => {
   // Modify patient record
-  db.executeSQL("UPDATE patientrecords SET ? WHERE ?",
+  db.executeSQL('UPDATE patientrecords SET ? WHERE ?',
                 params, (err, response, fields) => {
                         callback(err, response, fields);
                 });
@@ -19,7 +19,7 @@ const modifyRecord = (params, callback) => {
 **/
 const getRecordById = (params, callback) => {
   // get record by id
-  db.executeSQL("SELECT * FROM patientrecords WHERE ?",
+  db.executeSQL('SELECT * FROM patientrecords WHERE ?',
                 params, (err, response, fields) => {
                         callback(err, response[0], fields);
                 });
