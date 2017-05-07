@@ -51,7 +51,7 @@ const modifyPaymentById = (params, callback) => {
 }
 
 const sendReceipt = (params, callback) => {
-  db.executeSQL('SELECT CONCAT(p.first_name,' ', p.last_name) as name, ' +
+  db.executeSQL('SELECT CONCAT(p.first_name,\' \', p.last_name) as name, ' +
                 'pa.amount, pa.date_paid, p.email ' +
                 'FROM appointments as a INNER JOIN patients as p ' +
                 'ON a.patient_id = p.id INNER JOIN payments as pa ' +

@@ -1,131 +1,134 @@
 const db = require('./db.js');
 const express = require('express');
-const router = express.Router();
 const bodyParser = require('body-parser'); // To parse HTML post body
 const mailer = require('../mailer.js');
+
+const router = express.Router();
 router.use(bodyParser.urlencoded({ extended: false }));
 router.use(bodyParser.json());
 
 /**
 * createApp: create an appointment
-*
+* create an appointment by passing the employee_id, patient_id, date_time for the appointment
 **/
 const createApp = (req, callback) => {
-  let body = req.body; // get post body
-  let params = { // get parameters of appointment to be created
-    employee_id  : body.employee_id,
-    patient_id   : body.patient_id,
-    date_time    : new Date(body.date_time),
-    completed    : false // by default the appointment is not completed
+  const body = req.body; // HTTP POST body
+  const params = { // Attributes of the appointment to create (preserve order)
+    employee_id: body.employee_id,
+    patient_id: body.patient_id,
+    date_time: new Date(body.date_time),
+    completed: false, // default non-completed appointment
   };
   db.createApp(params, (err, response, fields) => {
     if (err) console.log(err);
-    callback(response); // send response info from query back
+    callback(response); // send JSONArray
   });
-}
+};
 
 /**
 * modifyApp: Update an appointment with id = uid;
-*
+* modify an appointment by passing employee_id, patient_id, date_time, completed.
+* if the modified appointment is marked completed = 1, send an invoice email
 **/
 const modifyApp = (req, callback) => {
-  let body = req.body; // Get body of request
-  let uid = { id : req.params.uid }; // uid of appointment in URL
-  let params = { // Get field values to update to
-    employee_id  : body.employee_id,
-    patient_id   : body.patient_id,
-    date_time    : new Date(body.date_time),
-    completed    : body.completed
+  const body = req.body; // HTTP POST body
+  const uid = { id: req.params.uid }; // ID of appointment
+  const params = { // Attributes of appointment to modify (preserve order)
+    employee_id: body.employee_id,
+    patient_id: body.patient_id,
+    date_time: new Date(body.date_time),
+    completed: body.completed,
   };
-  // Pass uid and params as a JSONArray (order matters)
+
   db.modifyApp([params, uid], (err, response, fields) => {
     if (err) console.log(err);
-    params.id = req.params.uid; // add the ID to the response
-    callback(params); // send back the updated appointment fields
+    params.id = req.params.uid; // Put ID in the response object
+    callback(params); // send JSONObject
   });
 
-  if (body.completed == 1){ // send an email if appt was completed
-    // get email receipient related to the appointment_id
-    db.sendInvoice({appointment_id : req.params.uid},(err, response, fields) => {
-        mailer.sendInvoice(response[0]); // send the fields to the mailer
-      });
+  if (body.completed === 1) {
+    const data = { appointment_id: req.params.uid }; // get email receipient & info
+    db.sendInvoice(data, (err, response, fields) => {
+      mailer.sendInvoice(response[0]); // send JSONObject
+    });
   }
-
-}
+};
 
 /**
-* deleteAPp: delete an appointment by id
+* deleteApp: delete an appointment by id
 *
 **/
 const deleteApp = (req, callback) => {
-  let uid = { id : req.params.uid }; // uid of appointment in URL
-  db.deleteApp(uid, (err, response, fields) => {
+  const params = { id: req.params.uid }; // ID of appointment (preserve order)
+  db.deleteApp(params, (err, response, fields) => {
     if (err) console.log(err);
-    callback(response); // send response back, response is unused for delete
+    callback(response); // send JSONArray
   });
-}
+};
 
 /**
 * getUncompApps: get all uncompleted appointments by month
-*
+* get all uncompleted appointments for a certain month
 **/
 const getUncompApps = (req, callback) => {
-  let month = parseInt(req.params.month) + 1; // Front end passes 0 idx months
-  let completed = {completed : 0 }; // specify completed = 0 for uncompleted
-  // pass month and completed as JSONArray (order matters)
-  db.getUncompApps([month, completed], (err, response, fields) => {
+  const month = parseInt(req.params.month, 10) + 1; // Front end passes 0 idx months
+  const completed = { completed: 0 }; // specify uncompleted
+  const params = [month, completed]; // Attributes of appointments to get (preserve order)
+  db.getUncompApps(params, (err, response, fields) => {
     if (err) console.log(err);
-    callback(response); // send JSONArray of all uncompleted apps for [month]
+    callback(response); // send JSONArray
   });
-}
+};
 
 /**
 * getAppsByPatient: get all appointments by patient
-*
+* get all appointments for a certain patiend ID
 **/
 const getAppsByPatient = (req, callback) => {
-  let patient_id = { patient_id : req.params.uid }; // patient_id
-  db.getAppsByPatient(patient_id, (err, response, fields) => {
+  const params = { patient_id: req.params.uid }; // ID of patient (preserve order)
+  db.getAppsByPatient(params, (err, response, fields) => {
     if (err) console.log(err);
-    callback(response); // send JSONArray of all appointments for [patient_id]
+    callback(response); // send JSONArray
   });
-}
+};
 
 /**
 * getUncompAppsByPatient: get uncompleted appointments by patient and month
-*
+* get uncompleted appointments for a certain patient ID in a certain month
 **/
 const getUncompAppsByPatient = (req, callback) => {
-  let month = parseInt(req.params.month) + 1; // Front end passes 0 idx months
-  let patient_id = { patient_id : req.params.uid }; // patient_id
-  let completed = { completed : 0 }; // specify completed = 0 for uncompleted
-  // pass month, patient_id, and completed as JSONArray (order matters)
-  db.getUncompAppsByPatient([month, patient_id, completed],
-     (err, response, fields) => {
+  const month = parseInt(req.params.month, 10) + 1; // Front end passes 0 idx months
+  const patientId = { patient_id: req.params.uid };
+  const completed = { completed: 0 }; // specify uncompleted
+  const params = [month, patientId, completed]; // Attributes of appointments to get (preserve order)
+  db.getUncompAppsByPatient(params, (err, response, fields) => {
     if (err) console.log(err);
-    callback(response); // send JSONArray of all uncompleted appointments for
-                        // [patient_id] and [month]
+    callback(response); // send JSONArray
   });
-}
+};
 
 /**
 * getUncompAppsByDoctor: get uncompleted appointments by doctor and month
-*
+* get uncompleted appointments for a certain employee_id and month
 **/
 const getUncompAppsByDoctor = (req, callback) => {
-  let month = parseInt(req.params.month) + 1; // Front end passes 0 idx months
-  let employee_id = { employee_id : req.params.uid }; // employee_id
-  let completed = { completed : 0 }; // specify completed = 0 for uncompleted
-  // pass month, employee_id, and completed as JSONArray (order matters)
-  db.getUncompAppsByDoctor([month, employee_id, completed],
-     (err, response, fields) => {
+  const month = parseInt(req.params.month, 10) + 1; // Front end passes 0 idx months
+  const employeeId = { employee_id: req.params.uid };
+  const completed = { completed: 0 }; // specify uncompleted
+  const params = [month, employeeId, completed]; // Attributes of appointments to get (preserve order)
+  db.getUncompAppsByDoctor(params, (err, response, fields) => {
     if (err) console.log(err);
-    callback(response); // send JSONArray of all uncompleted appointments for
-                        // [employee_id] and [month]
+    callback(response); // send JSONArray
   });
-}
+};
 
 // Export all functions so that router.js can find/use them in endpoints.
-module.exports = {createApp, modifyApp, deleteApp,
-                  getUncompApps, getAppsByPatient, getUncompAppsByPatient,
-                  getUncompAppsByDoctor};
+module.exports = {
+  createApp,
+  modifyApp,
+  deleteApp,
+  getUncompApps,
+  getAppsByPatient,
+  getUncompAppsByPatient,
+  getUncompAppsByDoctor,
+};
