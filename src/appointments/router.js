@@ -1,6 +1,7 @@
 const express = require('express');
-const router = express.Router();
 const manager = require('./manager.js'); // Handle request logic
+const router = express.Router();
+
 
 
 /**
@@ -91,4 +92,4 @@ router.get('/doctor/uncompleted/:uid/:month', (req, res) => {
 
 
 // export
-module.exports = router
+module.exports = router;
