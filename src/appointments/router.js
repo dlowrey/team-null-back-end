@@ -3,7 +3,6 @@ const manager = require('./manager.js'); // Handle request logic
 const router = express.Router();
 
 
-
 /**
 * endpoint: xxxx/appointments/
 * Creates an appointment from the Appointments table
@@ -16,6 +15,7 @@ router.post('/', (req, res) => {
     res.send();
   });
 });
+
 
 /**
 * endpoint: xxxx/appointments/[appointment UID]
@@ -77,6 +77,7 @@ router.get('/patient/:uid', (req, res) => {
     res.send(response);
   });
 });
+
 
 /**
 * endpoint: xxx/appointments/doctor/uncompleted/[employee UID]/[month]
