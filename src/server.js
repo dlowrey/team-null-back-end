@@ -8,6 +8,7 @@ const reports = require('./reports/router');
 const employees = require('./employees/router');
 const payments = require('./payments/router');
 const auth = require('./auth/router');
+
 const app = express();
 
 app.use(bodyParser.urlencoded({ extended: false }));

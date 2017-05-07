@@ -53,7 +53,7 @@ const modifyCopay = (req, callback) => {
 }
 
 /**
-* modifyInvoice: Update a payment by id
+* modifyPaymentById: Update a payment by id
 *
 **/
 const modifyPaymentById = (req, callback) => {
@@ -70,7 +70,7 @@ const modifyPaymentById = (req, callback) => {
     callback(response); // send back the updated payment object
   });
 
-  db.sendReceipt([id, type],(response) => {
+  db.sendReceipt(id,(response) => {
       mailer.sendReceipt(response); // send the fields to the mailer
     });
 

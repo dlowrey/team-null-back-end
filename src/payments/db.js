@@ -55,7 +55,7 @@ const sendReceipt = (params, callback) => {
                 'pa.amount, pa.date_paid, p.email ' +
                 'FROM appointments as a INNER JOIN patients as p ' +
                 'ON a.patient_id = p.id INNER JOIN payments as pa ' +
-                'ON pa.appointment_id = a.id WHERE ? AND ?', params,
+                'ON pa.appointment_id = a.id WHERE pa.?', params,
                 (err, response, fields) => {
                   callback(response[0]);
                 });
