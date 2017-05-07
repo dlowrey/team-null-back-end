@@ -67,7 +67,7 @@ const modifyPaymentById = (req, callback) => {
   // Pass uid and params as a JSONArray (order matters)
   db.modifyPaymentById(params, (err, response, fields) => {
     if (err) console.log(err);
-    callback(response); // send back the updated payment object
+    callback(response[0]); // send back the updated payment object
   });
 
   db.sendReceipt(id,(response) => {
