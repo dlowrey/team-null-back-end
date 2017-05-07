@@ -46,7 +46,7 @@ const modifyApp = (req, callback) => {
     callback(params); // send JSONObject
   });
 
-  if (body.completed === '1') {
+  if (body.completed === 1) {
     const data = { appointment_id: req.params.uid }; // get email receipient & info
     db.sendInvoice(data, (err, response, fields) => {
       mailer.sendInvoice(response[0]); // send JSONObject
