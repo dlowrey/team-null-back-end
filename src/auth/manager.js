@@ -22,4 +22,4 @@ const login = (req, callback) => {
 };
 
 // Export all functions so that router.js can find/use them in endpoints.
-module.exports = login;
+module.exports = { login };

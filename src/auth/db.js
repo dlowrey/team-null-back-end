@@ -11,4 +11,4 @@ const login = (params, callback) => {
 };
 
 // Export all functions so that manager.js can find/use them in functions.
-module.exports = login;
+module.exports = { login };
