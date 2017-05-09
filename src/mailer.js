@@ -19,7 +19,7 @@ const sendInvoice = (data) => {
              'null time. Now for the stuff we really care about: ' +
              '\n\nYour invoice total comes out to: $' + data.amount + '.\n\n' +
              'You can pay this using your online invoice number: ' +
-             data.id + ' at [insert endpoint here].' +
+             data.id + ' at http://team-null.s3-website-us-west-2.amazonaws.com/#/invoice.' +
              '\n\nThank you for your business,\nTeam Null';
   // setup email data with unicode symbols
   const mailOptions = {
@@ -42,7 +42,7 @@ const sendPenalty = (data) => {
   const body = 'Hello '+data.name+',\nYou have failed to complete your appointment on ' +
   data.date_time + '. As a result, you are being charged a penalty ' +
   'payment of $'+data.amount+'.  Please use the invoice number ' + data.id +
-  ' to complete your payment online at [enpoint here].\n\nThank you!';
+  ' to complete your payment online at http://team-null.s3-website-us-west-2.amazonaws.com/#/invoice.\n\nThank you!';
   // setup email data with unicode symbols
   const mailOptions = {
       from: '\'FakeHealthcare\' <fakehealthcareforyou@gmail.com>', // sender address
