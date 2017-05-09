@@ -32,18 +32,19 @@ const createApp = (req, callback) => {
 **/
 const modifyApp = (req, callback) => {
   const body = req.body; // HTTP POST body
-  const uid = { id: req.params.uid }; // ID of appointment
-  const params = { // Attributes of appointment to modify (preserve order)
+  const id = { id: req.params.uid }; // ID of appointment
+  const fields = {
     employee_id: body.employee_id,
     patient_id: body.patient_id,
     date_time: new Date(body.date_time),
     completed: body.completed,
   };
+  const params = [fields, id]; // Paremeters for update (preserve order)
 
-  db.modifyApp([params, uid], (err, response, fields) => {
+  db.modifyApp(params, (err, response, fields) => {
     if (err) console.log(err);
     params.id = req.params.uid; // Put ID in the response object
-    callback(params); // send JSONObject
+    callback(fields); // send JSONObject
   });
 
   if (body.completed === 1) {

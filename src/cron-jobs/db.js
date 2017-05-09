@@ -20,7 +20,7 @@ const markUncompleted = (params, callback) => {
 **/
 const sendPenalty = (callback) => {
   db.executeSQL('SELECT pa.amount, pa.id, p.email, a.date_time, ' +
-                'CONCAT(p.first_name, ' ', p.last_name) as name ' +
+                'CONCAT(p.first_name, \' \', p.last_name) as name ' +
                 'FROM appointments as a ' +
                 'INNER JOIN patients as p ' +
                 'ON a.patient_id = p.id ' +
@@ -38,7 +38,7 @@ const sendPenalty = (callback) => {
 const dailyReports = (callback) => {
   db.executeSQL( 'INSERT INTO reports (type, doctor_name, ' +
                  'patient_count, total_income) ' +
-                 'SELECT 1, CONCAT(e.first_name,' ', ' +
+                 'SELECT 1, CONCAT(e.first_name,\' \', ' +
                  'e.last_name), COUNT(a.patient_id), p.amount ' +
                  'FROM appointments AS a ' +
                  'INNER JOIN (SELECT appointment_id, SUM(amount) ' +
