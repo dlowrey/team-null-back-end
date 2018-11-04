@@ -33,7 +33,7 @@ This was the back end for a Healthcare system project for Sofware Engineering 1.
   ```
   Then save the `db-connection.js` file
  
-5. Navigate to `src\` and open `mailer.js` in a text editor, in this file you will need to set the `password` field to access the gmail account for sending emails (yes we know this is not secure, it was a school project). You may also enter your own Email/Password combo - but note that some account settings are not     compatible with [nodemailer](https://nodemailer.com/about/).
+5. Navigate to `src\` and open `mailer.js` in a text editor, in this file you will need to set the `password` field to access the gmail account for sending emails (yes we know this is not secure, it was a school project, we stored ours in a separate file that was not uploaded as part of the project). You may also enter your own Email/Password combo - but note that some account settings are not     compatible with [nodemailer](https://nodemailer.com/about/).
   ```Javascript
   const mailer = require('nodemailer');
 
