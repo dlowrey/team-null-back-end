@@ -53,7 +53,7 @@ This was the back end for a Healthcare system project for Sofware Engineering 1.
   C:\Projects\team-null-back-end> npm start
   ```
   The server will not be able to interact with the MySQL Database unless the MySQL server is running and 
-  the correct `healthcaredb` has been set up. Please see [Database README](https://github.com/NilsG-S/team-null-back-end/blob/master/Utils/README.md)
+  the correct `healthcaredb` has been set up. Please see [Database README](./Utils/README.md)
 
 You can navigate to _localhost:3000/_ in your web browser and should get the text `Hello World!` on your screen. If you did not
 get this text, please see the Command Window for any errors that may need fixing. 
