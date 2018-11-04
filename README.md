@@ -1,4 +1,7 @@
-# Setting up the Express Server
+# Project
+This was the back end for a Healthcare system project for Sofware Engineering 1.
+
+## Setting up the Express Server
 
 1. Download the correct Node for your OS [here](https://nodejs.org/en/)
 2. Navigate to desired directory and clone this repo
